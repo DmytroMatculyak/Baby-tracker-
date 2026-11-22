@@ -11,59 +11,73 @@
         :root {
             --bg: #121212;
             --card: #1e1e24;
+            --card-light: #272730;
             --primary: #7c4dff;
             --secondary: #03dac6;
+            --accent-pink: #ff7597;
+            --accent-blue: #4dabf7;
             --text: #ffffff;
             --text-muted: #a0a0ab;
             --danger: #cf6679;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 16px; padding-bottom: 80px; }
-        header { text-align: center; margin-bottom: 20px; }
-        h1 { font-size: 22px; font-weight: 600; }
-        .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); color: var(--text); padding: 16px; padding-bottom: 90px; }
         
-        /* Таймер */
+        .tab-content { display: none; animation: fadeIn 0.2s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        header { text-align: center; margin-bottom: 18px; }
+        h1 { font-size: 22px; font-weight: 700; }
+        .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .badge-hint {
+            display: inline-block;
+            background: rgba(124, 77, 255, 0.2);
+            color: #b39ddb;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
         .timer-box {
             background: var(--card);
             border-radius: 20px;
             padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border: 1px solid #2c2c35;
         }
-        .timer-label { font-size: 14px; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; }
-        .timer-display { font-size: 48px; font-weight: 700; margin: 10px 0; font-variant-numeric: tabular-nums; }
-        
-        /* Сітка кнопок */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .timer-label { font-size: 13px; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .timer-display { font-size: 46px; font-weight: 700; margin: 8px 0; font-variant-numeric: tabular-nums; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
         button {
             background: var(--card);
             color: var(--text);
             border: 1px solid #2e2e38;
             border-radius: 16px;
-            padding: 18px 12px;
-            font-size: 16px;
+            padding: 16px 12px;
+            font-size: 15px;
             font-weight: 600;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.15s;
         }
-        button:active { transform: scale(0.96); background: #2a2a35; }
-        button.active { background: var(--primary); border-color: var(--primary); }
+        button:active { transform: scale(0.96); background: var(--card-light); }
         .icon { font-size: 26px; }
-        
-        /* Швидке додавання пляшечки */
-        .bottle-row { display: flex; gap: 8px; margin-bottom: 24px; }
-        .bottle-btn { flex: 1; padding: 12px; font-size: 14px; flex-direction: row; justify-content: center; }
 
-        /* Історія */
+        .section-title { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
+        .bottle-row { display: flex; gap: 8px; margin-bottom: 22px; }
+        .bottle-btn { flex: 1; padding: 12px 6px; font-size: 14px; flex-direction: row; justify-content: center; }
+
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .history-header h2 { font-size: 18px; }
-        .clear-btn { background: none; border: none; color: var(--danger); font-size: 13px; padding: 4px; }
+        .history-header h2 { font-size: 17px; }
+        .clear-btn { background: none; border: none; color: var(--danger); font-size: 13px; padding: 4px 8px; }
         .history-list { display: flex; flex-direction: column; gap: 10px; }
         .history-item {
             background: var(--card);
@@ -75,150 +89,144 @@
         }
         .item-title { font-weight: 600; font-size: 15px; }
         .item-detail { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .item-right { text-align: right; }
         .item-time { font-size: 14px; color: var(--secondary); font-weight: 600; }
+        .item-date { font-size: 11px; color: var(--text-muted); }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+        .stat-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #2c2c35;
+        }
+        .stat-card-icon { font-size: 22px; margin-bottom: 6px; }
+        .stat-card-val { font-size: 20px; font-weight: 700; color: var(--text); }
+        .stat-card-lbl { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        
+        .card-box {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #2c2c35;
+        }
+        .card-box h3 { font-size: 15px; margin-bottom: 12px; color: var(--text); }
+        
+        .balance-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: #2e2e38; margin: 10px 0; }
+        .balance-left { background: var(--accent-pink); transition: width 0.3s; }
+        .balance-right { background: var(--accent-blue); transition: width 0.3s; }
+        .balance-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+
+        .chart-bars { display: flex; justify-content: space-between; align-items: flex-end; height: 110px; padding-top: 15px; gap: 6px; }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+        .bar-fill { width: 100%; max-width: 28px; background: var(--primary); border-radius: 6px 6px 0 0; min-height: 4px; transition: height 0.3s; }
+        .bar-val { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+        .bar-day { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+        .profile-banner {
+            background: linear-gradient(135deg, #2a214a 0%, #1e1e24 100%);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 18px;
+            border: 1px solid #3c306b;
+        }
+        .baby-avatar { font-size: 44px; margin-bottom: 8px; }
+        .baby-name-title { font-size: 22px; font-weight: 700; }
+        .baby-age-badge { font-size: 14px; color: var(--secondary); margin-top: 4px; font-weight: 600; }
+        
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+        input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid #343440;
+            color: var(--text);
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+        input:focus { outline: none; border-color: var(--primary); }
+        .save-btn {
+            width: 100%;
+            background: var(--primary);
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #18181f;
+            border-top: 1px solid #2c2c35;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 12px 0;
+            z-index: 100;
+        }
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 4px 16px;
+            font-size: 11px;
+            gap: 4px;
+            border-radius: 12px;
+        }
+        .nav-item.active { color: var(--secondary); }
+        .nav-icon { font-size: 22px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>👶 Трекер Малюка</h1>
-        <div class="subtitle" id="last-info">Останній запис: немає</div>
-    </header>
+    <div id="tab-tracker" class="tab-content active">
+        <header>
+            <h1 id="header-baby-name">👶 Трекер Малюка</h1>
+            <div class="subtitle" id="last-info">Останній запис: немає</div>
+            <div class="badge-hint" id="last-breast-hint" style="display:none;"></div>
+        </header>
 
-    <div class="timer-box">
-        <div class="timer-label" id="active-task">Оберіть дію для старту</div>
-        <div class="timer-display" id="timer">00:00</div>
-        <button id="stop-btn" onclick="stopTimer()" style="display:none; width:100%; background:var(--danger); border:none; padding:14px;">⏹ Зупинити та зберегти</button>
-    </div>
+        <div class="timer-box">
+            <div class="timer-label" id="active-task">Оберіть дію для старту</div>
+            <div class="timer-display" id="timer">00:00</div>
+            <button id="stop-btn" onclick="stopTimer()" style="display:none; width:100%; background:var(--danger); border:none; padding:14px;">⏹ Зупинити та зберегти</button>
+        </div>
 
-    <div class="grid">
-        <button id="btn-left" onclick="startTimer('Ліва грудь', '🤱')">
-            <span class="icon">🤱</span>
-            <span>Ліва грудь</span>
-        </button>
-        <button id="btn-right" onclick="startTimer('Права грудь', '🤱')">
-            <span class="icon">🤱</span>
-            <span>Права грудь</span>
-        </button>
-        <button id="btn-sleep" onclick="startTimer('Сон', '😴')">
-            <span class="icon">😴</span>
-            <span>Сон</span>
-        </button>
-        <button onclick="addInstant('Підгузок', '🧷', 'Зміна підгузка')">
-            <span class="icon">🧷</span>
-            <span>Підгузок</span>
-        </button>
-    </div>
+        <div class="grid">
+            <button onclick="startTimer('breast_left', 'Ліва грудь', '🤱')">
+                <span class="icon">🤱</span>
+                <span>Ліва грудь</span>
+            </button>
+            <button onclick="startTimer('breast_right', 'Права грудь', '🤱')">
+                <span class="icon">🤱</span>
+                <span>Права грудь</span>
+            </button>
+            <button onclick="startTimer('sleep', 'Сон', '😴')">
+                <span class="icon">😴</span>
+                <span>Сон</span>
+            </button>
+            <button onclick="addInstant('diaper', 'Підгузок', '🧷', 'Зміна підгузка')">
+                <span class="icon">🧷</span>
+                <span>Підгузок</span>
+            </button>
+        </div>
 
-    <div class="bottle-row">
-        <button class="bottle-btn" onclick="addBottle(60)">🍼 +60 мл</button>
-        <button class="bottle-btn" onclick="addBottle(90)">🍼 +90 мл</button>
-        <button class="bottle-btn" onclick="addBottle(120)">🍼 +120 мл</button>
-    </div>
+        <div class="section-title">Швидке годування з пляшечки:</div>
+        <div class="bottle-row">
+            <button class="bottle-btn" onclick="addBottle(60)">🍼 60 мл</button>
+            <button class="bottle-btn" onclick="addBottle(90)">🍼 90 мл</button>
+            <button class="bottle-btn" onclick="addBottle(120)">🍼 120 мл</button>
+            <button class="bottle-btn" onclick="addCustomBottle()">✏️ Інше</button>
+        </div>
 
-    <div class="history-header">
-        <h2>Історія за сьогодні</h2>
-        <button class="clear-btn" onclick="clearHistory()">Очистити</button>
-    </div>
-    <div class="history-list" id="history"></div>
-
-    <script>
-        let timerInterval = null;
-        let seconds = 0;
-        let currentTask = null;
-        let currentIcon = '';
-
-        // Завантаження історії з пам'яті телефону
-        let records = JSON.parse(localStorage.getItem('babyRecords')) || [];
-        renderHistory();
-
-        function startTimer(taskName, icon) {
-            if (timerInterval) {
-                if (!confirm('Зупинити поточний таймер і почати новий?')) return;
-                stopTimer();
-            }
-            currentTask = taskName;
-            currentIcon = icon;
-            seconds = 0;
-            document.getElementById('active-task').innerText = icon + ' ' + taskName + '...';
-            document.getElementById('stop-btn').style.display = 'flex';
-            updateTimerDisplay();
-
-            timerInterval = setInterval(() => {
-                seconds++;
-                updateTimerDisplay();
-            }, 1000);
-        }
-
-        function stopTimer() {
-            if (!timerInterval) return;
-            clearInterval(timerInterval);
-            timerInterval = null;
-
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            const durationText = mins > 0 ? `${mins} хв ${secs} сек` : `${secs} сек`;
-
-            saveRecord(currentTask, currentIcon, `Тривалість: ${durationText}`);
-            
-            document.getElementById('active-task').innerText = 'Оберіть дію для старту';
-            document.getElementById('timer').innerText = '00:00';
-            document.getElementById('stop-btn').style.display = 'none';
-            currentTask = null;
-        }
-
-        function updateTimerDisplay() {
-            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const s = String(seconds % 60).padStart(2, '0');
-            document.getElementById('timer').innerText = `${m}:${s}`;
-        }
-
-        function addBottle(ml) {
-            saveRecord('Пляшечка', '🍼', `Об'єм: ${ml} мл`);
-        }
-
-        function addInstant(title, icon, detail) {
-            saveRecord(title, icon, detail);
-        }
-
-        function saveRecord(title, icon, detail) {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-            records.unshift({ title, icon, detail, time: timeStr });
-            localStorage.setItem('babyRecords', JSON.stringify(records));
-            renderHistory();
-        }
-
-        function renderHistory() {
-            const list = document.getElementById('history');
-            list.innerHTML = '';
-            if (records.length > 0) {
-                document.getElementById('last-info').innerText = `Останнє: ${records.title} о ${records.time}`;
-            } else {
-                document.getElementById('last-info').innerText = 'Останній запис: немає';
-            }
-
-            records.forEach(rec => {
-                const div = document.createElement('div');
-                div.className = 'history-item';
-                div.innerHTML = `
-                    <div>
-                        <div class="item-title">${rec.icon} ${rec.title}</div>
-                        <div class="item-detail">${rec.detail}</div>
-                    </div>
-                    <div class="item-time">${rec.time}</div>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        function clearHistory() {
-            if (confirm('Видалити всю історію?')) {
-                records = [];
-                localStorage.removeItem('babyRecords');
-                renderHistory();
-            }
-        }
-    </script>
-</body>
-</html>
+        <div class="history-header">
+            <h2>Останні записи</h2>
+            <button class="clear-btn" onclick="clearHistory()">Очистити</button>
+        </div>
+        <div class="history-list" id="history"></div>
