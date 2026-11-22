@@ -10,17 +10,20 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0 auto;padding-bottom:50px}
 .card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.card.boy{border-top:3px solid var(--blue)}.card.girl{border-top:3px solid var(--pink)}
 .p-head,.h-head{display:flex;justify-content:space-between;align-items:center}
-.p-head{margin-bottom:12px}.h-head{margin:18px 0 10px}
+.h-head{margin:18px 0 10px}
 .b-name{font-size:19px;font-weight:700;color:var(--bright)}
-.edit-btn{background:var(--light);border:none;color:var(--txt);padding:6px 12px;border-radius:10px;font-size:13px;font-weight:600}
+.day-badge{background:rgba(157,124,216,.15);color:var(--prim);padding:6px 12px;border-radius:12px;font-size:14px;font-weight:800}
+.prof-details{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
 .age-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
 .age-grid{background:rgba(15,17,26,.5);padding:10px;border-radius:14px;margin-bottom:10px}
 .age-val,.stat-num{font-size:18px;font-weight:800}
 .age-val{color:var(--prim)}
 .age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
-.bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:6px}.bio strong{color:var(--bright)}
-.p-form{display:none;flex-direction:column;gap:10px}
+.bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-bottom:12px}.bio strong{color:var(--bright)}
+.edit-btn{background:var(--light);border:none;color:var(--txt);padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%}
+.p-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
 .p-form input,.modal input{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
 .f-row,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .save-btn{background:linear-gradient(135deg,var(--prim),var(--blue));color:#0f111a;border:none;padding:12px;border-radius:12px;font-weight:700;font-size:15px;width:100%}
@@ -33,6 +36,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 .t-btns{display:flex;gap:6px;width:100%}
 .t-btn{flex:1;border:none;padding:10px 4px;border-radius:10px;font-size:13px;font-weight:700;color:var(--bright);background:var(--light);text-align:center}
 .t-btn.sel{background:var(--blue);color:#0f111a}
+.t-btn.sel-g{background:var(--pink);color:#0f111a}
 .t-btn.go-p{background:rgba(247,118,142,.2);color:var(--pink)}
 .t-btn.go-v{background:rgba(157,124,216,.2);color:var(--prim)}
 .t-btn.stop{background:var(--red);color:#0f111a}
@@ -40,6 +44,9 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 .btn:active{transform:scale(.96);background:var(--light)}
 .b-b{border-bottom:3px solid var(--blue)}.b-t{border-bottom:3px solid var(--sec)}
 .stat-box{background:rgba(15,17,26,.45);padding:10px 4px;border-radius:14px}
+.ext-stats{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);flex-direction:column;gap:8px;font-size:13px}
+.ext-row{display:flex;justify-content:space-between;background:rgba(15,17,26,.35);padding:8px 12px;border-radius:10px}
+.ext-row strong{color:var(--bright)}
 .clr-btn{background:none;border:none;color:var(--red);font-size:13px;font-weight:600}
 .l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer}
 .l-item:active{background:var(--light)}
@@ -53,34 +60,43 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 </style>
 </head>
 <body>
-  <div class="card">
-  <div class="p-head">
+  <div class="card" id="profCard">
+  <div class="p-head" style="cursor:pointer" onclick="togProfDetails()">
     <div class="b-name" id="dName">👶 Мій Малюк</div>
-    <button class="edit-btn" onclick="togForm()">✏️ Дані</button>
+    <div class="day-badge" id="mainDaysBadge">0 днів ▾</div>
   </div>
-  <div id="pDisp">
-    <div class="age-grid">
-      <div><div class="age-val" id="aDays">0</div><div class="age-lbl">днів</div></div>
-      <div><div class="age-val" id="aWeeks">0</div><div class="age-lbl">тижнів</div></div>
-      <div><div class="age-val" id="aYears">0</div><div class="age-lbl" id="aYLbl">місяців</div></div>
+  
+  <div class="prof-details" id="profDetails">
+    <div id="pDisp">
+      <div class="age-grid">
+        <div><div class="age-val" id="aDays">0</div><div class="age-lbl">днів</div></div>
+        <div><div class="age-val" id="aWeeks">0</div><div class="age-lbl">тижнів</div></div>
+        <div><div class="age-val" id="aYears">0</div><div class="age-lbl" id="aYLbl">місяців</div></div>
+      </div>
+      <div class="bio">
+        <span>Вага: <strong id="dW">—</strong></span>
+        <span>Зріст: <strong id="dH">—</strong></span>
+        <span><span id="dDobLbl">Народився</span>: <strong id="dDob">не вказано</strong></span>
+      </div>
+      <button class="edit-btn" onclick="togForm()">✏️ Редагувати профіль</button>
     </div>
-    <div class="bio">
-      <span>Вага: <strong id="dW">—</strong></span>
-      <span>Зріст: <strong id="dH">—</strong></span>
-      <span>Народився: <strong id="dDob">не вказано</strong></span>
+
+    <div class="p-form" id="pForm">
+      <div class="f-row">
+        <button type="button" class="t-btn" id="btnBoy" onclick="setGender('boy')">👦 Хлопчик</button>
+        <button type="button" class="t-btn" id="btnGirl" onclick="setGender('girl')">👧 Дівчинка</button>
+      </div>
+      <input type="text" id="iName" placeholder="Ім'я дитини">
+      <div class="f-row">
+        <input type="date" id="iDob">
+        <input type="time" id="iTob">
+      </div>
+      <div class="f-row">
+        <input type="number" step="0.01" id="iW" placeholder="Вага (кг)">
+        <input type="number" id="iH" placeholder="Зріст (см)">
+      </div>
+      <button class="save-btn" onclick="saveProf()">Зберегти дані</button>
     </div>
-  </div>
-  <div class="p-form" id="pForm">
-    <input type="text" id="iName" placeholder="Ім'я дитини">
-    <div class="f-row">
-      <input type="date" id="iDob">
-      <input type="time" id="iTob">
-    </div>
-    <div class="f-row">
-      <input type="number" step="0.01" id="iW" placeholder="Вага (кг)">
-      <input type="number" id="iH" placeholder="Зріст (см)">
-    </div>
-    <button class="save-btn" onclick="saveProf()">Зберегти дані</button>
   </div>
 </div>
 
@@ -111,12 +127,24 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
   <button class="btn b-t" onclick="openDia()"><span style="font-size:24px">🧷</span><span>Підгузок</span></button>
 </div>
 
-<div class="card">
-  <div class="s-lbl" style="font-weight:700;margin-bottom:10px;color:var(--txt)">📊 Статистика за сьогодні</div>
+<div class="card" style="cursor:pointer" onclick="togStats()">
+  <div class="p-head" style="margin-bottom:10px">
+    <div class="s-lbl" style="font-weight:700;color:var(--txt)">📊 Статистика за сьогодні</div>
+    <div class="s-lbl" id="stArrow">Детальніше ▾</div>
+  </div>
   <div class="stats-grid">
     <div class="stat-box"><div class="stat-num" style="color:var(--pink)" id="stF">0</div><div class="stat-sub" id="stMl">Їжа (0 мл)</div></div>
     <div class="stat-box"><div class="stat-num" style="color:var(--sec)" id="stD">0</div><div class="stat-sub" id="stDt">Підгузки (0💩)</div></div>
     <div class="stat-box"><div class="stat-num" style="color:var(--prim)" id="stS">0 хв</div><div class="stat-sub" id="stSc">Сон (0 разів)</div></div>
+  </div>
+  
+  <div class="ext-stats" id="extStats" onclick="event.stopPropagation()">
+    <div class="ext-row"><span>🤱 Грудне годування:</span><strong id="exBf">0 разів (0 хв)</strong></div>
+    <div class="ext-row"><span>🍼 Суміш:</span><strong id="exMix">0 мл</strong></div>
+    <div class="ext-row"><span>🥛 Зціджене молоко:</span><strong id="exMilk">0 мл</strong></div>
+    <div class="ext-row"><span>⏱ Середній інтервал їжі:</span><strong id="exInt">—</strong></div>
+    <div class="ext-row"><span>🧷 Підгузки детально:</span><strong id="exDia">0💧 / 0💩 / 0💧💩 / 0⚠️</strong></div>
+    <div class="ext-row"><span>😴 Середня тривалість сну:</span><strong id="exAvgSlp">—</strong></div>
   </div>
 </div>
 
@@ -171,15 +199,34 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 </div>
 <script>
 let logs=JSON.parse(localStorage.getItem('bLogs'))||[];
-let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',dob:'',tob:'',w:'',h:''};
+let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',gender:'',dob:'',tob:'',w:'',h:''};
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
-let botType='Суміш',editId=null;
+let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false;
+
+function togProfDetails(){
+  profOpen=!profOpen;
+  document.getElementById('profDetails').style.display=profOpen?'block':'none';
+  renderProf();
+}
+
+function togStats(){
+  statsOpen=!statsOpen;
+  document.getElementById('extStats').style.display=statsOpen?'flex':'none';
+  document.getElementById('stArrow').textContent=statsOpen?'Згорнути ▴':'Детальніше ▾';
+}
+
+function setGender(g){
+  selGender=g;
+  document.getElementById('btnBoy').className=g==='boy'?'t-btn sel':'t-btn';
+  document.getElementById('btnGirl').className=g==='girl'?'t-btn sel-g':'t-btn';
+}
 
 function togForm(){
   const f=document.getElementById('pForm'),d=document.getElementById('pDisp');
   if(f.style.display==='flex'){f.style.display='none';d.style.display='block'}
   else{
+    setGender(prof.gender||'');
     document.getElementById('iName').value=prof.name;document.getElementById('iDob').value=prof.dob;
     document.getElementById('iTob').value=prof.tob||'';document.getElementById('iW').value=prof.w;document.getElementById('iH').value=prof.h;
     f.style.display='flex';d.style.display='none';
@@ -187,23 +234,45 @@ function togForm(){
 }
 
 function saveProf(){
-  prof={name:document.getElementById('iName').value.trim()||'Мій Малюк',dob:document.getElementById('iDob').value,tob:document.getElementById('iTob').value,w:document.getElementById('iW').value,h:document.getElementById('iH').value};
+  prof={name:document.getElementById('iName').value.trim()||'Мій Малюк',gender:selGender,dob:document.getElementById('iDob').value,tob:document.getElementById('iTob').value,w:document.getElementById('iW').value,h:document.getElementById('iH').value};
   localStorage.setItem('bProf',JSON.stringify(prof));togForm();renderProf();
 }
 
+function pluralDays(n){
+  const mod10=n%10,mod100=n%100;
+  if(mod10===1&&mod100!==11)return `${n} день`;
+  if(mod10>=2&&mod10<=4&&(mod100<12||mod100>14))return `${n} дні`;
+  return `${n} днів`;
+}
+
 function renderProf(){
-  document.getElementById('dName').textContent='👶 '+prof.name;
+  const card=document.getElementById('profCard');
+  card.className='card'+(prof.gender==='boy'?' boy':(prof.gender==='girl'?' girl':''));
+  const icon=prof.gender==='boy'?'👦 ':(prof.gender==='girl'?'👧 ':'👶 ');
+  document.getElementById('dName').textContent=icon+prof.name;
+  document.getElementById('dDobLbl').textContent=prof.gender==='girl'?'Народилася':'Народився';
   document.getElementById('dW').textContent=prof.w?prof.w+' кг':'—';
   document.getElementById('dH').textContent=prof.h?prof.h+' см':'—';
-  if(!prof.dob){document.getElementById('dDob').textContent='натисніть ✏️ Дані';return}
-  const timeStr=prof.tob||'00:00',dob=new Date(`${prof.dob}T${timeStr}`),now=new Date();
-  const formattedDate=dob.toLocaleDateString('uk-UA');
+  const arrow=profOpen?' ▴':' ▾';
+  if(!prof.dob){
+    document.getElementById('dDob').textContent='натисніть Редагувати';
+    document.getElementById('mainDaysBadge').textContent='Профіль'+arrow;
+    return;
+  }
+  const [yr,mo,da]=prof.dob.split('-').map(Number);
+  const dobStart=new Date(yr,mo-1,da);
+  const now=new Date();
+  const todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const days=Math.max(0,Math.round((todayStart-dobStart)/864e5));
+  
+  const formattedDate=dobStart.toLocaleDateString('uk-UA');
   document.getElementById('dDob').textContent=prof.tob?`${formattedDate} о ${prof.tob}`:formattedDate;
-  const days=Math.max(0,Math.floor((now-dob)/864e5));
+  document.getElementById('mainDaysBadge').textContent=pluralDays(days)+arrow;
   document.getElementById('aDays').textContent=days;
   document.getElementById('aWeeks').textContent=Math.floor(days/7);
-  let y=now.getFullYear()-dob.getFullYear(),m=now.getMonth()-dob.getMonth();
-  if(now.getDate()<dob.getDate())m--;if(m<0){y--;m+=12}
+  
+  let y=now.getFullYear()-dobStart.getFullYear(),m=now.getMonth()-dobStart.getMonth();
+  if(now.getDate()<dobStart.getDate())m--;if(m<0){y--;m+=12}
   if(y>=1){document.getElementById('aYears').textContent=y;document.getElementById('aYLbl').textContent=y===1?'рік':(y<5?'роки':'років')}
   else{document.getElementById('aYears').textContent=m;document.getElementById('aYLbl').textContent=m===1?'місяць':(m>=2&&m<=4?'місяці':'місяців')}
 }
@@ -257,8 +326,7 @@ function updTimers(){
     bts.innerHTML='<button class="t-btn go-v" onclick="startSleep()">Почати сон</button>';
   }
 }
-
-function setBotType(t){
+  function setBotType(t){
   botType=t;
   document.getElementById('btnTypeMix').className=t==='Суміш'?'t-btn sel':'t-btn';
   document.getElementById('btnTypeMilk').className=t==='Зціджене молоко'?'t-btn sel':'t-btn';
@@ -277,17 +345,13 @@ function openEdit(id){
   const item=logs.find(i=>i.id===id);if(!item)return;
   editId=id;
   document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
-  const dt=new Date(item.ts);
-  const pad=n=>String(n).padStart(2,'0');
+  const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');
   document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
   document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
-  
   const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');
-  if(item.ex&&typeof item.ex.ml!=='undefined'){
-    wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml;
-  }else if(item.ex&&typeof item.ex.mins!=='undefined'){
-    wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins;
-  }else{wrap.style.display='none'}
+  if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}
+  else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}
+  else{wrap.style.display='none'}
   document.getElementById('modEdit').style.display='flex';
 }
 
@@ -295,12 +359,10 @@ function applyEdit(){
   const item=logs.find(i=>i.id===editId);if(!item)return;
   const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;
   if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();
-  
   const wrap=document.getElementById('edExtraWrap'),val=parseInt(document.getElementById('edExtraVal').value)||0;
   if(wrap.style.display==='flex'){
-    if(typeof item.ex.ml!=='undefined'){
-      item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti;
-    }else if(typeof item.ex.mins!=='undefined'){
+    if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}
+    else if(typeof item.ex.mins!=='undefined'){
       item.ex.mins=val;
       item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim();
     }
@@ -309,13 +371,7 @@ function applyEdit(){
   document.getElementById('modEdit').style.display='none';save();
 }
 
-function delFromEdit(){
-  if(confirm("Видалити цей запис?")){
-    logs=logs.filter(i=>i.id!==editId);
-    document.getElementById('modEdit').style.display='none';save();
-  }
-}
-
+function delFromEdit(){if(confirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save()}}
 function save(){localStorage.setItem('bLogs',JSON.stringify(logs));render();updSince();updStats()}
 function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);save()}
 function del(e,id){e.stopPropagation();if(confirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save()}}
@@ -324,17 +380,36 @@ function clrAll(){if(confirm("Видалити всю історію?")){logs=[]
 function updStats(){
   const today=new Date().setHours(0,0,0,0),tl=logs.filter(i=>i.ts>=today);
   let f=0,ml=0,d=0,dt=0,sc=0,sm=0;
+  let bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];
+  
   tl.forEach(i=>{
-    if(i.t==='feed'){f++;if(i.ex.ml)ml+=i.ex.ml}
-    else if(i.t==='dia'){d++;if(i.ex.d)dt++}
-    else if(i.t==='slp'){sc++;if(i.ex.mins)sm+=i.ex.mins}
+    if(i.t==='feed'){
+      f++;feedTimes.push(i.ts);
+      if(i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}
+      else{bfC++;bfM+=(i.ex.mins||0)}
+    }else if(i.t==='dia'){
+      d++;if(i.ex.d)dt++;
+      if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++;
+    }else if(i.t==='slp'){sc++;if(i.ex.mins)sm+=i.ex.mins}
   });
-  document.getElementById('stF').textContent=f;
-  document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;
-  document.getElementById('stD').textContent=d;
-  document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;
-  document.getElementById('stS').textContent=fmtTextDur(sm);
-  document.getElementById('stSc').textContent=`Сон (${sc} разів)`;
+  
+  document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;
+  document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;
+  document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;
+  
+  document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;
+  document.getElementById('exMix').textContent=`${mixMl} мл`;
+  document.getElementById('exMilk').textContent=`${milkMl} мл`;
+  document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;
+  document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';
+  
+  if(feedTimes.length>=2){
+    feedTimes.sort((a,b)=>a-b);
+    let diffSum=0;
+    for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);
+    const avgMins=Math.round((diffSum/(feedTimes.length-1))/6e4);
+    document.getElementById('exInt').textContent=fmtTextDur(avgMins);
+  }else{document.getElementById('exInt').textContent='—'}
 }
 
 function updSince(){
