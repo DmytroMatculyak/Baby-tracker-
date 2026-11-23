@@ -4,17 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f111a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Малюк">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23191c29'/><text x='50' y='68' font-size='56' text-anchor='middle'>👶</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23191c29'/><text x='50' y='68' font-size='56' text-anchor='middle'>👶</text></svg>">
 <title>Трекер Малюка</title>
 <style>
 :root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0 auto;padding-bottom:50px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
+input{user-select:auto}
+body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env(safe-area-inset-top));max-width:480px;margin:0 auto;padding-bottom:60px}
 .card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .card.boy{border-top:3px solid var(--blue)}.card.girl{border-top:3px solid var(--pink)}
 .p-head,.h-head{display:flex;justify-content:space-between;align-items:center}
 .h-head{margin:18px 0 10px}
 .b-name{font-size:19px;font-weight:700;color:var(--bright)}
 .day-badge{background:rgba(157,124,216,.15);color:var(--prim);padding:6px 12px;border-radius:12px;font-size:14px;font-weight:800}
+.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mut);margin-right:6px}
+.sync-dot.on{background:var(--sec);box-shadow:0 0 8px var(--sec)}
 .prof-details{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
 .age-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
 .age-grid{background:rgba(15,17,26,.5);padding:10px;border-radius:14px;margin-bottom:10px}
@@ -22,7 +31,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 .age-val{color:var(--prim)}
 .age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
 .bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-bottom:12px}.bio strong{color:var(--bright)}
-.edit-btn{background:var(--light);border:none;color:var(--txt);padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%}
+.edit-btn{background:var(--light);border:none;color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%;margin-top:6px}
 .p-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
 .p-form input,.modal input{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
 .f-row,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -62,7 +71,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 <body>
   <div class="card" id="profCard">
   <div class="p-head" style="cursor:pointer" onclick="togProfDetails()">
-    <div class="b-name" id="dName">👶 Мій Малюк</div>
+    <div class="b-name"><span class="sync-dot" id="syncDot"></span><span id="dName">👶 Мій Малюк</span></div>
     <div class="day-badge" id="mainDaysBadge">0 днів ▾</div>
   </div>
   
@@ -79,6 +88,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
         <span><span id="dDobLbl">Народився</span>: <strong id="dDob">не вказано</strong></span>
       </div>
       <button class="edit-btn" onclick="togForm()">✏️ Редагувати профіль</button>
+      <button class="edit-btn" style="color:var(--sec)" onclick="openSync()">🔄 Сімейна синхронізація</button>
     </div>
 
     <div class="p-form" id="pForm">
@@ -185,16 +195,24 @@ body{background:var(--bg);color:var(--txt);padding:16px;max-width:480px;margin:0
 <div class="modal" id="modEdit" onclick="if(event.target===this)this.style.display='none'">
   <div class="m-body">
     <h3 style="font-size:17px;color:var(--bright)" id="edTitle">✏️ Редагувати запис</h3>
-    <div class="m-lbl">Дата події:</div>
-    <input type="date" id="edDate">
-    <div class="m-lbl">Час події:</div>
-    <input type="time" id="edTime">
+    <div class="m-lbl">Дата події:</div><input type="date" id="edDate">
+    <div class="m-lbl">Час події:</div><input type="time" id="edTime">
     <div id="edExtraWrap" style="display:none;flex-direction:column;gap:12px">
-      <div class="m-lbl" id="edExtraLbl">Значення:</div>
-      <input type="number" id="edExtraVal">
+      <div class="m-lbl" id="edExtraLbl">Значення:</div><input type="number" id="edExtraVal">
     </div>
     <button class="save-btn" onclick="applyEdit()">Зберегти зміни</button>
     <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red);padding:11px" onclick="delFromEdit()">🗑 Видалити цей запис</button>
+  </div>
+</div>
+
+<div class="modal" id="modSync" onclick="if(event.target===this)this.style.display='none'">
+  <div class="m-body">
+    <h3 style="font-size:17px;color:var(--bright)">🔄 Сімейна синхронізація</h3>
+    <div class="s-lbl" style="line-height:1.4">Вставте посилання на базу Firebase або надішліть готове посилання-запрошення мамі:</div>
+    <input type="url" id="inSyncUrl" placeholder="https://">
+    <button class="save-btn" onclick="saveSync()">Підключити</button>
+    <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnShareLink" onclick="shareInvite()">📤 Надіслати посилання мамі</button>
+    <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableSync()">Вимкнути</button>
   </div>
 </div>
 <script>
@@ -202,25 +220,84 @@ let logs=JSON.parse(localStorage.getItem('bLogs'))||[];
 let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',gender:'',dob:'',tob:'',w:'',h:''};
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
-let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false;
+let syncUrl=localStorage.getItem('bSyncUrl')||'';
+let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='';
 
-function togProfDetails(){
-  profOpen=!profOpen;
-  document.getElementById('profDetails').style.display=profOpen?'block':'none';
-  renderProf();
+// Автопідключення, якщо сайт відкрито за посиланням-запрошенням
+(function checkInvite(){
+  const p=new URLSearchParams(window.location.search);
+  const db=p.get('db');
+  if(db){
+    let u=decodeURIComponent(db).trim();
+    if(!u.endsWith('/'))u+='/';
+    syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);
+    window.history.replaceState({},document.title,window.location.pathname);
+  }
+})();
+
+function openSync(){
+  document.getElementById('inSyncUrl').value=syncUrl;
+  document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';
+  document.getElementById('modSync').style.display='flex';
 }
 
-function togStats(){
-  statsOpen=!statsOpen;
-  document.getElementById('extStats').style.display=statsOpen?'flex':'none';
-  document.getElementById('stArrow').textContent=statsOpen?'Згорнути ▴':'Детальніше ▾';
+function saveSync(){
+  let u=document.getElementById('inSyncUrl').value.trim();
+  if(u&&!u.endsWith('/'))u+='/';
+  syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);
+  document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';
+  if(syncUrl){pushCloud();pullCloud();alert('Підключено! Тепер можна натиснути "Надіслати посилання мамі".')}
+  else{updSyncDot(false);document.getElementById('modSync').style.display='none'}
 }
 
-function setGender(g){
-  selGender=g;
-  document.getElementById('btnBoy').className=g==='boy'?'t-btn sel':'t-btn';
-  document.getElementById('btnGirl').className=g==='girl'?'t-btn sel-g':'t-btn';
+function shareInvite(){
+  if(!syncUrl)return;
+  const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;
+  if(navigator.share){
+    navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(inviteUrl);
+    alert('Готове посилання скопійовано! Просто вставте його у повідомлення мамі.');
+  }else{prompt('Скопіюйте це посилання для мами:',inviteUrl)}
 }
+
+function disableSync(){syncUrl='';localStorage.removeItem('bSyncUrl');updSyncDot(false);document.getElementById('modSync').style.display='none'}
+function updSyncDot(ok){document.getElementById('syncDot').className=ok?'sync-dot on':'sync-dot'}
+
+async function pushCloud(){
+  if(!syncUrl)return;
+  const payload=JSON.stringify({logs,prof,actFeed,actSleep,upd:Date.now()});
+  lastHash=JSON.stringify({logs,prof,actFeed,actSleep});
+  try{
+    const r=await fetch(syncUrl+'babydata.json',{method:'PUT',body:payload});
+    updSyncDot(r.ok);
+  }catch(e){updSyncDot(false)}
+}
+
+async function pullCloud(){
+  if(!syncUrl)return;
+  try{
+    const r=await fetch(syncUrl+'babydata.json');
+    if(!r.ok){updSyncDot(false);return}
+    updSyncDot(true);
+    const data=await r.json();
+    if(!data){pushCloud();return}
+    const remoteHash=JSON.stringify({logs:data.logs||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null});
+    if(remoteHash!==lastHash){
+      logs=data.logs||[];prof=data.prof||prof;actFeed=data.actFeed||null;actSleep=data.actSleep||null;
+      localStorage.setItem('bLogs',JSON.stringify(logs));
+      localStorage.setItem('bProf',JSON.stringify(prof));
+      if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');
+      if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');
+      lastHash=remoteHash;
+      renderProf();updTimers();render();updSince();updStats();
+    }
+  }catch(e){updSyncDot(false)}
+}
+
+function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
+function togStats(){statsOpen=!statsOpen;document.getElementById('extStats').style.display=statsOpen?'flex':'none';document.getElementById('stArrow').textContent=statsOpen?'Згорнути ▴':'Детальніше ▾'}
+function setGender(g){selGender=g;document.getElementById('btnBoy').className=g==='boy'?'t-btn sel':'t-btn';document.getElementById('btnGirl').className=g==='girl'?'t-btn sel-g':'t-btn'}
 
 function togForm(){
   const f=document.getElementById('pForm'),d=document.getElementById('pDisp');
@@ -235,7 +312,7 @@ function togForm(){
 
 function saveProf(){
   prof={name:document.getElementById('iName').value.trim()||'Мій Малюк',gender:selGender,dob:document.getElementById('iDob').value,tob:document.getElementById('iTob').value,w:document.getElementById('iW').value,h:document.getElementById('iH').value};
-  localStorage.setItem('bProf',JSON.stringify(prof));togForm();renderProf();
+  localStorage.setItem('bProf',JSON.stringify(prof));togForm();renderProf();pushCloud();
 }
 
 function pluralDays(n){
@@ -254,30 +331,18 @@ function renderProf(){
   document.getElementById('dW').textContent=prof.w?prof.w+' кг':'—';
   document.getElementById('dH').textContent=prof.h?prof.h+' см':'—';
   const arrow=profOpen?' ▴':' ▾';
-  if(!prof.dob){
-    document.getElementById('dDob').textContent='натисніть Редагувати';
-    document.getElementById('mainDaysBadge').textContent='Профіль'+arrow;
-    return;
-  }
-  const [yr,mo,da]=prof.dob.split('-').map(Number);
-  const dobStart=new Date(yr,mo-1,da);
-  const now=new Date();
-  const todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const days=Math.max(0,Math.round((todayStart-dobStart)/864e5));
-  
-  const formattedDate=dobStart.toLocaleDateString('uk-UA');
+  if(!prof.dob){document.getElementById('dDob').textContent='натисніть Редагувати';document.getElementById('mainDaysBadge').textContent='Профіль'+arrow;return}
+  const [yr,mo,da]=prof.dob.split('-').map(Number),dobStart=new Date(yr,mo-1,da),now=new Date(),todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const days=Math.max(0,Math.round((todayStart-dobStart)/864e5)),formattedDate=dobStart.toLocaleDateString('uk-UA');
   document.getElementById('dDob').textContent=prof.tob?`${formattedDate} о ${prof.tob}`:formattedDate;
   document.getElementById('mainDaysBadge').textContent=pluralDays(days)+arrow;
-  document.getElementById('aDays').textContent=days;
-  document.getElementById('aWeeks').textContent=Math.floor(days/7);
-  
+  document.getElementById('aDays').textContent=days;document.getElementById('aWeeks').textContent=Math.floor(days/7);
   let y=now.getFullYear()-dobStart.getFullYear(),m=now.getMonth()-dobStart.getMonth();
   if(now.getDate()<dobStart.getDate())m--;if(m<0){y--;m+=12}
   if(y>=1){document.getElementById('aYears').textContent=y;document.getElementById('aYLbl').textContent=y===1?'рік':(y<5?'роки':'років')}
   else{document.getElementById('aYears').textContent=m;document.getElementById('aYLbl').textContent=m===1?'місяць':(m>=2&&m<=4?'місяці':'місяців')}
 }
-
-function fmtDur(sec){
+  function fmtDur(sec){
   const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60,pad=n=>String(n).padStart(2,'0');
   return h>0?`${h}:${pad(m)}:${pad(s)}`:`${pad(m)}:${pad(s)}`;
 }
@@ -288,22 +353,18 @@ function fmtTextDur(mins){
   return h>0?`${h} год ${m} хв`:`${m} хв`;
 }
 
-function startFeed(side){actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers()}
+function startFeed(side){actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
 function stopFeed(saveIt){
-  if(saveIt&&actFeed){
-    const mins=Math.round((Date.now()-actFeed.start)/6e4);
-    add('feed','🤱','Грудне годування',`${actFeed.side} грудь (${fmtTextDur(mins)})`,{mins,side:actFeed.side});
-  }
-  actFeed=null;localStorage.removeItem('actFeed');updTimers();
+  const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();
+  if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}
+  else{pushCloud()}
 }
 
-function startSleep(){actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers()}
+function startSleep(){actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
 function stopSleep(saveIt){
-  if(saveIt&&actSleep){
-    const mins=Math.round((Date.now()-actSleep.start)/6e4);
-    add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins});
-  }
-  actSleep=null;localStorage.removeItem('actSleep');updTimers();
+  const cur=actSleep;actSleep=null;localStorage.removeItem('actSleep');updTimers();
+  if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins})}
+  else{pushCloud()}
 }
 
 function updTimers(){
@@ -326,25 +387,16 @@ function updTimers(){
     bts.innerHTML='<button class="t-btn go-v" onclick="startSleep()">Почати сон</button>';
   }
 }
-  function setBotType(t){
-  botType=t;
-  document.getElementById('btnTypeMix').className=t==='Суміш'?'t-btn sel':'t-btn';
-  document.getElementById('btnTypeMilk').className=t==='Зціджене молоко'?'t-btn sel':'t-btn';
-}
 
+function setBotType(t){botType=t;document.getElementById('btnTypeMix').className=t==='Суміш'?'t-btn sel':'t-btn';document.getElementById('btnTypeMilk').className=t==='Зціджене молоко'?'t-btn sel':'t-btn'}
 function openBot(){document.getElementById('inMl').value='';setBotType('Суміш');document.getElementById('modBot').style.display='flex'}
-function saveBot(val){
-  const ml=parseInt(val)||0;
-  add('feed','🍼',botType,ml>0?`${botType} • ${ml} мл`:botType,{ml});
-  document.getElementById('modBot').style.display='none';
-}
+function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`${botType} • ${ml} мл`:botType,{ml});document.getElementById('modBot').style.display='none'}
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
 
 function openEdit(id){
   const item=logs.find(i=>i.id===id);if(!item)return;
-  editId=id;
-  document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
+  editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
   const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');
   document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
   document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
@@ -362,53 +414,36 @@ function applyEdit(){
   const wrap=document.getElementById('edExtraWrap'),val=parseInt(document.getElementById('edExtraVal').value)||0;
   if(wrap.style.display==='flex'){
     if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}
-    else if(typeof item.ex.mins!=='undefined'){
-      item.ex.mins=val;
-      item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim();
-    }
+    else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}
   }
-  logs.sort((a,b)=>b.ts-a.ts);
-  document.getElementById('modEdit').style.display='none';save();
+  logs.sort((a,b)=>b.ts-a.ts);document.getElementById('modEdit').style.display='none';save();
 }
 
 function delFromEdit(){if(confirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save()}}
-function save(){localStorage.setItem('bLogs',JSON.stringify(logs));render();updSince();updStats()}
+function save(){localStorage.setItem('bLogs',JSON.stringify(logs));render();updSince();updStats();pushCloud()}
 function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);save()}
 function del(e,id){e.stopPropagation();if(confirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save()}}
 function clrAll(){if(confirm("Видалити всю історію?")){logs=[];save()}}
 
 function updStats(){
   const today=new Date().setHours(0,0,0,0),tl=logs.filter(i=>i.ts>=today);
-  let f=0,ml=0,d=0,dt=0,sc=0,sm=0;
-  let bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];
-  
+  let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];
   tl.forEach(i=>{
-    if(i.t==='feed'){
-      f++;feedTimes.push(i.ts);
-      if(i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}
-      else{bfC++;bfM+=(i.ex.mins||0)}
-    }else if(i.t==='dia'){
-      d++;if(i.ex.d)dt++;
-      if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++;
-    }else if(i.t==='slp'){sc++;if(i.ex.mins)sm+=i.ex.mins}
+    if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=(i.ex.mins||0)}}
+    else if(i.t==='dia'){d++;if(i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}
+    else if(i.t==='slp'){sc++;if(i.ex.mins)sm+=i.ex.mins}
   });
-  
   document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;
   document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;
   document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;
-  
   document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;
-  document.getElementById('exMix').textContent=`${mixMl} мл`;
-  document.getElementById('exMilk').textContent=`${milkMl} мл`;
+  document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;
   document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;
   document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';
-  
   if(feedTimes.length>=2){
-    feedTimes.sort((a,b)=>a-b);
-    let diffSum=0;
+    feedTimes.sort((a,b)=>a-b);let diffSum=0;
     for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);
-    const avgMins=Math.round((diffSum/(feedTimes.length-1))/6e4);
-    document.getElementById('exInt').textContent=fmtTextDur(avgMins);
+    document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4));
   }else{document.getElementById('exInt').textContent='—'}
 }
 
@@ -430,8 +465,16 @@ function render(){
   }).join('');
 }
 
+// Генерація маніфесту для встановлення як окремий додаток
+const manifest={name:"Трекер Малюка",short_name:"Малюк",start_url:window.location.href,display:"standalone",background_color:"#0f111a",theme_color:"#0f111a"};
+const mLink=document.createElement('link');mLink.rel='manifest';
+mLink.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify(manifest));
+document.head.appendChild(mLink);
+
 setInterval(()=>{updTimers();updSince();renderProf()},1000);
-renderProf();updTimers();save();
+setInterval(pullCloud,5000);
+renderProf();updTimers();render();updSince();updStats();
+if(syncUrl)pullCloud();
 </script>
 </body>
 </html>
