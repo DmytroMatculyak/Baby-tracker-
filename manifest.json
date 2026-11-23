@@ -1,16 +1,17 @@
 {
   "name": "Трекер Даринки",
   "short_name": "Даринка",
-  "start_url": "index.html",
+  "start_url": "/Baby/",
+  "scope": "/Baby/",
   "display": "standalone",
   "background_color": "#0f111a",
   "theme_color": "#0f111a",
   "icons": [
     {
-      "src": "https://flaticon.com",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23191c29'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E👶%3C/text%3E%3C/svg%3E",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
