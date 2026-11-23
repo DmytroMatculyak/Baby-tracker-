@@ -1,8 +1,8 @@
 {
   "name": "Трекер Даринки",
   "short_name": "Даринка",
-  "start_url": "/Baby/",
-  "scope": "/Baby/",
+  "start_url": "/baby/",
+  "scope": "/baby/",
   "display": "standalone",
   "background_color": "#0f111a",
   "theme_color": "#0f111a",
