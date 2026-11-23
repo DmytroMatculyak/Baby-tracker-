@@ -11,7 +11,7 @@
       "src": "1795395014124.jpg",
       "sizes": "1080x1080",
       "type": "image/jpeg",
-      "purpose": "any"
+      "purpose": "maskable"
     }
   ]
 }
