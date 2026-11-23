@@ -162,6 +162,12 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnShareLink" onclick="shareInvite()">📤 Надіслати посилання мамі</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableSync()">Вимкнути</button>
 </div></div>
+  <div class="modal" id="modDlg" style="z-index:50" onclick="if(event.target===this)closeDlg(false)"><div class="m-body t-center">
+  <div style="font-size:34px" id="dlgIcon">💬</div>
+  <h3 style="font-size:18px;color:var(--bright)" id="dlgTitle">Підтвердження</h3>
+  <div class="s-lbl" style="line-height:1.45;font-size:14px" id="dlgText"></div>
+  <div class="f-row" id="dlgBtns"></div>
+</div></div>
 <script>
   let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
 const backupLogs=JSON.parse(localStorage.getItem('bLogs_backup'));
@@ -176,7 +182,11 @@ let syncUrl=localStorage.getItem('bSyncUrl')||'';
 let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
 let viewDate=new Date();viewDate.setHours(0,0,0,0);
 let ringInterval=null,audioCtx=null;
-
+let dlgRes=null;
+function closeDlg(v){document.getElementById('modDlg').style.display='none';if(dlgRes){const r=dlgRes;dlgRes=null;r(v)}}
+function uiAlert(txt,ic='✨',ti='Готово'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML='<button class="save-btn" style="grid-column:span 2" onclick="closeDlg(true)">Зрозуміло</button>';document.getElementById('modDlg').style.display='flex'})}
+function uiConfirm(txt,btnTxt='Видалити',ic='🗑️',ti='Підтвердження'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML=`<button class="t-btn" style="padding:12px" onclick="closeDlg(false)">Скасувати</button><button class="t-btn stop" style="padding:12px" onclick="closeDlg(true)">${btnTxt}</button>`;document.getElementById('modDlg').style.display='flex'})}
+  
 function unlockAudio(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC()}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume()}
 document.addEventListener('touchstart',unlockAudio,{passive:true});document.addEventListener('click',unlockAudio,{passive:true});
 function playChime(){try{unlockAudio();if(!audioCtx)return;const now=audioCtx.currentTime;[523.25,659.25,783.99,1046.50].forEach((freq,idx)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,now+idx*0.16);gain.gain.setValueAtTime(0.001,now+idx*0.16);gain.gain.exponentialRampToValueAtTime(0.25,now+idx*0.16+0.04);gain.gain.exponentialRampToValueAtTime(0.001,now+idx*0.16+0.45);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(now+idx*0.16);osc.stop(now+idx*0.16+0.46)});if(navigator.vibrate)navigator.vibrate()}catch(e){}}
