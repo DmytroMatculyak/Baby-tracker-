@@ -477,6 +477,8 @@ setInterval(()=>{updTimers();updSince();renderProf()},1000);
 setInterval(pullCloud,5000);
 renderProf();updTimers();render();updSince();updStats();
 if(syncUrl)pullCloud();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  
 </script>
 </body>
 </html>
