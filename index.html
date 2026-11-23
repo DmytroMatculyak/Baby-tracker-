@@ -258,6 +258,59 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <div class="med-list" id="medHistoryList"></div>
   </div>
 </div>
+
+<div class="modal" id="modBot" onclick="if(event.target===this)this.style.display='none'">
+  <div class="m-body">
+    <h3 style="font-size:17px;color:var(--bright)">🍼 Харчування з пляшечки</h3>
+    <div class="f-row">
+      <button class="t-btn sel" id="btnTypeMix" onclick="setBotType('Суміш')">🍼 Суміш</button>
+      <button class="t-btn" id="btnTypeMilk" onclick="setBotType('Зціджене молоко')">🤱 Зціджене</button>
+    </div>
+    <div class="f-row">
+      <button class="t-btn" onclick="saveBot(60)">60 мл</button>
+      <button class="t-btn" onclick="saveBot(90)">90 мл</button>
+      <button class="t-btn" onclick="saveBot(120)">120 мл</button>
+      <button class="t-btn" onclick="saveBot(150)">150 мл</button>
+    </div>
+    <input type="number" id="inMl" placeholder="Або введіть свій об'єм (мл)">
+    <button class="save-btn" onclick="saveBot(document.getElementById('inMl').value)">Записати</button>
+  </div>
+</div>
+
+<div class="modal" id="modDia" onclick="if(event.target===this)this.style.display='none'">
+  <div class="m-body">
+    <h3 style="font-size:17px;color:var(--bright)">🧷 Зміна підгузка</h3>
+    <button class="t-btn" style="padding:13px" onclick="saveDia('Мокрий', false)">💧 Мокрий</button>
+    <button class="t-btn" style="padding:13px" onclick="saveDia('Какашка', true)">💩 Какашка</button>
+    <button class="t-btn" style="padding:13px" onclick="saveDia('Гібрид', true)">💧💩 Гібрид</button>
+    <button class="t-btn" style="padding:13px" onclick="saveDia('Не стандарт', true)">⚠️ Не стандарт</button>
+  </div>
+</div>
+
+<div class="modal" id="modEdit" onclick="if(event.target===this)this.style.display='none'">
+  <div class="m-body">
+    <h3 style="font-size:17px;color:var(--bright)" id="edTitle">✏️ Редагувати запис</h3>
+    <div class="m-lbl">Дата події:</div><input type="date" id="edDate">
+    <div class="m-lbl">Час події:</div><input type="time" id="edTime">
+    <div id="edExtraWrap" style="display:none;flex-direction:column;gap:12px">
+      <div class="m-lbl" id="edExtraLbl">Значення:</div><input type="number" id="edExtraVal">
+    </div>
+    <button class="save-btn" onclick="applyEdit()">Зберегти зміни</button>
+    <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red);padding:11px" onclick="delFromEdit()">🗑 Видалити цей запис</button>
+  </div>
+</div>
+
+<div class="modal" id="modSync" onclick="if(event.target===this)this.style.display='none'">
+  <div class="m-body">
+    <h3 style="font-size:17px;color:var(--bright)">🔄 Сімейна синхронізація</h3>
+    <div class="s-lbl" style="line-height:1.4">Вставте посилання на базу Firebase або надішліть готове посилання-запрошення мамі:</div>
+    <input type="url" id="inSyncUrl" placeholder="https://">
+    <button class="save-btn" onclick="saveSync()">Підключити</button>
+    <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnShareLink" onclick="shareInvite()">📤 Надіслати посилання мамі</button>
+    <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableSync()">Вимкнути</button>
+  </div>
+</div>
+
 <script>
 let rawLogs = JSON.parse(localStorage.getItem('bLogs'));
 const backupLogs = JSON.parse(localStorage.getItem('bLogs_backup'));
