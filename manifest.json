@@ -1,0 +1,20 @@
+{
+  "name": "Трекер Даринки",
+  "short_name": "Даринка",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f111a",
+  "theme_color": "#0f111a",
+  "icons": [
+    {
+      "src": "https://zobj.net",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://zobj.net",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
