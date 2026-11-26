@@ -617,8 +617,8 @@ function render(){
 }
 
 function hideSplash(){const s=document.getElementById('splash-screen');if(s&&!s.classList.contains('hidden')){s.classList.add('hidden');setTimeout(()=>s.remove(),600)}}
-}
-window.addEventListener('load',()=>{setTimeout(()=>{const splash=document.getElementById('splash-screen');if(splash){splash.classList.add('hidden');setTimeout(()=>splash.remove(),600)}},1500)});
+window.addEventListener('load',()=>setTimeout(hideSplash,1500));
+setTimeout(hideSplash,3000);
 if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(reg=>reg.update());let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing&&!actFeed&&!actSleep){refreshing=true;window.location.reload()}})}
 setInterval(()=>{updTimers();updSince();renderProf()},1000);
 setInterval(pullCloud,5000);
