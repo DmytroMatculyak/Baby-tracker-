@@ -487,6 +487,12 @@ function confirmRem(id){
   renderRem();pushCloud();
 }
 async function delRem(id){
+  if(!await uiConfirm('Видалити це нагадування?'))return;
+  remData=remData.filter(x=>x.id!==id);
+  localStorage.setItem('bRem',JSON.stringify(remData));
+  renderRem();pushCloud();
+}
+
 
 
 function renderRem(){
