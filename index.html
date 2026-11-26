@@ -106,9 +106,10 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
 </div>
 
 <div class="grid" style="margin-bottom:10px">
-  <button class="btn b-r" onclick="openAct('bath')"><span style="font-size:24px">🛁</span><span>Купання</span></button>
-  <button class="btn b-t" onclick="openAct('walk')"><span style="font-size:24px">🚶</span><span>Прогулянка</span></button>
+  <button class="btn b-g" onclick="openBath()"><span style="font-size:24px">🛁</span><span>Купання</span></button>
+  <button class="btn b-t" onclick="openWalk()"><span style="font-size:24px">🚶</span><span>Прогулянка</span></button>
 </div>
+
 
 <div class="grid" style="margin-bottom:14px">
   <button class="btn b-y" onclick="openMed()"><span style="font-size:24px">🩺</span><span>Медична інформація</span></button>
@@ -346,6 +347,34 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <div class="s-lbl" style="line-height:1.45;font-size:14px" id="dlgText"></div>
   <div class="f-row" id="dlgBtns"></div>
 </div></div>
+  <div class="modal" id="modBath" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">🛁 Купання малюка</h3>
+  <button class="save-btn" onclick="saveBath(0)">✅ Записати купання зараз</button>
+  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
+  <div class="f-row">
+    <button class="t-btn" onclick="saveBath(10)">10 хв</button>
+    <button class="t-btn" onclick="saveBath(15)">15 хв</button>
+    <button class="t-btn" onclick="saveBath(20)">20 хв</button>
+    <button class="t-btn" onclick="saveBath(30)">30 хв</button>
+  </div>
+  <input type="number" id="inBathMins" placeholder="Свій час (хвилин)">
+  <button class="t-btn" style="background:rgba(122,162,247,.2);color:var(--blue);padding:11px" onclick="saveBath(document.getElementById('inBathMins').value)">Записати з часом</button>
+</div></div>
+
+<div class="modal" id="modWalk" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">🚶 Прогулянка</h3>
+  <button class="save-btn" onclick="saveWalk(0)">✅ Записати прогулянку зараз</button>
+  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
+  <div class="f-row">
+    <button class="t-btn" onclick="saveWalk(30)">30 хв</button>
+    <button class="t-btn" onclick="saveWalk(60)">1 год</button>
+    <button class="t-btn" onclick="saveWalk(90)">1.5 год</button>
+    <button class="t-btn" onclick="saveWalk(120)">2 год</button>
+  </div>
+  <input type="number" id="inWalkMins" placeholder="Свій час (хвилин)">
+  <button class="t-btn" style="background:rgba(115,218,202,.2);color:var(--sec);padding:11px" onclick="saveWalk(document.getElementById('inWalkMins').value)">Записати з часом</button>
+</div></div>
+
 <script>
 let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
 const backupLogs=JSON.parse(localStorage.getItem('bLogs_backup'));
