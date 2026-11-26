@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Даринка">
-<link rel="manifest" href="manifest.json?v=8">
+<link rel="manifest" href="manifest.json?v=10">
 <link rel="apple-touch-icon" href="./1795395014124.jpg">
 <title>Трекер Малюка</title>
 <style>
-  :root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
+:root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
 input,textarea,select{user-select:auto}
 body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env(safe-area-inset-top));max-width:480px;margin:0 auto;padding-bottom:60px}
@@ -99,7 +99,6 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="btn b-y" onclick="openMed()"><span style="font-size:24px">🩺</span><span>Медична інформація</span></button>
   <button class="btn b-p" onclick="openNote()"><span style="font-size:24px">📝</span><span>Нотатки</span></button>
 </div>
-
 <div class="card" style="cursor:pointer" onclick="togStats()">
   <div class="p-head" style="margin-bottom:10px"><div class="s-lbl" style="font-weight:700;color:var(--txt)" id="statsTitle">📊 Статистика за сьогодні</div><div class="s-lbl" id="stArrow">Детальніше ▾</div></div>
   <div class="stats-grid">
@@ -120,6 +119,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
 <div class="h-head"><h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3><button class="clr-btn" onclick="clrAll()">Очистити</button></div>
 <div class="day-nav"><button onclick="shiftDay(-1)">◀</button><label class="cal-trigger"><span>📅</span><span id="curDayLabel">Сьогодні</span><input type="date" id="calPicker" onchange="pickCalDate(this.value)"></label><button id="btnNextDay" onclick="shiftDay(1)" disabled>▶</button></div>
 <div id="logList"></div>
+
 <div class="modal" id="modMed" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">🩺 Медична інформація</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modMed').style.display='none'">✕</button></div>
   <div class="t-btns">
@@ -129,14 +129,12 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <button class="t-btn" id="tabV" onclick="setMedTab('v')">💉 Вакцина</button>
     <button class="t-btn" id="tabD" onclick="setMedTab('d')">💊 Ліки</button>
   </div>
-  
   <div id="medGraphSection" style="display:flex;flex-direction:column;gap:12px">
     <div class="chart-box" id="medChartWrap"></div>
     <div class="f-row"><input type="date" id="medDate"><input type="number" step="0.01" id="medVal" placeholder="Значення"></div>
     <button class="save-btn" onclick="addMed()">➕ Додати показник</button>
     <div class="med-list" id="medHistoryList"></div>
   </div>
-
   <div id="medVacSection" style="display:none;flex-direction:column;gap:10px">
     <div class="s-lbl">Швидкий вибір щеплення:</div>
     <div class="chip-row">
@@ -174,6 +172,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <div class="med-list" id="drugHistoryList"></div>
   </div>
 </div></div>
+
 <div class="modal" id="modNote" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">📝 Нова нотатка</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modNote').style.display='none'">✕</button></div>
   <div class="chip-row">
@@ -186,7 +185,6 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <textarea id="inNoteText" placeholder="Запишіть важливу деталь, самопочуття, вітаміни або питання для педіатра..."></textarea>
   <button class="save-btn" onclick="saveNote()">Зберегти нотатку</button>
 </div></div>
-
 <div class="modal" id="modBot" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🍼 Харчування з пляшечки</h3>
   <div class="f-row"><button class="t-btn sel" id="btnTypeMix" onclick="setBotType('Суміш')">🍼 Суміш</button><button class="t-btn" id="btnTypeMilk" onclick="setBotType('Зціджене молоко')">🤱 Зціджене</button></div>
@@ -320,7 +318,6 @@ function setMedTab(t){
   document.getElementById('tabB').className=t==='b'?'t-btn sel-y':'t-btn';
   document.getElementById('tabV').className=t==='v'?'t-btn sel-p':'t-btn';
   document.getElementById('tabD').className=t==='d'?'t-btn sel-t':'t-btn';
-  
   const gSec=document.getElementById('medGraphSection'),vSec=document.getElementById('medVacSection'),dSec=document.getElementById('medDrugSection');
   gSec.style.display='none';vSec.style.display='none';dSec.style.display='none';
   if(t==='v'){vSec.style.display='flex';renderVac()}
@@ -455,79 +452,48 @@ function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
 function appendSubChip(txt,needsInput=false){
-  const inp=document.getElementById('edSubNote');
-  const cur=inp.value.trim();
-  if(needsInput){
-    inp.value=cur?`${cur}; ${txt}`:txt;
-    inp.focus();
-  }else{
-    const parts=cur?cur.split('; ').filter(Boolean):[];
-    if(!parts.includes(txt))parts.push(txt);
-    inp.value=parts.join('; ');
-  }
+  const inp=document.getElementById('edSubNote'),cur=inp.value.trim();
+  if(needsInput){inp.value=cur?`${cur}; ${txt}`:txt;inp.focus()}
+  else{const parts=cur?cur.split('; ').filter(Boolean):[];if(!parts.includes(txt))parts.push(txt);inp.value=parts.join('; ')}
 }
 
 function openEdit(id){
   const item=logs.find(i=>i.id===id);if(!item)return;
-  editId=id;
-  document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
+  editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
   const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');
   document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
   document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
-  
   const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');
   const noteWrap=document.getElementById('edNoteWrap'),noteInp=document.getElementById('edNoteVal');
   const subWrap=document.getElementById('edSubWrap'),subInp=document.getElementById('edSubNote'),chipsEl=document.getElementById('edQuickChips');
-  
   wrap.style.display='none';noteWrap.style.display='none';subWrap.style.display='none';
-  
-  if(item.t==='note'){
-    noteWrap.style.display='flex';noteInp.value=item.n||'';
-  }else{
-    subWrap.style.display='flex';
-    subInp.value=(item.ex&&item.ex.sub)||'';
-    let chips=[];
-    
-  if(item.t==='note'){
-    noteWrap.style.display='flex';noteInp.value=item.n||'';
-  }else{
-    subWrap.style.display='flex';
-    subInp.value=(item.ex&&item.ex.sub)||'';
+  if(item.t==='note'){noteWrap.style.display='flex';noteInp.value=item.n||''}
+  else{
+    subWrap.style.display='flex';subInp.value=(item.ex&&item.ex.sub)||'';
     let chips=[];
     if(item.t==='feed'){
       chips=[
-        {l:'🤢 Зригнула',v:'Зригнула',f:false},
-        {l:'🤮 Сильно зригнула',v:'Сильно зригнула',f:false},
-        {l:'🫧 Гикавка',v:'Гикавка',f:false},
-        {l:'💨 Не вийшло повітря',v:'Не вийшло повітря',f:false},
-        {l:'😫 Коліки',v:'Коліки',f:false},
-        {l:'😴 Заснула під час їжі',v:'Заснула під час їжі',f:false},
-                {l:'🙅 Мало з\'їла',v:'Мало з\'їла',f:false}
-
+        {l:'🤢 Зригнула',v:'Зригнула',f:false},{l:'🤮 Сильно зригнула',v:'Сильно зригнула',f:false},
+        {l:'🫧 Гикавка',v:'Гикавка',f:false},{l:'💨 Не вийшло повітря',v:'Не вийшло повітря',f:false},
+        {l:'😫 Коліки',v:'Коліки',f:false},{l:'😴 Заснула під час їжі',v:'Заснула під час їжі',f:false},
+        {l:'🙅 Мало зїла',v:'Мало зїла',f:false}
       ];
     }else if(item.t==='slp'){
       chips=[
-        {l:'😫 Коліки / животик',v:'Коліки / болить животик',f:false},
-        {l:'😢 Неспокійний сон',v:'Неспокійний сон',f:false},
-        {l:'🤱 На руках / животику',v:'Спить на руках / животику',f:false},
-        {l:'🌡️ Температура',v:'Температура: ',f:true}
+        {l:'😫 Коліки / животик',v:'Коліки / болить животик',f:false},{l:'😢 Неспокійний сон',v:'Неспокійний сон',f:false},
+        {l:'🤱 На руках / животику',v:'Спить на руках / животику',f:false},{l:'🌡️ Температура',v:'Температура: ',f:true}
       ];
     }else if(item.t==='dia'){
       chips=[
-        {l:'🔴 Почервоніння',v:'Почервоніння / попрілість',f:false},
-        {l:'💧 Дуже повний',v:'Дуже повний підгузок',f:false},
+        {l:'🔴 Почервоніння',v:'Почервоніння / попрілість',f:false},{l:'💧 Дуже повний',v:'Дуже повний підгузок',f:false},
         {l:'🤢 Слиз / інший колір',v:'Слиз / незвичний колір',f:false}
       ];
     }
     chips.push({l:'☀️ Вітамін D3',v:'Вітамін D3: ',f:true});
     chips.push({l:'💊 Ліки / вітамін',v:'Ліки/вітамін: ',f:true});
-    chipsEl.innerHTML=chips.map(c=>`<button type="button" class="chip" onclick="appendSubChip('${c.v.replace(/'/g,"\\'")}',${c.f})">${c.l}</button>`).join('');
-    
-    if(item.ex&&typeof item.ex.ml!=='undefined'){
-      wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml;
-    }else if(item.ex&&typeof item.ex.mins!=='undefined'){
-      wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins;
-    }
+    chipsEl.innerHTML=chips.map(c=>`<button type="button" class="chip" onclick="appendSubChip('${c.v}',${c.f})">${c.l}</button>`).join('');
+    if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}
+    else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}
   }
   document.getElementById('modEdit').style.display='flex';
 }
@@ -536,10 +502,8 @@ function applyEdit(){
   const item=logs.find(i=>i.id===editId);if(!item)return;
   const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;
   if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();
-  if(item.t==='note'){
-    const txt=document.getElementById('edNoteVal').value.trim();
-    if(txt)item.n=txt;
-  }else{
+  if(item.t==='note'){const txt=document.getElementById('edNoteVal').value.trim();if(txt)item.n=txt}
+  else{
     if(!item.ex)item.ex={};
     item.ex.sub=document.getElementById('edSubNote').value.trim();
     if(document.getElementById('edExtraWrap').style.display==='flex'){
@@ -548,9 +512,7 @@ function applyEdit(){
       else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}
     }
   }
-  logs.sort((a,b)=>b.ts-a.ts);
-  document.getElementById('modEdit').style.display='none';
-  save();
+  logs.sort((a,b)=>b.ts-a.ts);document.getElementById('modEdit').style.display='none';save();
 }
 
 async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
@@ -568,16 +530,9 @@ function updStats(){
   const tl=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd);
   let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];
   tl.forEach(i=>{
-    if(i.t==='feed'){
-      f++;feedTimes.push(i.ts);
-      if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}
-      else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}
-    }else if(i.t==='dia'){
-      d++;if(i.ex&&i.ex.d)dt++;
-      if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++;
-    }else if(i.t==='slp'){
-      sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins;
-    }
+    if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}}
+    else if(i.t==='dia'){d++;if(i.ex&&i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}
+    else if(i.t==='slp'){sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins}
   });
   document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;
   document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;
@@ -586,11 +541,8 @@ function updStats(){
   document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;
   document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;
   document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';
-  if(feedTimes.length>=2){
-    feedTimes.sort((a,b)=>a-b);let diffSum=0;
-    for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);
-    document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4));
-  }else{document.getElementById('exInt').textContent='—'}
+  if(feedTimes.length>=2){feedTimes.sort((a,b)=>a-b);let diffSum=0;for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4))}
+  else{document.getElementById('exInt').textContent='—'}
 }
 
 function updSince(){
@@ -603,9 +555,7 @@ function render(){
   const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),yesterdayStart=todayStart-864e5,pad=n=>String(n).padStart(2,'0'),isoStr=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`,todayIso=`${new Date().getFullYear()}-${pad(new Date().getMonth()+1)}-${pad(new Date().getDate())}`,picker=document.getElementById('calPicker');
   picker.value=isoStr;picker.max=todayIso;
   const lbl=document.getElementById('curDayLabel');
-  if(dayStart===todayStart)lbl.textContent='Сьогодні';
-  else if(dayStart===yesterdayStart)lbl.textContent='Вчора';
-  else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});
+  if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});
   document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);
   const dayLogs=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');
   if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}
@@ -627,4 +577,3 @@ if(syncUrl)pullCloud();
 </script>
 </body>
 </html>
-
