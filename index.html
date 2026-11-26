@@ -218,13 +218,9 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
 
 <div class="modal" id="modNote" onclick="if(event.target===this)closeNoteMod()"><div class="m-body">
   <div class="p-head"><h3 style="font-size:17px;color:var(--bright)" id="noteModTitle">📝 Нотатки</h3><button class="del-btn" style="font-size:20px" onclick="closeNoteMod()">✕</button></div>
-  <div class="chip-row">
-    <button type="button" class="chip" onclick="addNoteTag('🌡️ Температура: ')">🌡️ Темп.</button>
-    <button type="button" class="chip" onclick="addNoteTag('🛁 Купання')">🛁 Купання</button>
-    <button type="button" class="chip" onclick="addNoteTag('🚶 Прогулянка')">🚶 Прогулянка</button>
-  </div>
   <input type="date" id="inNoteDate">
   <textarea id="inNoteText" placeholder="Запишіть важливу деталь, самопочуття або питання для педіатра..."></textarea>
+
   <div class="f-row">
     <button class="t-btn" id="btnCancelNoteEdit" style="display:none" onclick="cancelNoteEdit()">Скасувати</button>
     <button class="save-btn" id="btnSaveNote" style="grid-column:span 2" onclick="saveNote()">Зберегти нотатку</button>
@@ -246,6 +242,33 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="padding:13px" onclick="saveDia('Какашка', true)">💩 Какашка</button>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Гібрид', true)">🎉 Гібрид</button>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Не стандарт', true)">⚠️ Не стандарт</button>
+</div></div>
+<div class="modal" id="modBath" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">🛁 Купання малюка</h3>
+  <button class="save-btn" onclick="saveBath(0)">✅ Записати купання зараз</button>
+  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
+  <div class="f-row">
+    <button class="t-btn" onclick="saveBath(10)">10 хв</button>
+    <button class="t-btn" onclick="saveBath(15)">15 хв</button>
+    <button class="t-btn" onclick="saveBath(20)">20 хв</button>
+    <button class="t-btn" onclick="saveBath(30)">30 хв</button>
+  </div>
+  <input type="number" id="inBathMins" placeholder="Свій час (хвилин)">
+  <button class="t-btn" style="background:rgba(122,162,247,.2);color:var(--blue);padding:11px" onclick="saveBath(document.getElementById('inBathMins').value)">Записати з часом</button>
+</div></div>
+
+<div class="modal" id="modWalk" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">🚶 Прогулянка</h3>
+  <button class="save-btn" onclick="saveWalk(0)">✅ Записати прогулянку зараз</button>
+  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
+  <div class="f-row">
+    <button class="t-btn" onclick="saveWalk(30)">30 хв</button>
+    <button class="t-btn" onclick="saveWalk(60)">1 год</button>
+    <button class="t-btn" onclick="saveWalk(90)">1.5 год</button>
+    <button class="t-btn" onclick="saveWalk(120)">2 год</button>
+  </div>
+  <input type="number" id="inWalkMins" placeholder="Свій час (хвилин)">
+  <button class="t-btn" style="background:rgba(115,218,202,.2);color:var(--sec);padding:11px" onclick="saveWalk(document.getElementById('inWalkMins').value)">Записати з часом</button>
 </div></div>
 
 <div class="modal" id="modAddLog" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
@@ -722,7 +745,7 @@ function updStats(){
   document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;
   document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;
   document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;
-  document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;
+  document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}🎉 / ${dNon}⚠️`;
   document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';
   document.getElementById('exBath').textContent=`${bathC} разів`;
   document.getElementById('exWalk').textContent=walkM>0?`${walkC} разів (${fmtTextDur(walkM)})`:`${walkC} разів`;
