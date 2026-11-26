@@ -834,8 +834,8 @@ if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(r
 setInterval(()=>{updTimers();updSince();renderProf()},1000);
 setInterval(pullCloud,5000);
 renderProf();updTimers();render();updSince();updStats();renderRem();
-window.addEventListener('DOMContentLoaded', renderRem);
-if(syncUrl){pullCloud().then(()=>renderRem())}
+setTimeout(()=>{openRem();document.getElementById('modRem').style.display='none'}, 100);
+if(syncUrl){pullCloud().then(()=>{renderRem();openRem();document.getElementById('modRem').style.display='none'})}
 
 if(syncUrl)pullCloud();
 </script>
