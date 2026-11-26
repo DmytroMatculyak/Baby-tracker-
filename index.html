@@ -652,8 +652,24 @@ function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
 function openBath(){document.getElementById('inBathMins').value='';document.getElementById('modBath').style.display='flex'}
-function saveBath(val){const mins=parseInt(val)||0;add('bath','🛁','Купання',mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Купання малюка',{mins});document.getElementById('modBath').style.display='none'}
-function openWalk(){document.getElementById('inWalkMins').value='';document.getElementById('modWalk').style.display='flex'}
+function saveBath(val){
+  const mins=parseInt(val)||0;
+  const n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Купання малюка';
+  logs.unshift({id:Date.now(),t:'bath',ic:'🛁',ti:'Купання',n,ex:{mins},ts:Date.now()});
+  logs.sort((a,b)=>b.ts-a.ts);
+  document.getElementById('modBath').style.display='none';
+  resetDay();save();
+}
+
+function saveWalk(val){
+  const mins=parseInt(val)||0;
+  const n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Прогулянка на свіжому повітрі';
+  logs.unshift({id:Date.now(),t:'walk',ic:'🚶',ti:'Прогулянка',n,ex:{mins},ts:Date.now()});
+  logs.sort((a,b)=>b.ts-a.ts);
+  document.getElementById('modWalk').style.display='none';
+  resetDay();save();
+}
+
 function saveWalk(val){const mins=parseInt(val)||0;add('walk','🚶','Прогулянка',mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Прогулянка на свіжому повітрі',{mins});document.getElementById('modWalk').style.display='none'}
 // --- РУЧНЕ ДОДАВАННЯ В ІСТОРІЮ ---
 let addLogMode='bf',addLogSide='Ліва',addBotKind='Суміш',addDiaLabel='Мокрий',addDiaDirty=false;
