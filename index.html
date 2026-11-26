@@ -471,8 +471,6 @@ function addRem(){
   document.getElementById('remName').value='';
   renderRem();pushCloud();
 }
-  renderRem();pushCloud();
-}
 function confirmRem(id){
   const item=remData.find(x=>x.id===id);if(!item)return;
   const today=todayIsoStr();
