@@ -661,6 +661,7 @@ function saveBath(val){
   document.getElementById('modBath').style.display='none';
   resetDay();save();
 }
+function openWalk(){document.getElementById('inWalkMins').value='';document.getElementById('modWalk').style.display='flex'}
 
 function saveWalk(val){
   const mins=parseInt(val)||0;
