@@ -465,33 +465,32 @@ function pickRemPreset(name,days){document.getElementById('remName').value=name;
 function addRem(){
   const name=document.getElementById('remName').value.trim(),nextDate=document.getElementById('remDate').value,everyDays=parseInt(document.getElementById('remDays').value)||0;
   if(!name||!nextDate){uiAlert('Вкажіть назву та дату нагадування','🔔','Увага');return}
-  .push({id:Date.now(),name,nextDate,everyDays});
-  .sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
-  localStorage.setItem('bRem',JSON.stringify());
+  remData.push({id:Date.now(),name,nextDate,everyDays});
+  remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+  localStorage.setItem('bRem',JSON.stringify(remData));
   document.getElementById('remName').value='';
   renderRem();pushCloud();
 }
+  renderRem();pushCloud();
+}
 function confirmRem(id){
-  const item=.find(x=>x.id===id);if(!item)return;
+  const item=remData.find(x=>x.id===id);if(!item)return;
   const today=todayIsoStr();
   addMedToHistory('🔔','Виконано нагадування',item.name,today,new Date().toTimeString().slice(0,5));
   if(item.everyDays>0){
     const [y,m,d]=today.split('-').map(Number);
     const nxt=new Date(y,m-1,d+item.everyDays),p=n=>String(n).padStart(2,'0');
     item.nextDate=`${nxt.getFullYear()}-${p(nxt.getMonth()+1)}-${p(nxt.getDate())}`;
-    .sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+    remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
   }else{
-    =.filter(x=>x.id!==id);
+    remData=remData.filter(x=>x.id!==id);
   }
-  localStorage.setItem('bRem',JSON.stringify());
+  localStorage.setItem('bRem',JSON.stringify(remData));
   renderRem();pushCloud();
 }
 async function delRem(id){
-  if(!await uiConfirm('Видалити це нагадування?'))return;
-  =.filter(x=>x.id!==id);
-  localStorage.setItem('bRem',JSON.stringify());
-  renderRem();pushCloud();
-}
+
+
 function renderRem(){
   const today=todayIsoStr(),due=remData.filter(x=>x.nextDate<=today);
   const card=document.getElementById('remBannerCard'),dueEl=document.getElementById('remDueList'),actEl=document.getElementById('remBannerAction');
