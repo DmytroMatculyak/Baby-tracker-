@@ -831,13 +831,11 @@ function hideSplash(){const s=document.getElementById('splash-screen');if(s&&!s.
 window.addEventListener('load',()=>setTimeout(hideSplash,1500));
 setTimeout(hideSplash,3000);
 if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(reg=>reg.update());let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing&&!actFeed&&!actSleep){refreshing=true;window.location.reload()}})}
-setInterval(()=>{updTimers();updSince();renderProf()},1000);
+setInterval(()=>{updTimers();updSince();renderProf();renderRem()},1000);
 setInterval(pullCloud,5000);
 renderProf();updTimers();render();updSince();updStats();renderRem();
-setTimeout(()=>{openRem();document.getElementById('modRem').style.display='none'}, 100);
-if(syncUrl){pullCloud().then(()=>{renderRem();openRem();document.getElementById('modRem').style.display='none'})}
-
 if(syncUrl)pullCloud();
 </script>
 </body>
 </html>
+
