@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Даринка">
-<link rel="manifest" href="manifest.json?v=10">
+<link rel="manifest" href="manifest.json?v=12">
 <link rel="apple-touch-icon" href="./1795395014124.jpg">
 <title>Трекер Малюка</title>
 <style>
@@ -49,7 +49,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
 .day-nav{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 12px;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}.day-nav button{background:var(--light);border:none;color:var(--bright);padding:6px 12px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer}.day-nav button:disabled{opacity:.35}
 .cal-trigger{position:relative;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--bright);padding:4px 10px;border-radius:10px;background:rgba(157,124,216,.12);cursor:pointer}.cal-trigger input[type="date"]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
 .l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer;gap:10px}.l-item:active{background:var(--light)}
-.l-info{display:flex;align-items:center;gap:12px;min-width:0;flex:1}.l-right{display:flex;align-items:center;gap:8px;flex-shrink:0}.l-icon{width:38px;height:38px;flex-shrink:0;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.l-note{word-break:break-word;margin-top:2px}.l-subnote{font-size:12px;color:var(--yel);margin-top:3px;word-break:break-word}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px;cursor:pointer}
+.l-info{display:flex;align-items:center;gap:12px;min-width:0;flex:1}.l-right{display:flex;align-items:center;gap:8px;flex-shrink:0}.l-icon{width:38px;height:38px;flex-shrink:0;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.l-note{word-break:break-word;margin-top:2px}.l-subnote{font-size:12px;color:var(--yel);margin-top:3px;word-break:break-word}.note-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);margin-left:6px;vertical-align:middle}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px;cursor:pointer}
 .modal{display:none;position:fixed;inset:0;background:rgba(10,12,18,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;z-index:20;overflow-y:auto}.m-body{background:var(--card);padding:20px;border-radius:22px;width:100%;max-width:400px;display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);max-height:90vh;overflow-y:auto}.m-lbl{font-size:12px;color:var(--mut);margin-bottom:-6px}
 .chart-box{background:var(--bg);border-radius:16px;padding:10px;min-height:135px;display:flex;align-items:center;justify-content:center}
 .med-list{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
@@ -116,7 +116,13 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   </div>
 </div>
 
-<div class="h-head"><h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3><button class="clr-btn" onclick="clrAll()">Очистити</button></div>
+<div class="h-head">
+  <h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="clr-btn" style="color:var(--sec)" onclick="openAddLog()">➕ Додати</button>
+    <button class="clr-btn" onclick="clrAll()">Очистити</button>
+  </div>
+</div>
 <div class="day-nav"><button onclick="shiftDay(-1)">◀</button><label class="cal-trigger"><span>📅</span><span id="curDayLabel">Сьогодні</span><input type="date" id="calPicker" onchange="pickCalDate(this.value)"></label><button id="btnNextDay" onclick="shiftDay(1)" disabled>▶</button></div>
 <div id="logList"></div>
 
@@ -157,10 +163,9 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <div id="medDrugSection" style="display:none;flex-direction:column;gap:10px">
     <div class="s-lbl">Швидкий вибір препарату / вітаміну:</div>
     <div class="chip-row">
-      <button type="button" class="chip" onclick="pickDrug('Вітамін D3 (Аквадетрим)')">☀️ Вітамін D3</button>
+      <button type="button" class="chip" onclick="pickDrug('Вітамін ', true)">☀️ Вітамін</button>
       <button type="button" class="chip" onclick="pickDrug('Еспумізан (Симетикон)')">🫧 Еспумізан</button>
       <button type="button" class="chip" onclick="pickDrug('БіоГая (Пробіотик)')">🦠 БіоГая</button>
-      <button type="button" class="chip" onclick="pickDrug('Вітамін K')">🩸 Вітамін K</button>
       <button type="button" class="chip" onclick="pickDrug('Жарознижувальне')">🌡️ Від темп.</button>
     </div>
     <input type="text" id="drugName" placeholder="Назва вітаміну або препарату">
@@ -173,17 +178,21 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   </div>
 </div></div>
 
-<div class="modal" id="modNote" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">📝 Нова нотатка</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modNote').style.display='none'">✕</button></div>
+<div class="modal" id="modNote" onclick="if(event.target===this)closeNoteMod()"><div class="m-body">
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)" id="noteModTitle">📝 Нотатки</h3><button class="del-btn" style="font-size:20px" onclick="closeNoteMod()">✕</button></div>
   <div class="chip-row">
-    <button type="button" class="chip" onclick="addNoteTag('☀️ Вітамін D3: ')">☀️ Віт. D3</button>
-    <button type="button" class="chip" onclick="addNoteTag('💊 Ліки/вітамін: ')">💊 Ліки</button>
     <button type="button" class="chip" onclick="addNoteTag('🌡️ Температура: ')">🌡️ Темп.</button>
     <button type="button" class="chip" onclick="addNoteTag('🛁 Купання')">🛁 Купання</button>
     <button type="button" class="chip" onclick="addNoteTag('🚶 Прогулянка')">🚶 Прогулянка</button>
   </div>
-  <textarea id="inNoteText" placeholder="Запишіть важливу деталь, самопочуття, вітаміни або питання для педіатра..."></textarea>
-  <button class="save-btn" onclick="saveNote()">Зберегти нотатку</button>
+  <input type="date" id="inNoteDate">
+  <textarea id="inNoteText" placeholder="Запишіть важливу деталь, самопочуття або питання для педіатра..."></textarea>
+  <div class="f-row">
+    <button class="t-btn" id="btnCancelNoteEdit" style="display:none" onclick="cancelNoteEdit()">Скасувати</button>
+    <button class="save-btn" id="btnSaveNote" style="grid-column:span 2" onclick="saveNote()">Зберегти нотатку</button>
+  </div>
+  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Збережені нотатки (натисніть для змін):</div>
+  <div class="med-list" id="notesHistoryList" style="max-height:230px"></div>
 </div></div>
 <div class="modal" id="modBot" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🍼 Харчування з пляшечки</h3>
@@ -201,6 +210,45 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="padding:13px" onclick="saveDia('Не стандарт', true)">⚠️ Не стандарт</button>
 </div></div>
 
+<div class="modal" id="modAddLog" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">➕ Додати подію в історію</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modAddLog').style.display='none'">✕</button></div>
+  <div class="t-btns">
+    <button class="t-btn sel-g" id="addTypeBf" onclick="setAddLogType('bf')">🤱 Груди</button>
+    <button class="t-btn" id="addTypeBot" onclick="setAddLogType('bot')">🍼 Пляшка</button>
+    <button class="t-btn" id="addTypeSlp" onclick="setAddLogType('slp')">😴 Сон</button>
+    <button class="t-btn" id="addTypeDia" onclick="setAddLogType('dia')">🧷 Підгузок</button>
+  </div>
+  <div class="f-row">
+    <div><div class="m-lbl" style="margin-bottom:4px">Дата:</div><input type="date" id="addLogDate"></div>
+    <div><div class="m-lbl" style="margin-bottom:4px">Час:</div><input type="time" id="addLogTime"></div>
+  </div>
+  <div id="addFieldsBf" style="display:flex;flex-direction:column;gap:10px">
+    <div class="f-row">
+      <button type="button" class="t-btn sel-g" id="addSideL" onclick="setAddSide('Ліва')">Ліва грудь</button>
+      <button type="button" class="t-btn" id="addSideR" onclick="setAddSide('Права')">Права грудь</button>
+    </div>
+    <input type="number" id="addBfMins" placeholder="Тривалість (хвилин, напр. 15)">
+  </div>
+  <div id="addFieldsBot" style="display:none;flex-direction:column;gap:10px">
+    <div class="f-row">
+      <button type="button" class="t-btn sel" id="addBotMix" onclick="setAddBotKind('Суміш')">🍼 Суміш</button>
+      <button type="button" class="t-btn" id="addBotMilk" onclick="setAddBotKind('Зціджене молоко')">🤱 Зціджене</button>
+    </div>
+    <input type="number" id="addBotMl" placeholder="Об'єм (мл, напр. 90)">
+  </div>
+  <div id="addFieldsSlp" style="display:none;flex-direction:column;gap:10px">
+    <input type="number" id="addSlpMins" placeholder="Тривалість сну (хвилин, напр. 45)">
+  </div>
+  <div id="addFieldsDia" style="display:none;flex-direction:column;gap:10px">
+    <div class="f-row">
+      <button type="button" class="t-btn sel-t" id="addDia0" onclick="setAddDiaKind('Мокрий',false)">💧 Мокрий</button>
+      <button type="button" class="t-btn" id="addDia1" onclick="setAddDiaKind('Какашка',true)">💩 Какашка</button>
+      <button type="button" class="t-btn" id="addDia2" onclick="setAddDiaKind('Гібрид',true)">🎉 Гібрид</button>
+      <button type="button" class="t-btn" id="addDia3" onclick="setAddDiaKind('Не стандарт',true)">⚠️ Не стандарт</button>
+    </div>
+  </div>
+  <button class="save-btn" onclick="saveManualLog()">Зберегти в історію</button>
+</div></div>
 <div class="modal" id="modEdit" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)" id="edTitle">✏️ Редагувати запис</h3>
   <div class="f-row">
@@ -208,11 +256,10 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <div><div class="m-lbl" style="margin-bottom:4px">Час події:</div><input type="time" id="edTime"></div>
   </div>
   <div id="edExtraWrap" style="display:none;flex-direction:column;gap:8px"><div class="m-lbl" id="edExtraLbl" style="margin-bottom:0">Значення:</div><input type="number" id="edExtraVal"></div>
-  <div id="edNoteWrap" style="display:none;flex-direction:column;gap:8px"><div class="m-lbl" style="margin-bottom:0">Текст нотатки:</div><textarea id="edNoteVal"></textarea></div>
   <div id="edSubWrap" style="display:flex;flex-direction:column;gap:8px">
     <div class="m-lbl" style="margin-bottom:0">Швидкий опис проблеми / події:</div>
     <div class="chip-row" id="edQuickChips"></div>
-    <input type="text" id="edSubNote" placeholder="Міні-нотатка (напр. зригнула, вітамін D3...)">
+    <input type="text" id="edSubNote" placeholder="Міні-нотатка (напр. зригнула, гикавка...)">
   </div>
   <button class="save-btn" onclick="applyEdit()">Зберегти зміни</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red);padding:11px" onclick="delFromEdit()">🗑 Видалити цей запис</button>
@@ -241,11 +288,21 @@ let logs=rawLogs||[];
 let medData=JSON.parse(localStorage.getItem('bMed'))||{w:[],h:[],b:[]};
 let vacData=JSON.parse(localStorage.getItem('bVac'))||[];
 let drugData=JSON.parse(localStorage.getItem('bDrugs'))||[];
+let notesData=JSON.parse(localStorage.getItem('bNotes'))||[];
+if(logs.some(i=>i.t==='note')){
+  logs.filter(i=>i.t==='note').forEach(n=>{
+    const d=new Date(n.ts),pad=x=>String(x).padStart(2,'0');
+    notesData.push({id:n.id,d:`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,txt:n.n,ts:n.ts});
+  });
+  logs=logs.filter(i=>i.t!=='note');
+  localStorage.setItem('bNotes',JSON.stringify(notesData));
+  localStorage.setItem('bLogs',JSON.stringify(logs));
+}
 let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',gender:'',dob:'',tob:'',w:'',h:''};
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
 let syncUrl=localStorage.getItem('bSyncUrl')||'';
-let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
+let botType='Суміш',editId=null,editNoteId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
 let viewDate=new Date();viewDate.setHours(0,0,0,0);
 let dlgRes=null;
 
@@ -256,7 +313,7 @@ function escHtml(str){return String(str||'').replace(/[&<>"']/g,m=>({'&':'&amp;'
 
 (function checkInvite(){const p=new URLSearchParams(window.location.search),db=p.get('db');if(db){let u=decodeURIComponent(db).trim();if(!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl)}})();
 function openSync(){document.getElementById('inSyncUrl').value=syncUrl;document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';document.getElementById('modSync').style.display='flex'}
-async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||hasMedData()||vacData.length>0||drugData.length>0)await pushCloud();document.getElementById('modSync').style.display='none';uiAlert('Дані синхронізовано!','🔄','Підключено')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
+async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||hasMedData()||vacData.length>0||drugData.length>0||notesData.length>0)await pushCloud();document.getElementById('modSync').style.display='none';uiAlert('Дані синхронізовано!','🔄','Підключено')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
 function shareInvite(){if(!syncUrl)return;const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;if(navigator.share){navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl})}else if(navigator.clipboard){navigator.clipboard.writeText(inviteUrl);uiAlert('Посилання скопійовано!','📋','Скопійовано')}else{prompt('Скопіюйте посилання:',inviteUrl)}}
 function disableSync(){syncUrl='';localStorage.removeItem('bSyncUrl');updSyncDot(false);document.getElementById('modSync').style.display='none'}
 function updSyncDot(ok){document.getElementById('syncDot').className=ok?'sync-dot on':'sync-dot'}
@@ -264,10 +321,10 @@ function hasMedData(){return(medData.w&&medData.w.length)||(medData.h&&medData.h
 
 async function pushCloud(forceEmpty=false){
   if(!syncUrl)return;
-  if(!forceEmpty&&!logs.length&&!hasMedData()&&!vacData.length&&!drugData.length&&!actFeed&&!actSleep)return;
+  if(!forceEmpty&&!logs.length&&!hasMedData()&&!vacData.length&&!drugData.length&&!notesData.length&&!actFeed&&!actSleep)return;
   try{
-    const payload={logs,medData,vacData,drugData,prof,actFeed,actSleep,updatedAt:Date.now()};
-    lastHash=JSON.stringify({logs,medData,vacData,drugData,prof,actFeed,actSleep});
+    const payload={logs,medData,vacData,drugData,notesData,prof,actFeed,actSleep,updatedAt:Date.now()};
+    lastHash=JSON.stringify({logs,medData,vacData,drugData,notesData,prof,actFeed,actSleep});
     const res=await fetch(`${syncUrl}babydata.json`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     updSyncDot(res.ok);
   }catch(e){updSyncDot(false)}
@@ -281,13 +338,14 @@ async function pullCloud(){
     const data=await res.json();
     updSyncDot(true);
     if(!data)return;
-    const remoteHash=JSON.stringify({logs:data.logs||[],medData:data.medData||{w:[],h:[],b:[]},vacData:data.vacData||[],drugData:data.drugData||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null});
+    const remoteHash=JSON.stringify({logs:data.logs||[],medData:data.medData||{w:[],h:[],b:[]},vacData:data.vacData||[],drugData:data.drugData||[],notesData:data.notesData||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null});
     if(remoteHash===lastHash&&!isInitialSync)return;
     lastHash=remoteHash;
     if(data.logs){logs=data.logs;localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length)localStorage.setItem('bLogs_backup',JSON.stringify(logs))}
     if(data.medData){medData=data.medData;localStorage.setItem('bMed',JSON.stringify(medData))}
     if(data.vacData){vacData=data.vacData;localStorage.setItem('bVac',JSON.stringify(vacData))}
     if(data.drugData){drugData=data.drugData;localStorage.setItem('bDrugs',JSON.stringify(drugData))}
+    if(data.notesData){notesData=data.notesData;localStorage.setItem('bNotes',JSON.stringify(notesData))}
     if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}
     actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');
     actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');
@@ -295,6 +353,7 @@ async function pullCloud(){
     if(document.getElementById('modMed').style.display==='flex'){
       if(curMedTab==='v')renderVac();else if(curMedTab==='d')renderDrug();else renderMed();
     }
+    if(document.getElementById('modNote').style.display==='flex')renderNotes();
   }catch(e){updSyncDot(false)}
 }
 function nowLocalIso(){
@@ -388,7 +447,12 @@ function renderVac(){
   listEl.innerHTML=vacData.map(v=>`<div class="med-row"><div class="vac-info"><strong style="color:var(--bright)">💉 ${escHtml(v.name)}</strong><span class="vac-sub">${v.d.split('-').reverse().join('.')}${v.note?' • '+escHtml(v.note):''}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delVac(${v.id})">✕</button></div>`).join('');
 }
 
-function pickDrug(name){document.getElementById('drugName').value=name;document.getElementById('drugDose').focus()}
+function pickDrug(name,focusName=false){
+  const inp=document.getElementById('drugName');
+  inp.value=name;
+  if(focusName)inp.focus();
+  else document.getElementById('drugDose').focus();
+}
 function addDrug(){
   const name=document.getElementById('drugName').value.trim(),dt=document.getElementById('drugDt').value,dose=document.getElementById('drugDose').value.trim();
   if(!name||!dt){uiAlert('Вкажіть назву препарату та час прийому','💊','Увага');return}
@@ -414,21 +478,52 @@ function renderDrug(){
     return`<div class="med-row"><div class="vac-info"><strong style="color:var(--bright)">💊 ${escHtml(x.name)}</strong><span class="vac-sub">${fmtDate} о ${tPart||''}${x.dose?' • '+escHtml(x.dose):''}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delDrug(${x.id})">✕</button></div>`;
   }).join('');
 }
-function openNote(){
+
+function closeNoteMod(){cancelNoteEdit();document.getElementById('modNote').style.display='none'}
+function openNote(){cancelNoteEdit();renderNotes();document.getElementById('modNote').style.display='flex'}
+function cancelNoteEdit(){
+  editNoteId=null;
+  document.getElementById('noteModTitle').textContent='📝 Нотатки';
+  document.getElementById('inNoteDate').value=new Date().toISOString().slice(0,10);
   document.getElementById('inNoteText').value='';
-  document.getElementById('modNote').style.display='flex';
-  setTimeout(()=>document.getElementById('inNoteText').focus(),100);
+  document.getElementById('btnCancelNoteEdit').style.display='none';
+  const btn=document.getElementById('btnSaveNote');btn.textContent='Зберегти нотатку';btn.style.gridColumn='span 2';
 }
-function addNoteTag(tag){
-  const ta=document.getElementById('inNoteText');
-  ta.value=(ta.value?ta.value.trim()+' ':'')+tag;
-  ta.focus();
+function editNote(id){
+  const n=notesData.find(x=>x.id===id);if(!n)return;
+  editNoteId=id;
+  document.getElementById('noteModTitle').textContent='✏️ Редагувати нотатку';
+  document.getElementById('inNoteDate').value=n.d||new Date().toISOString().slice(0,10);
+  document.getElementById('inNoteText').value=n.txt||'';
+  document.getElementById('btnCancelNoteEdit').style.display='block';
+  const btn=document.getElementById('btnSaveNote');btn.textContent='Оновити';btn.style.gridColumn='span 1';
+  document.getElementById('inNoteText').focus();
 }
+function addNoteTag(tag){const ta=document.getElementById('inNoteText');ta.value=(ta.value?ta.value.trim()+' ':'')+tag;ta.focus()}
 function saveNote(){
-  const txt=document.getElementById('inNoteText').value.trim();
+  const txt=document.getElementById('inNoteText').value.trim(),d=document.getElementById('inNoteDate').value||new Date().toISOString().slice(0,10);
   if(!txt){uiAlert('Введіть текст нотатки','📝','Увага');return}
-  document.getElementById('modNote').style.display='none';
-  add('note','📝','Нотатка',txt,{isNote:true});
+  if(editNoteId){const item=notesData.find(x=>x.id===editNoteId);if(item){item.d=d;item.txt=txt}cancelNoteEdit()}
+  else{notesData.unshift({id:Date.now(),d,txt,ts:Date.now()});document.getElementById('inNoteText').value=''}
+  notesData.sort((a,b)=>b.d.localeCompare(a.d)||b.ts-a.ts);
+  localStorage.setItem('bNotes',JSON.stringify(notesData));
+  renderNotes();pushCloud();
+}
+async function delNote(e,id){
+  e.stopPropagation();
+  if(!await uiConfirm('Видалити цю нотатку?'))return;
+  if(editNoteId===id)cancelNoteEdit();
+  notesData=notesData.filter(x=>x.id!==id);
+  localStorage.setItem('bNotes',JSON.stringify(notesData));
+  renderNotes();pushCloud();
+}
+function renderNotes(){
+  const listEl=document.getElementById('notesHistoryList');
+  if(!notesData.length){listEl.innerHTML='<div class="t-center s-lbl" style="padding:18px 10px">Нотаток ще немає</div>';return}
+  listEl.innerHTML=notesData.map(n=>{
+    const fmtDate=n.d?n.d.split('-').reverse().join('.'):'';
+    return`<div class="med-row" style="align-items:flex-start;cursor:pointer" onclick="editNote(${n.id})"><div class="vac-info"><span class="vac-sub" style="color:var(--prim);font-weight:700">📅 ${fmtDate}</span><span style="color:var(--bright);line-height:1.35;word-break:break-word">${escHtml(n.txt)}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delNote(event,${n.id})">✕</button></div>`;
+  }).join('');
 }
 
 function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
@@ -451,12 +546,48 @@ function openBot(){document.getElementById('inMl').value='';setBotType('Сумі
 function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`${botType} • ${ml} мл`:botType,{ml});document.getElementById('modBot').style.display='none'}
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
+
+let addLogMode='bf',addLogSide='Ліва',addBotKind='Суміш',addDiaLabel='Мокрий',addDiaDirty=false;
+
+function openAddLog(){
+  const pad=n=>String(n).padStart(2,'0'),now=new Date();
+  document.getElementById('addLogDate').value=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`;
+  document.getElementById('addLogTime').value=`${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  document.getElementById('addBfMins').value='';document.getElementById('addBotMl').value='';document.getElementById('addSlpMins').value='';
+  setAddLogType('bf');document.getElementById('modAddLog').style.display='flex';
+}
+function setAddLogType(t){
+  addLogMode=t;
+  document.getElementById('addTypeBf').className=t==='bf'?'t-btn sel-g':'t-btn';
+  document.getElementById('addTypeBot').className=t==='bot'?'t-btn sel':'t-btn';
+  document.getElementById('addTypeSlp').className=t==='slp'?'t-btn sel-p':'t-btn';
+  document.getElementById('addTypeDia').className=t==='dia'?'t-btn sel-t':'t-btn';
+  document.getElementById('addFieldsBf').style.display=t==='bf'?'flex':'none';
+  document.getElementById('addFieldsBot').style.display=t==='bot'?'flex':'none';
+  document.getElementById('addFieldsSlp').style.display=t==='slp'?'flex':'none';
+  document.getElementById('addFieldsDia').style.display=t==='dia'?'flex':'none';
+}
+function setAddSide(s){addLogSide=s;document.getElementById('addSideL').className=s==='Ліва'?'t-btn sel-g':'t-btn';document.getElementById('addSideR').className=s==='Права'?'t-btn sel-g':'t-btn'}
+function setAddBotKind(k){addBotKind=k;document.getElementById('addBotMix').className=k==='Суміш'?'t-btn sel':'t-btn';document.getElementById('addBotMilk').className=k==='Зціджене молоко'?'t-btn sel':'t-btn'}
+function setAddDiaKind(lbl,dirty){addDiaLabel=lbl;addDiaDirty=dirty;['Мокрий','Какашка','Гібрид','Не стандарт'].forEach((n,i)=>{document.getElementById('addDia'+i).className=n===lbl?'t-btn sel-t':'t-btn'})}
+function saveManualLog(){
+  const dVal=document.getElementById('addLogDate').value,tVal=document.getElementById('addLogTime').value;
+  if(!dVal||!tVal){uiAlert('Вкажіть дату та час події','📅','Увага');return}
+  const ts=new Date(`${dVal}T${tVal}`).getTime();
+  let t='feed',ic='🤱',ti='Грудне годування',n='',ex={};
+  if(addLogMode==='bf'){const mins=parseInt(document.getElementById('addBfMins').value)||0;n=mins>0?`${addLogSide} грудь (${fmtTextDur(mins)})`:`${addLogSide} грудь`;ex={mins,side:addLogSide}}
+  else if(addLogMode==='bot'){const ml=parseInt(document.getElementById('addBotMl').value)||0;ic='🍼';ti=addBotKind;n=ml>0?`${addBotKind} • ${ml} мл`:addBotKind;ex={ml}}
+  else if(addLogMode==='slp'){const mins=parseInt(document.getElementById('addSlpMins').value)||0;t='slp';ic='😴';ti='Сон малюка';n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Сон';ex={mins}}
+  else if(addLogMode==='dia'){t='dia';ic='🧷';ti='Підгузок';n=addDiaLabel;ex={d:addDiaDirty}}
+  logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts});logs.sort((a,b)=>b.ts-a.ts);
+  const [y,m,d]=dVal.split('-').map(Number);viewDate=new Date(y,m-1,d);viewDate.setHours(0,0,0,0);
+  document.getElementById('modAddLog').style.display='none';save();
+}
 function appendSubChip(txt,needsInput=false){
   const inp=document.getElementById('edSubNote'),cur=inp.value.trim();
   if(needsInput){inp.value=cur?`${cur}; ${txt}`:txt;inp.focus()}
   else{const parts=cur?cur.split('; ').filter(Boolean):[];if(!parts.includes(txt))parts.push(txt);inp.value=parts.join('; ')}
 }
-
 function openEdit(id){
   const item=logs.find(i=>i.id===id);if(!item)return;
   editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
@@ -464,57 +595,34 @@ function openEdit(id){
   document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
   document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
   const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');
-  const noteWrap=document.getElementById('edNoteWrap'),noteInp=document.getElementById('edNoteVal');
-  const subWrap=document.getElementById('edSubWrap'),subInp=document.getElementById('edSubNote'),chipsEl=document.getElementById('edQuickChips');
-  wrap.style.display='none';noteWrap.style.display='none';subWrap.style.display='none';
-  if(item.t==='note'){noteWrap.style.display='flex';noteInp.value=item.n||''}
-  else{
-    subWrap.style.display='flex';subInp.value=(item.ex&&item.ex.sub)||'';
-    let chips=[];
-    if(item.t==='feed'){
-      chips=[
-        {l:'🤢 Зригнула',v:'Зригнула',f:false},{l:'🤮 Сильно зригнула',v:'Сильно зригнула',f:false},
-        {l:'🫧 Гикавка',v:'Гикавка',f:false},{l:'💨 Не вийшло повітря',v:'Не вийшло повітря',f:false},
-        {l:'😫 Коліки',v:'Коліки',f:false},{l:'😴 Заснула під час їжі',v:'Заснула під час їжі',f:false},
-        {l:'🙅 Мало зїла',v:'Мало зїла',f:false}
-      ];
-    }else if(item.t==='slp'){
-      chips=[
-        {l:'😫 Коліки / животик',v:'Коліки / болить животик',f:false},{l:'😢 Неспокійний сон',v:'Неспокійний сон',f:false},
-        {l:'🤱 На руках / животику',v:'Спить на руках / животику',f:false},{l:'🌡️ Температура',v:'Температура: ',f:true}
-      ];
-    }else if(item.t==='dia'){
-      chips=[
-        {l:'🔴 Почервоніння',v:'Почервоніння / попрілість',f:false},{l:'💧 Дуже повний',v:'Дуже повний підгузок',f:false},
-        {l:'🤢 Слиз / інший колір',v:'Слиз / незвичний колір',f:false}
-      ];
-    }
-    chips.push({l:'☀️ Вітамін D3',v:'Вітамін D3: ',f:true});
-    chips.push({l:'💊 Ліки / вітамін',v:'Ліки/вітамін: ',f:true});
-    chipsEl.innerHTML=chips.map(c=>`<button type="button" class="chip" onclick="appendSubChip('${c.v}',${c.f})">${c.l}</button>`).join('');
-    if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}
-    else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}
+  const subInp=document.getElementById('edSubNote'),chipsEl=document.getElementById('edQuickChips');
+  wrap.style.display='none';subInp.value=(item.ex&&item.ex.sub)||'';
+  let chips=[];
+  if(item.t==='feed'){
+    chips=[{l:'🤢 Зригнула',v:'Зригнула',f:false},{l:'🤮 Сильно зригнула',v:'Сильно зригнула',f:false},{l:'🫧 Гикавка',v:'Гикавка',f:false},{l:'💨 Не вийшло повітря',v:'Не вийшло повітря',f:false},{l:'😫 Коліки',v:'Коліки',f:false},{l:'😴 Заснула під час їжі',v:'Заснула під час їжі',f:false},{l:'🙅 Мало зїла',v:'Мало зїла',f:false}];
+  }else if(item.t==='slp'){
+    chips=[{l:'😫 Коліки / животик',v:'Коліки / болить животик',f:false},{l:'😢 Неспокійний сон',v:'Неспокійний сон',f:false},{l:'🤱 На руках / животику',v:'Спить на руках / животику',f:false},{l:'🌡️ Температура',v:'Температура: ',f:true}];
+  }else if(item.t==='dia'){
+    chips=[{l:'🔴 Почервоніння',v:'Почервоніння / попрілість',f:false},{l:'💧 Дуже повний',v:'Дуже повний підгузок',f:false},{l:'🤢 Слиз / інший колір',v:'Слиз / незвичний колір',f:false}];
   }
+  chipsEl.innerHTML=chips.map(c=>`<button type="button" class="chip" onclick="appendSubChip('${c.v}',${c.f})">${c.l}</button>`).join('');
+  if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}
+  else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}
   document.getElementById('modEdit').style.display='flex';
 }
-
 function applyEdit(){
   const item=logs.find(i=>i.id===editId);if(!item)return;
   const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;
   if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();
-  if(item.t==='note'){const txt=document.getElementById('edNoteVal').value.trim();if(txt)item.n=txt}
-  else{
-    if(!item.ex)item.ex={};
-    item.ex.sub=document.getElementById('edSubNote').value.trim();
-    if(document.getElementById('edExtraWrap').style.display==='flex'){
-      const val=parseInt(document.getElementById('edExtraVal').value)||0;
-      if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}
-      else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}
-    }
+  if(!item.ex)item.ex={};
+  item.ex.sub=document.getElementById('edSubNote').value.trim();
+  if(document.getElementById('edExtraWrap').style.display==='flex'){
+    const val=parseInt(document.getElementById('edExtraVal').value)||0;
+    if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}
+    else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}
   }
   logs.sort((a,b)=>b.ts-a.ts);document.getElementById('modEdit').style.display='none';save();
 }
-
 async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
 function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
 function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);resetDay();save()}
@@ -557,12 +665,14 @@ function render(){
   const lbl=document.getElementById('curDayLabel');
   if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});
   document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);
-  const dayLogs=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');
+  const dayLogs=logs.filter(i=>i.t!=='note'&&i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');
   if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}
   el.innerHTML=dayLogs.map(i=>{
     const dt=new Date(i.ts),tm=dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});
-    const sub=(i.ex&&i.ex.sub)?`<div class="l-subnote">💬 ${escHtml(i.ex.sub)}</div>`:'';
-    return`<div class="l-item" onclick="openEdit(${i.id})"><div class="l-info"><div class="l-icon">${i.ic}</div><div style="min-width:0"><div class="l-title">${escHtml(i.ti)}</div>${i.n?`<div class="l-note">${escHtml(i.n)}</div>`:''}${sub}</div></div><div class="l-right"><span class="l-time">${tm}</span><button class="del-btn" onclick="del(event,${i.id})">✕</button></div></div>`;
+    const hasSub=Boolean(i.ex&&i.ex.sub&&i.ex.sub.trim());
+    const dot=hasSub?'<span class="note-dot"></span>':'';
+    const sub=hasSub?`<div class="l-subnote">💬 ${escHtml(i.ex.sub)}</div>`:'';
+    return`<div class="l-item" onclick="openEdit(${i.id})"><div class="l-info"><div class="l-icon">${i.ic}</div><div style="min-width:0"><div class="l-title">${escHtml(i.ti)}${dot}</div>${i.n?`<div class="l-note">${escHtml(i.n)}</div>`:''}${sub}</div></div><div class="l-right"><span class="l-time">${tm}</span><button class="del-btn" onclick="del(event,${i.id})">✕</button></div></div>`;
   }).join('');
 }
 
@@ -577,3 +687,4 @@ if(syncUrl)pullCloud();
 </script>
 </body>
 </html>
+
