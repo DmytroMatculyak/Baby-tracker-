@@ -465,31 +465,31 @@ function pickRemPreset(name,days){document.getElementById('remName').value=name;
 function addRem(){
   const name=document.getElementById('remName').value.trim(),nextDate=document.getElementById('remDate').value,everyDays=parseInt(document.getElementById('remDays').value)||0;
   if(!name||!nextDate){uiAlert('Вкажіть назву та дату нагадування','🔔','Увага');return}
-  remData.push({id:Date.now(),name,nextDate,everyDays});
-  remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
-  localStorage.setItem('bRem',JSON.stringify(remData));
+  .push({id:Date.now(),name,nextDate,everyDays});
+  .sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+  localStorage.setItem('bRem',JSON.stringify());
   document.getElementById('remName').value='';
   renderRem();pushCloud();
 }
 function confirmRem(id){
-  const item=remData.find(x=>x.id===id);if(!item)return;
+  const item=.find(x=>x.id===id);if(!item)return;
   const today=todayIsoStr();
   addMedToHistory('🔔','Виконано нагадування',item.name,today,new Date().toTimeString().slice(0,5));
   if(item.everyDays>0){
     const [y,m,d]=today.split('-').map(Number);
     const nxt=new Date(y,m-1,d+item.everyDays),p=n=>String(n).padStart(2,'0');
     item.nextDate=`${nxt.getFullYear()}-${p(nxt.getMonth()+1)}-${p(nxt.getDate())}`;
-    remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+    .sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
   }else{
-    remData=remData.filter(x=>x.id!==id);
+    =.filter(x=>x.id!==id);
   }
-  localStorage.setItem('bRem',JSON.stringify(remData));
+  localStorage.setItem('bRem',JSON.stringify());
   renderRem();pushCloud();
 }
 async function delRem(id){
   if(!await uiConfirm('Видалити це нагадування?'))return;
-  remData=remData.filter(x=>x.id!==id);
-  localStorage.setItem('bRem',JSON.stringify(remData));
+  =.filter(x=>x.id!==id);
+  localStorage.setItem('bRem',JSON.stringify());
   renderRem();pushCloud();
 }
 function renderRem(){
@@ -509,6 +509,7 @@ function renderRem(){
   if(!remData.length){listEl.innerHTML='<div class="t-center s-lbl" style="padding:16px">Планових нагадувань немає</div>';return}
   listEl.innerHTML=remData.map(x=>`<div class="med-row"><div class="vac-info"><strong style="color:var(--bright)">🔔 ${escHtml(x.name)}</strong><span class="vac-sub">Наступне: ${x.nextDate.split('-').reverse().join('.')} • ${x.everyDays>0?`кожні ${x.everyDays} дн.`:'одноразово'}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delRem(${x.id})">✕</button></div>`).join('');
 }
+
 
 function nowLocalIso(){const d=new Date(),p=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
 function addMedToHistory(ic,ti,n,dateStr,timeStr='12:00'){
