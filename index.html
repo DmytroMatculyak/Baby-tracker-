@@ -399,8 +399,9 @@ let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',ge
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
 let syncUrl=localStorage.getItem('bSyncUrl')||'';
-let botType='Суміш',curActType='bath',editId=null,editNoteId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
+let lockSyncUntil=0,delIds=JSON.parse(localStorage.getItem('bDelIds'))||[],botType='Суміш',curActType='bath',editId=null,editNoteId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
 let viewDate=new Date();viewDate.setHours(0,0,0,0);
+
 let dlgRes=null;
 
 function closeDlg(v){document.getElementById('modDlg').style.display='none';if(dlgRes){const r=dlgRes;dlgRes=null;r(v)}}
@@ -416,44 +417,70 @@ function disableSync(){syncUrl='';localStorage.removeItem('bSyncUrl');updSyncDot
 function updSyncDot(ok){document.getElementById('syncDot').className=ok?'sync-dot on':'sync-dot'}
 function hasMedData(){return(medData.w&&medData.w.length)||(medData.h&&medData.h.length)||(medData.b&&medData.b.length)}
 
+function mergeById(localArr,remoteArr){
+  const map=new Map();
+  (remoteArr||[]).forEach(x=>{if(x&&x.id&&!delIds.includes(x.id))map.set(x.id,x)});
+  (localArr||[]).forEach(x=>{if(x&&x.id&&!delIds.includes(x.id))map.set(x.id,x)});
+  return Array.from(map.values());
+}
+
 async function pushCloud(forceEmpty=false){
   if(!syncUrl)return;
-  if(!forceEmpty&&!logs.length&&!hasMedData()&&!vacData.length&&!drugData.length&&!notesData.length&&!remData.length&&!actFeed&&!actSleep)return;
+  lockSyncUntil=Date.now()+8000;
+  const rData=(typeof remData!=='undefined')?remData:[];
+  if(!forceEmpty&&!logs.length&&!hasMedData()&&!vacData.length&&!drugData.length&&!notesData.length&&!rData.length&&!actFeed&&!actSleep)return;
   try{
-    const payload={logs,medData,vacData,drugData,notesData,remData,prof,actFeed,actSleep,updatedAt:Date.now()};
-    lastHash=JSON.stringify({logs,medData,vacData,drugData,notesData,remData,prof,actFeed,actSleep});
+    const payload={logs,medData,vacData,drugData,notesData,remData:rData,delIds:delIds.slice(-100),prof,actFeed,actSleep,updatedAt:Date.now()};
+    lastHash=JSON.stringify({logs,medData,vacData,drugData,notesData,remData:rData,prof,actFeed,actSleep});
     const res=await fetch(`${syncUrl}babydata.json`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     updSyncDot(res.ok);
   }catch(e){updSyncDot(false)}
 }
 
 async function pullCloud(){
-  if(!syncUrl)return;
+  if(!syncUrl||Date.now()<lockSyncUntil)return;
   try{
     const res=await fetch(`${syncUrl}babydata.json`);
-    if(!res.ok){updSyncDot(false);return}
+    if(!res.ok||Date.now()<lockSyncUntil){updSyncDot(res.ok);return}
     const data=await res.json();
     updSyncDot(true);
-    if(!data)return;
+    if(!data||Date.now()<lockSyncUntil)return;
+    if(data.delIds&&Array.isArray(data.delIds)){
+      delIds=Array.from(new Set([...delIds,...data.delIds])).slice(-150);
+      localStorage.setItem('bDelIds',JSON.stringify(delIds));
+    }
+    const rData=(typeof remData!=='undefined')?remData:[];
     const remoteHash=JSON.stringify({logs:data.logs||[],medData:data.medData||{w:[],h:[],b:[]},vacData:data.vacData||[],drugData:data.drugData||[],notesData:data.notesData||[],remData:data.remData||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null});
     if(remoteHash===lastHash&&!isInitialSync)return;
     lastHash=remoteHash;
-    if(data.logs){logs=data.logs;localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length)localStorage.setItem('bLogs_backup',JSON.stringify(logs))}
-    if(data.medData){medData=data.medData;localStorage.setItem('bMed',JSON.stringify(medData))}
-    if(data.vacData){vacData=data.vacData;localStorage.setItem('bVac',JSON.stringify(vacData))}
-    if(data.drugData){drugData=data.drugData;localStorage.setItem('bDrugs',JSON.stringify(drugData))}
-    if(data.notesData){notesData=data.notesData;localStorage.setItem('bNotes',JSON.stringify(notesData))}
-    if(data.remData){remData=data.remData;localStorage.setItem('bRem',JSON.stringify(remData))}
+    if(data.logs){
+      logs=mergeById(logs,data.logs).sort((a,b)=>b.ts-a.ts);
+      localStorage.setItem('bLogs',JSON.stringify(logs));
+      if(logs.length)localStorage.setItem('bLogs_backup',JSON.stringify(logs));
+    }
+    if(data.medData){
+      medData={
+        w:mergeById(medData.w,data.medData.w).sort((a,b)=>a.d.localeCompare(b.d)),
+        h:mergeById(medData.h,data.medData.h).sort((a,b)=>a.d.localeCompare(b.d)),
+        b:mergeById(medData.b,data.medData.b).sort((a,b)=>a.d.localeCompare(b.d))
+      };
+      localStorage.setItem('bMed',JSON.stringify(medData));
+    }
+    if(data.vacData){vacData=mergeById(vacData,data.vacData).sort((a,b)=>b.d.localeCompare(a.d));localStorage.setItem('bVac',JSON.stringify(vacData))}
+    if(data.drugData){drugData=mergeById(drugData,data.drugData).sort((a,b)=>b.dt.localeCompare(a.dt));localStorage.setItem('bDrugs',JSON.stringify(drugData))}
+    if(data.notesData){notesData=mergeById(notesData,data.notesData).sort((a,b)=>b.d.localeCompare(a.d)||b.ts-a.ts);localStorage.setItem('bNotes',JSON.stringify(notesData))}
+    if(data.remData&&typeof remData!=='undefined'){remData=mergeById(remData,data.remData);localStorage.setItem('bRem',JSON.stringify(remData));if(typeof renderRem==='function')renderRem()}
     if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}
     actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');
     actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');
-    updTimers();render();updSince();updStats();renderRem();
+    updTimers();render();updSince();updStats();
     if(document.getElementById('modMed').style.display==='flex'){
       if(curMedTab==='v')renderVac();else if(curMedTab==='d')renderDrug();else renderMed();
     }
     if(document.getElementById('modNote').style.display==='flex')renderNotes();
   }catch(e){updSyncDot(false)}
 }
+
 function todayIsoStr(){const d=new Date(),p=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
 function openRem(){
   document.getElementById('remName').value='';
@@ -646,10 +673,10 @@ function renderProf(){const card=document.getElementById('profCard');card.classN
 // --- ТАЙМЕРИ ТА ШВИДКІ ДІЇ ---
 function fmtDur(sec){const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60,pad=n=>String(n).padStart(2,'0');return h>0?`${h}:${pad(m)}:${pad(s)}`:`${pad(m)}:${pad(s)}`}
 function fmtTextDur(mins){if(mins<1)return'< 1 хв';const h=Math.floor(mins/60),m=mins%60;return h>0?`${h} год ${m} хв`:`${m} хв`}
-function startFeed(side){actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
-function stopFeed(saveIt){const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}else{pushCloud()}}
-function startSleep(){actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
-function stopSleep(saveIt){const cur=actSleep;actSleep=null;localStorage.removeItem('actSleep');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins})}else{pushCloud()}}
+function startFeed(side){lockSyncUntil=Date.now()+8000;actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
+function stopFeed(saveIt){lockSyncUntil=Date.now()+8000;const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}else{pushCloud()}}
+function startSleep(){lockSyncUntil=Date.now()+8000;actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
+function stopSleep(saveIt){lockSyncUntil=Date.now()+8000;const cur=actSleep;actSleep=null;localStorage.removeItem('actSleep');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins})}else{pushCloud()}}
 function updTimers(){const bf=document.getElementById('boxFeed'),lf=document.getElementById('lblFeed'),cf=document.getElementById('clkFeed'),btf=document.getElementById('btnsFeed');if(actFeed){bf.className='timer-box active-pink';lf.textContent='🤱 Їсть ('+actFeed.side+')';cf.textContent=fmtDur(Math.floor((Date.now()-actFeed.start)/1e3));btf.innerHTML='<button class="t-btn stop" onclick="stopFeed(true)">Стоп</button><button class="t-btn" onclick="stopFeed(false)">✕</button>'}else{bf.className='timer-box';lf.textContent='🤱 Груди (таймер)';cf.textContent='00:00';btf.innerHTML='<button class="t-btn go-p" onclick="startFeed(\'Ліва\')">Ліва</button><button class="t-btn go-p" onclick="startFeed(\'Права\')">Права</button>'}const bs=document.getElementById('boxSleep'),ls=document.getElementById('lblSleep'),cs=document.getElementById('clkSleep'),bts=document.getElementById('btnsSleep');if(actSleep){bs.className='timer-box active';ls.textContent='😴 Малюк спить...';cs.textContent=fmtDur(Math.floor((Date.now()-actSleep.start)/1e3));bts.innerHTML='<button class="t-btn stop" onclick="stopSleep(true)">Прокинувся</button><button class="t-btn" onclick="stopSleep(false)">✕</button>'}else{bs.className='timer-box';ls.textContent='😴 Таймер сну';cs.textContent='00:00';bts.innerHTML='<button class="t-btn go-v" onclick="startSleep()">Почати сон</button>'}}
 function setBotType(t){botType=t;document.getElementById('btnTypeMix').className=t==='Суміш'?'t-btn sel':'t-btn';document.getElementById('btnTypeMilk').className=t==='Зціджене молоко'?'t-btn sel':'t-btn'}
 function openBot(){document.getElementById('inMl').value='';setBotType('Суміш');document.getElementById('modBot').style.display='flex'}
@@ -770,11 +797,11 @@ function applyEdit(){
   }
   logs.sort((a,b)=>b.ts-a.ts);document.getElementById('modEdit').style.display='none';save();
 }
-async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
+async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){delIds.push(editId);localStorage.setItem('bDelIds',JSON.stringify(delIds));logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
 // --- ЗБЕРЕЖЕННЯ, СТАТИСТИКА ТА РЕНДЕР ---
 function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
 function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);resetDay();save()}
-async function del(e,id){e.stopPropagation();if(await uiConfirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save(true)}}
+async function del(e,id){e.stopPropagation();if(await uiConfirm("Видалити запис?")){delIds.push(id);localStorage.setItem('bDelIds',JSON.stringify(delIds));logs=logs.filter(i=>i.id!==id);save(true)}}
 function shiftDay(delta){viewDate.setDate(viewDate.getDate()+delta);render();updStats()}
 function resetDay(){viewDate=new Date();viewDate.setHours(0,0,0,0);render();updStats()}
 function pickCalDate(val){if(!val)return;const[y,m,d]=val.split('-').map(Number);viewDate=new Date(y,m-1,d);viewDate.setHours(0,0,0,0);render();updStats()}
@@ -832,7 +859,9 @@ window.addEventListener('load',()=>setTimeout(hideSplash,1500));
 setTimeout(hideSplash,3000);
 if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(reg=>reg.update());let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing&&!actFeed&&!actSleep){refreshing=true;window.location.reload()}})}
 setInterval(()=>{updTimers();updSince();renderProf();renderRem()},1000);
-setInterval(pullCloud,5000);
+setInterval(()=>{if(!document.hidden)pullCloud()},15000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullCloud()});
+  
 renderProf();updTimers();render();updSince();updStats();renderRem();
 if(syncUrl)pullCloud();
 </script>
