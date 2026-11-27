@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-tracker-v4';
+const CACHE_NAME = 'baby-tracker-v1.2';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
