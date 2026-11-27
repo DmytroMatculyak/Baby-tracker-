@@ -7,59 +7,79 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Даринка">
-<link rel="manifest" href="manifest.json?v=6">
+<link rel="manifest" href="manifest.json?v=7">
 <link rel="apple-touch-icon" href="./1795395014124.jpg">
 <title>Трекер Малюка</title>
 <style>
-  :root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
-input{user-select:auto}
-body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env(safe-area-inset-top));max-width:480px;margin:0 auto;padding-bottom:60px}
-#splash-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;transition:opacity .6s ease,visibility .6s ease}
-#splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-#splash-logo{width:240px;height:240px;border-radius:44px;object-fit:cover;box-shadow:0 16px 40px rgba(0,0,0,.5);margin-bottom:28px;border:2px solid rgba(157,124,216,.3)}
-#splash-text{font-size:26px;font-weight:700;color:var(--bright);letter-spacing:.5px;opacity:0;transform:translateY(14px);animation:fadeInLove .9s ease forwards;animation-delay:.25s}
-@keyframes fadeInLove{to{opacity:1;transform:translateY(0)}}
-.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.card.boy{border-top:3px solid var(--blue)}.card.girl{border-top:3px solid var(--pink)}
+  :root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--grn:#9ece6a;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
+  input,textarea,select{user-select:auto}
+  body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env(safe-area-inset-top));max-width:480px;margin:0 auto;padding-bottom:60px}
+  #splash-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;transition:opacity .6s ease,visibility .6s ease}
+  #splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+  #splash-logo{width:240px;height:240px;border-radius:44px;object-fit:cover;box-shadow:0 16px 40px rgba(0,0,0,.5);margin-bottom:28px;border:2px solid rgba(157,124,216,.3)}
+  #splash-text{font-size:26px;font-weight:700;color:var(--bright);letter-spacing:.5px;opacity:0;transform:translateY(14px);animation:fadeInLove .9s ease forwards;animation-delay:.25s}
+  @keyframes fadeInLove{to{opacity:1;transform:translateY(0)}}
+  .card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  .card.boy{border-top:3px solid var(--blue)}.card.girl{border-top:3px solid var(--pink)}
   .p-head,.h-head{display:flex;justify-content:space-between;align-items:center}.h-head{margin:18px 0 10px}
-.b-name{font-size:19px;font-weight:700;color:var(--bright)}
-.day-badge{background:rgba(157,124,216,.15);color:var(--prim);padding:6px 12px;border-radius:12px;font-size:14px;font-weight:800}
-.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mut);margin-right:6px}.sync-dot.on{background:var(--sec);box-shadow:0 0 8px var(--sec)}
-.prof-details{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
-.age-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.age-grid{background:rgba(15,17,26,.5);padding:10px;border-radius:14px;margin-bottom:10px}
-.age-val,.stat-num{font-size:18px;font-weight:800}.age-val{color:var(--prim)}
-.age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
-.bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-bottom:12px}.bio strong{color:var(--bright)}
-.edit-btn{background:var(--light);border:none;color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%;margin-top:6px}
-.p-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
-  .p-form input,.modal input{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
-.f-row,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.save-btn{background:linear-gradient(135deg,var(--prim),var(--blue));color:#0f111a;border:none;padding:12px;border-radius:12px;font-weight:700;font-size:15px;width:100%}
-.t-center{text-align:center}.s-time{font-size:20px;font-weight:800;color:var(--sec);margin-top:4px;letter-spacing:.3px}
-.alarm-bar{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.alarm-pill{background:var(--light);border:none;color:var(--txt);padding:6px 12px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}.alarm-pill.on{background:rgba(224,175,104,.2);color:var(--yel);border:1px solid rgba(224,175,104,.4)}
-.alarm-info{font-size:12px;color:var(--yel);font-weight:600;text-align:left}
-@keyframes pulseAlarm{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}.ring-card{border:2px solid var(--red)!important;animation:pulseAlarm 1s infinite}
-.timer-box{background:var(--card);border-radius:20px;padding:14px;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.timer-box.active{border-color:var(--sec);background:rgba(115,218,202,.08)}.timer-box.active-pink{border-color:var(--pink);background:rgba(247,118,142,.08)}
-.t-clock{font-size:24px;font-weight:800;color:var(--bright);font-variant-numeric:tabular-nums}.t-btns{display:flex;gap:6px;width:100%}
-.t-btn{flex:1;border:none;padding:10px 4px;border-radius:10px;font-size:13px;font-weight:700;color:var(--bright);background:var(--light);text-align:center}
-.t-btn.sel{background:var(--blue);color:#0f111a}.t-btn.sel-g{background:var(--pink);color:#0f111a}.t-btn.sel-y{background:var(--yel);color:#0f111a}.t-btn.go-p{background:rgba(247,118,142,.2);color:var(--pink)}.t-btn.go-v{background:rgba(157,124,216,.2);color:var(--prim)}.t-btn.stop{background:var(--red);color:#0f111a}
-.btn{background:var(--card);color:var(--bright);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:14px 8px;font-size:14px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.15)}.btn:active{transform:scale(.96);background:var(--light)}
-.b-b{border-bottom:3px solid var(--blue)}.b-t{border-bottom:3px solid var(--sec)}.b-y{border-bottom:3px solid var(--yel);width:100%;flex-direction:row;justify-content:center;gap:10px;margin-bottom:14px}
-.stat-box{background:rgba(15,17,26,.45);padding:10px 4px;border-radius:14px}.ext-stats{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);flex-direction:column;gap:8px;font-size:13px}
-.ext-row{display:flex;justify-content:space-between;background:rgba(15,17,26,.35);padding:8px 12px;border-radius:10px}.ext-row strong{color:var(--bright)}.clr-btn{background:none;border:none;color:var(--red);font-size:13px;font-weight:600}
-.day-nav{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 12px;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}.day-nav button{background:var(--light);border:none;color:var(--bright);padding:6px 12px;border-radius:10px;font-weight:700;font-size:13px}.day-nav button:disabled{opacity:.35}
-.cal-trigger{position:relative;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--bright);padding:4px 10px;border-radius:10px;background:rgba(157,124,216,.12);cursor:pointer}.cal-trigger input[type="date"]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
-.l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer}.l-item:active{background:var(--light)}
-.l-info,.l-right{display:flex;align-items:center;gap:12px}.l-icon{width:38px;height:38px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px}
-.modal{display:none;position:fixed;inset:0;background:rgba(10,12,18,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;z-index:20;overflow-y:auto}.m-body{background:var(--card);padding:20px;border-radius:22px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);max-height:90vh;overflow-y:auto}.m-lbl{font-size:12px;color:var(--mut);margin-bottom:-6px}
-.chart-box{background:var(--bg);border-radius:16px;padding:12px;border:1px solid var(--light)}.med-list{display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto}.med-row{display:flex;justify-content:space-between;align-items:center;background:rgba(15,17,26,.6);padding:8px 12px;border-radius:10px;font-size:13px}
+  .b-name{font-size:19px;font-weight:700;color:var(--bright)}
+  .day-badge{background:rgba(157,124,216,.15);color:var(--prim);padding:6px 12px;border-radius:12px;font-size:14px;font-weight:800}
+  .sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mut);margin-right:6px}.sync-dot.on{background:var(--sec);box-shadow:0 0 8px var(--sec)}
+  .prof-details{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
+  .age-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.age-grid{background:rgba(15,17,26,.5);padding:10px;border-radius:14px;margin-bottom:10px}
+  .age-val,.stat-num{font-size:18px;font-weight:800}.age-val{color:var(--prim)}
+  .age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
+  .bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-bottom:12px}.bio strong{color:var(--bright)}
+  .edit-btn{background:var(--light);border:none;color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%;margin-top:6px}
+  .p-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
+  .p-form input,.modal input,.modal textarea,.modal select{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
+  .modal textarea{resize:none;font-family:inherit;line-height:1.4}
+  .f-row,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .save-btn{background:linear-gradient(135deg,var(--prim),var(--blue));color:#0f111a;border:none;padding:12px;border-radius:12px;font-weight:700;font-size:15px;width:100%}
+  .t-center{text-align:center}.s-time{font-size:20px;font-weight:800;color:var(--sec);margin-top:4px;letter-spacing:.3px}
+  .alarm-bar{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .alarm-pill{background:var(--light);border:none;color:var(--txt);padding:6px 12px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}.alarm-pill.on{background:rgba(224,175,104,.2);color:var(--yel);border:1px solid rgba(224,175,104,.4)}
+  .alarm-info{font-size:12px;color:var(--yel);font-weight:600;text-align:left}
+  @keyframes pulseAlarm{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}.ring-card{border:2px solid var(--red)!important;animation:pulseAlarm 1s infinite}
+  .rem-card{background:var(--card);border-radius:18px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+  .rem-card.due{border:1px solid rgba(224,175,104,.55);background:linear-gradient(135deg,rgba(224,175,104,.12),rgba(25,28,41,.98))}
+  .rem-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;background:rgba(15,17,26,.65);border-radius:12px;margin-top:8px;border-left:3px solid var(--yel)}
+  .rem-ok-btn{background:var(--sec);color:#0f111a;border:none;padding:7px 12px;border-radius:10px;font-size:12px;font-weight:800;white-space:nowrap}
+  .dow-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .dow-btn{background:var(--bg);border:1px solid var(--light);color:var(--mut);padding:9px 0;border-radius:10px;font-size:12px;font-weight:700;text-align:center}
+  .dow-btn.on{background:var(--yel);color:#0f111a;border-color:var(--yel)}
+  .timer-box{background:var(--card);border-radius:20px;padding:14px;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  .timer-box.active{border-color:var(--sec);background:rgba(115,218,202,.08)}.timer-box.active-pink{border-color:var(--pink);background:rgba(247,118,142,.08)}
+  .t-clock{font-size:24px;font-weight:800;color:var(--bright);font-variant-numeric:tabular-nums}.t-btns{display:flex;gap:6px;width:100%}
+  .t-btn{flex:1;border:none;padding:10px 4px;border-radius:10px;font-size:13px;font-weight:700;color:var(--bright);background:var(--light);text-align:center}
+  .t-btn.sel{background:var(--blue);color:#0f111a}.t-btn.sel-g{background:var(--pink);color:#0f111a}.t-btn.sel-y{background:var(--yel);color:#0f111a}.t-btn.sel-gr{background:var(--grn);color:#0f111a}.t-btn.go-p{background:rgba(247,118,142,.2);color:var(--pink)}.t-btn.go-v{background:rgba(157,124,216,.2);color:var(--prim)}.t-btn.stop{background:var(--red);color:#0f111a}
+  .btn{background:var(--card);color:var(--bright);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:14px 8px;font-size:14px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.15)}.btn:active{transform:scale(.96);background:var(--light)}
+  .b-b{border-bottom:3px solid var(--blue)}.b-t{border-bottom:3px solid var(--sec)}.b-g{border-bottom:3px solid var(--grn)}.b-v{border-bottom:3px solid var(--prim)}
+  .b-med{border-bottom:3px solid var(--yel);width:100%;flex-direction:row;justify-content:center;gap:10px;margin-bottom:10px}
+  .b-note{border-bottom:3px solid var(--prim);width:100%;flex-direction:row;justify-content:center;gap:10px;margin-bottom:14px}
+  .badge-pill{background:rgba(157,124,216,.2);color:var(--prim);padding:2px 8px;border-radius:8px;font-size:12px;font-weight:800}
+  .stat-box{background:rgba(15,17,26,.45);padding:10px 4px;border-radius:14px}.ext-stats{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);flex-direction:column;gap:8px;font-size:13px}
+  .ext-row{display:flex;justify-content:space-between;background:rgba(15,17,26,.35);padding:8px 12px;border-radius:10px}.ext-row strong{color:var(--bright)}
+  .add-log-btn{background:rgba(115,218,202,.15);border:1px solid rgba(115,218,202,.35);color:var(--sec);font-size:12px;font-weight:700;padding:6px 11px;border-radius:10px}
+  .day-nav{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 12px;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}.day-nav button{background:var(--light);border:none;color:var(--bright);padding:6px 12px;border-radius:10px;font-weight:700;font-size:13px}.day-nav button:disabled{opacity:.35}
+  .cal-trigger{position:relative;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--bright);padding:4px 10px;border-radius:10px;background:rgba(157,124,216,.12);cursor:pointer}.cal-trigger input[type="date"]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+  .l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer}.l-item:active{background:var(--light)}
+  .l-item.has-comment{border-left:3px solid var(--prim)}
+  .l-comment{font-size:12px;color:var(--prim);margin-top:3px;font-weight:500;word-break:break-word}
+  .l-info,.l-right{display:flex;align-items:center;gap:12px}.l-icon{width:38px;height:38px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px}
+  .modal{display:none;position:fixed;inset:0;background:rgba(10,12,18,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;z-index:20;overflow-y:auto}.m-body{background:var(--card);padding:20px;border-radius:22px;width:100%;max-width:390px;display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);max-height:90vh;overflow-y:auto}.m-lbl{font-size:12px;color:var(--mut);margin-bottom:-6px}
+  .chart-box{background:var(--bg);border-radius:16px;padding:12px;border:1px solid var(--light)}.med-list{display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto}.med-row{display:flex;justify-content:space-between;align-items:center;background:rgba(15,17,26,.6);padding:8px 12px;border-radius:10px;font-size:13px}
+  .note-card{background:var(--bg);border:1px solid var(--light);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+  .note-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--mut)}
+  .note-body{font-size:14px;color:var(--bright);line-height:1.4;white-space:pre-wrap;word-break:break-word}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px}
+  .tag-chip{background:var(--bg);border:1px solid var(--light);color:var(--txt);padding:5px 9px;border-radius:9px;font-size:11px;font-weight:600}
 </style>
 </head>
 <body>
 <div id="splash-screen"><img id="splash-logo" src="./1795395014124.jpg" alt="Даринка"><div id="splash-text">Зроблено з любов'ю ❤️</div></div>
+
 <div class="card" id="profCard">
   <div class="p-head" style="cursor:pointer" onclick="togProfDetails()"><div class="b-name"><span class="sync-dot" id="syncDot"></span><span id="dName">👶 Мій Малюк</span></div><div class="day-badge" id="mainDaysBadge">0 днів ▾</div></div>
   <div class="prof-details" id="profDetails">
@@ -78,19 +98,37 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     </div>
   </div>
 </div>
+
+<div class="rem-card" id="remBanner">
+  <div class="p-head">
+    <div class="s-lbl" style="font-weight:700;color:var(--bright)" id="remHeaderTxt">🔔 Нагадування за графіком</div>
+    <button class="alarm-pill" onclick="openRemModal()">⚙️ Керувати</button>
+  </div>
+  <div id="dueRemList"></div>
+</div>
 <div class="card t-center" id="feedStatusCard">
   <div class="s-lbl">З останнього годування минуло:</div><div class="s-time" id="tFeed">Ще не було записів</div>
   <div class="alarm-bar"><div class="alarm-info" id="alarmStatusText">Будильник вимкнено</div><button class="alarm-pill" id="alarmBtn" onclick="openAlarm()">⏰ Налаштувати</button></div>
 </div>
+
 <div class="grid" style="margin-bottom:10px">
   <div class="timer-box" id="boxFeed"><div class="s-lbl" id="lblFeed">🤱 Груди (таймер)</div><div class="t-clock" id="clkFeed">00:00</div><div class="t-btns" id="btnsFeed"><button class="t-btn go-p" onclick="startFeed('Ліва')">Ліва</button><button class="t-btn go-p" onclick="startFeed('Права')">Права</button></div></div>
   <div class="timer-box" id="boxSleep"><div class="s-lbl" id="lblSleep">😴 Таймер сну</div><div class="t-clock" id="clkSleep">00:00</div><div class="t-btns" id="btnsSleep"><button class="t-btn go-v" onclick="startSleep()">Почати сон</button></div></div>
 </div>
+
 <div class="grid" style="margin-bottom:10px">
   <button class="btn b-b" onclick="openBot()"><span style="font-size:24px">🍼</span><span>Суміш / Зціджене</span></button>
   <button class="btn b-t" onclick="openDia()"><span style="font-size:24px">🧷</span><span>Підгузок</span></button>
 </div>
-<button class="btn b-y" onclick="openMed()"><span style="font-size:22px">📈</span><span>Графіки: Вага, Зріст, Білірубін</span></button>
+
+<div class="grid" style="margin-bottom:10px">
+  <button class="btn b-g" onclick="openAct('walk')"><span style="font-size:24px">🚼</span><span>Прогулянка</span></button>
+  <button class="btn b-v" onclick="openAct('bath')"><span style="font-size:24px">🛁</span><span>Купання</span></button>
+</div>
+
+<button class="btn b-med" onclick="openMed()"><span style="font-size:22px">🩺</span><span>Медична інформація</span></button>
+<button class="btn b-note" onclick="openNotes()"><span style="font-size:22px">📝</span><span>Нотатки</span><span class="badge-pill" id="notesBadge">0</span></button>
+
 <div class="card" style="cursor:pointer" onclick="togStats()">
   <div class="p-head" style="margin-bottom:10px"><div class="s-lbl" style="font-weight:700;color:var(--txt)" id="statsTitle">📊 Статистика за сьогодні</div><div class="s-lbl" id="stArrow">Детальніше ▾</div></div>
   <div class="stats-grid">
@@ -107,9 +145,61 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <div class="ext-row"><span>😴 Середня тривалість сну:</span><strong id="exAvgSlp">—</strong></div>
   </div>
 </div>
-<div class="h-head"><h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3><button class="clr-btn" onclick="clrAll()">Очистити</button></div>
+
+<div class="h-head"><h3 style="font-size:16px;color:var(--bright)">Історія подій</h3><button class="add-log-btn" onclick="openManualAdd()">➕ Додати запис</button></div>
 <div class="day-nav"><button onclick="shiftDay(-1)">◀</button><label class="cal-trigger"><span>📅</span><span id="curDayLabel">Сьогодні</span><input type="date" id="calPicker" onchange="pickCalDate(this.value)"></label><button id="btnNextDay" onclick="shiftDay(1)" disabled>▶</button></div>
 <div id="logList"></div>
+<div class="modal" id="modRem" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">🔔 Нагадування по днях тижня</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modRem').style.display='none'">✕</button></div>
+  <div class="s-lbl">Наприклад: «Вітамін К1» (раз на тиждень у Пт) або «Вітамін D» (щодня):</div>
+  <input type="text" id="inRemTitle" placeholder="Назва (напр. Вітамін К1)">
+  <div class="m-lbl">Оберіть дні тижня:</div>
+  <div class="dow-row" id="dowSelector">
+    <button type="button" class="dow-btn" data-d="1" onclick="togDow(this)">Пн</button>
+    <button type="button" class="dow-btn" data-d="2" onclick="togDow(this)">Вт</button>
+    <button type="button" class="dow-btn" data-d="3" onclick="togDow(this)">Ср</button>
+    <button type="button" class="dow-btn" data-d="4" onclick="togDow(this)">Чт</button>
+    <button type="button" class="dow-btn" data-d="5" onclick="togDow(this)">Пт</button>
+    <button type="button" class="dow-btn" data-d="6" onclick="togDow(this)">Сб</button>
+    <button type="button" class="dow-btn" data-d="0" onclick="togDow(this)">Нд</button>
+  </div>
+  <button class="t-btn" style="padding:8px;font-size:12px" onclick="selAllDow()">Обрати всі дні (щодня)</button>
+  <button class="save-btn" onclick="addReminder()">➕ Додати нагадування</button>
+  <div class="med-list" id="remManageList" style="max-height:190px"></div>
+</div></div>
+
+<div class="modal" id="modMed" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">🩺 Медична інформація</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modMed').style.display='none'">✕</button></div>
+  <div class="t-btns">
+    <button class="t-btn sel" id="tabW" onclick="setMedTab('w')">⚖️ Вага</button>
+    <button class="t-btn" id="tabH" onclick="setMedTab('h')">📏 Зріст</button>
+    <button class="t-btn" id="tabB" onclick="setMedTab('b')">🧪 Білірубін</button>
+    <button class="t-btn" id="tabC" onclick="setMedTab('c')">📋 Картка</button>
+  </div>
+  <div id="medGraphSection" style="display:flex;flex-direction:column;gap:10px">
+    <div class="chart-box" id="medChartWrap"></div>
+    <div class="f-row"><input type="date" id="medDate"><input type="number" step="0.01" id="medVal" placeholder="Значення"></div>
+    <input type="text" id="medNote" placeholder="Примітка до заміру (необов'язково)">
+    <button class="save-btn" onclick="addMed()">➕ Додати показник</button>
+    <div class="med-list" id="medHistoryList"></div>
+  </div>
+  <div id="medCardSection" style="display:none;flex-direction:column;gap:10px">
+    <div class="f-row"><input type="text" id="mcBlood" placeholder="Група крові / Rh"><input type="text" id="mcDoc" placeholder="Педіатр / тел."></div>
+    <input type="text" id="mcAllergy" placeholder="Алергії / особливості">
+    <button class="t-btn sel" style="padding:10px" onclick="saveMedInfo()">💾 Зберегти дані картки</button>
+    <div class="m-lbl" style="margin-top:2px">Медичні записи (огляди, щеплення, ліки):</div>
+    <textarea id="mcRecText" rows="2" placeholder="Наприклад: Огляд педіатра, призначено вітамін К1..."></textarea>
+    <button class="save-btn" onclick="addMedRecord()">➕ Додати медичний запис</button>
+    <div class="med-list" id="medRecordsList" style="max-height:170px"></div>
+  </div>
+</div></div>
+
+<div class="modal" id="modNotes" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">📝 Нотатки</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modNotes').style.display='none'">✕</button></div>
+  <textarea id="inNoteText" rows="3" placeholder="Запишіть важливу інформацію або спостереження..."></textarea>
+  <button class="save-btn" onclick="addNote()">➕ Зберегти нотатку</button>
+  <div id="notesList" style="display:flex;flex-direction:column;gap:8px;max-height:42vh;overflow-y:auto;margin-top:4px"></div>
+</div></div>
 <div class="modal" id="modAlarm" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">⏰ Будильник годування</h3>
   <div class="s-lbl" style="line-height:1.4">Оберіть інтервал між годуваннями:</div>
@@ -120,19 +210,13 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnSysCalAlarm" onclick="exportCalendarAlarm()">📲 Додати в Будильник iPhone</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableAlarm()">Вимкнути</button>
 </div></div>
+
 <div class="modal" id="modRing"><div class="m-body ring-card t-center">
   <div style="font-size:42px">⏰🍼</div><h3 style="font-size:20px;color:var(--bright)">Час годувати малюка!</h3><div class="s-lbl" id="ringSubText">Минув інтервал</div>
   <button class="save-btn" style="background:var(--red);color:#0f111a;padding:14px;font-size:16px" onclick="stopRinging()">🔕 Вимкнути сигнал</button>
   <button class="t-btn" style="padding:11px" onclick="snoozeAlarm(15)">😴 Відкласти на 15 хв</button>
 </div></div>
-<div class="modal" id="modMed" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">📈 Динаміка розвитку</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modMed').style.display='none'">✕</button></div>
-  <div class="t-btns"><button class="t-btn sel" id="tabW" onclick="setMedTab('w')">⚖️ Вага</button><button class="t-btn" id="tabH" onclick="setMedTab('h')">📏 Зріст</button><button class="t-btn" id="tabB" onclick="setMedTab('b')">🧪 Білірубін</button></div>
-  <div class="chart-box" id="medChartWrap"></div>
-  <div class="f-row"><input type="date" id="medDate"><input type="number" step="0.01" id="medVal" placeholder="Значення"></div>
-  <button class="save-btn" onclick="addMed()">➕ Додати показник</button>
-  <div class="med-list" id="medHistoryList"></div>
-</div></div>
+
 <div class="modal" id="modBot" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🍼 Харчування з пляшечки</h3>
   <div class="f-row"><button class="t-btn sel" id="btnTypeMix" onclick="setBotType('Суміш')">🍼 Суміш</button><button class="t-btn" id="btnTypeMilk" onclick="setBotType('Зціджене молоко')">🤱 Зціджене</button></div>
@@ -140,6 +224,7 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <input type="number" id="inMl" placeholder="Або введіть свій об'єм (мл)">
   <button class="save-btn" onclick="saveBot(document.getElementById('inMl').value)">Записати</button>
 </div></div>
+
 <div class="modal" id="modDia" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🧷 Зміна підгузка</h3>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Мокрий', false)">💧 Мокрий</button>
@@ -147,13 +232,55 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="padding:13px" onclick="saveDia('Гібрид', true)">🎉 Гібрид</button>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Не стандарт', true)">⚠️ Не стандарт</button>
 </div></div>
+
+<div class="modal" id="modAct" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)" id="actModalTitle">🚼 Прогулянка</h3>
+  <button class="save-btn" onclick="saveAct(0)">✅ Записати зараз (без тривалості)</button>
+  <div class="f-row"><button class="t-btn" onclick="saveAct(15)">15 хв</button><button class="t-btn" onclick="saveAct(30)">30 хв</button><button class="t-btn" onclick="saveAct(60)">1 год</button><button class="t-btn" onclick="saveAct(90)">1.5 год</button></div>
+  <input type="number" id="inActMins" placeholder="Або введіть тривалість (хвилин)">
+  <button class="t-btn sel-gr" style="padding:11px" onclick="saveAct(document.getElementById('inActMins').value)">Зберегти з тривалістю</button>
+</div></div>
+
+<div class="modal" id="modManual" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">➕ Додати пропущену подію</h3>
+  <div class="m-lbl">Тип події:</div>
+  <select id="manType" onchange="updManualFields()">
+    <option value="bf_l">🤱 Грудне годування (Ліва)</option>
+    <option value="bf_r">🤱 Грудне годування (Права)</option>
+    <option value="mix">🍼 Суміш</option>
+    <option value="milk">🥛 Зціджене молоко</option>
+    <option value="slp">😴 Сон малюка</option>
+    <option value="dia_w">💧 Підгузок: Мокрий</option>
+    <option value="dia_p">💩 Підгузок: Какашка</option>
+    <option value="dia_h">🎉 Підгузок: Гібрид</option>
+    <option value="dia_n">⚠️ Підгузок: Не стандарт</option>
+    <option value="walk">🚼 Прогулянка</option>
+    <option value="bath">🛁 Купання</option>
+  </select>
+  <div class="f-row"><div><div class="m-lbl" style="margin-bottom:4px">Дата:</div><input type="date" id="manDate"></div><div><div class="m-lbl" style="margin-bottom:4px">Час:</div><input type="time" id="manTime"></div></div>
+  <div id="manExtraWrap" style="display:flex;flex-direction:column;gap:8px"><div class="m-lbl" id="manExtraLbl">Тривалість (хвилин):</div><input type="number" id="manExtraVal" placeholder="0"></div>
+  <div class="m-lbl">Коментар (необов'язково):</div>
+  <textarea id="manComment" rows="2" placeholder="Додайте коментар до події..."></textarea>
+  <button class="save-btn" onclick="saveManualAdd()">Зберегти в історію</button>
+</div></div>
+
 <div class="modal" id="modEdit" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)" id="edTitle">✏️ Редагувати запис</h3>
   <div class="m-lbl">Дата події:</div><input type="date" id="edDate"><div class="m-lbl">Час події:</div><input type="time" id="edTime">
   <div id="edExtraWrap" style="display:none;flex-direction:column;gap:12px"><div class="m-lbl" id="edExtraLbl">Значення:</div><input type="number" id="edExtraVal"></div>
+  <div class="m-lbl">Коментар до події:</div>
+  <textarea id="edComment" rows="2" placeholder="Наприклад: зригнула, спокійно заснула..."></textarea>
+  <div class="tag-row">
+    <button type="button" class="tag-chip" onclick="appendTag('Зригнула')">+ Зригнула</button>
+    <button type="button" class="tag-chip" onclick="appendTag('Гикавка')">+ Гикавка</button>
+    <button type="button" class="tag-chip" onclick="appendTag('Коліки')">+ Коліки</button>
+    <button type="button" class="tag-chip" onclick="appendTag('Ліки')">+ Ліки</button>
+    <button type="button" class="tag-chip" onclick="appendTag('Неспокійно спала')">+ Неспокійно спала</button>
+  </div>
   <button class="save-btn" onclick="applyEdit()">Зберегти зміни</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red);padding:11px" onclick="delFromEdit()">🗑 Видалити цей запис</button>
 </div></div>
+
 <div class="modal" id="modSync" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🔄 Сімейна синхронізація</h3>
   <div class="s-lbl" style="line-height:1.4">Вставте посилання на базу Firebase або надішліть запрошення:</div>
@@ -162,60 +289,89 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnShareLink" onclick="shareInvite()">📤 Надіслати посилання мамі</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableSync()">Вимкнути</button>
 </div></div>
-  <div class="modal" id="modDlg" style="z-index:50" onclick="if(event.target===this)closeDlg(false)"><div class="m-body t-center">
+
+<div class="modal" id="modDlg" style="z-index:50" onclick="if(event.target===this)closeDlg(false)"><div class="m-body t-center">
   <div style="font-size:34px" id="dlgIcon">💬</div>
   <h3 style="font-size:18px;color:var(--bright)" id="dlgTitle">Підтвердження</h3>
   <div class="s-lbl" style="line-height:1.45;font-size:14px" id="dlgText"></div>
   <div class="f-row" id="dlgBtns"></div>
 </div></div>
 <script>
-  let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
+let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
 const backupLogs=JSON.parse(localStorage.getItem('bLogs_backup'));
 if((!rawLogs||!rawLogs.length)&&backupLogs&&backupLogs.length){rawLogs=backupLogs;localStorage.setItem('bLogs',JSON.stringify(rawLogs))}
 let logs=rawLogs||[];
-let medData=JSON.parse(localStorage.getItem('bMed'))||{w:[],h:[],b:[]};
+let notes=JSON.parse(localStorage.getItem('bNotes'))||[];
+let reminders=JSON.parse(localStorage.getItem('bReminders'))||[];
+let medData=JSON.parse(localStorage.getItem('bMed'))||{w:[],h:[],b:[],info:{blood:'',doc:'',allergy:''},records:[]};
+if(!medData.info)medData.info={blood:'',doc:'',allergy:''};
+if(!medData.records)medData.records=[];
 let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',gender:'',dob:'',tob:'',w:'',h:''};
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
 let alarmCfg=JSON.parse(localStorage.getItem('bAlarm'))||{enabled:false,mins:180,targetTs:0,dismissedForTs:0};
 let syncUrl=localStorage.getItem('bSyncUrl')||'';
-let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
+let botType='Суміш',actMode='walk',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
 let viewDate=new Date();viewDate.setHours(0,0,0,0);
-let ringInterval=null,audioCtx=null;
-let dlgRes=null;
+let ringInterval=null,audioCtx=null,dlgRes=null;
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function localDateKey(d=new Date()){const pad=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
 function closeDlg(v){document.getElementById('modDlg').style.display='none';if(dlgRes){const r=dlgRes;dlgRes=null;r(v)}}
 function uiAlert(txt,ic='✨',ti='Готово'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML='<button class="save-btn" style="grid-column:span 2" onclick="closeDlg(true)">Зрозуміло</button>';document.getElementById('modDlg').style.display='flex'})}
 function uiConfirm(txt,btnTxt='Видалити',ic='🗑️',ti='Підтвердження'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML=`<button class="t-btn" style="padding:12px" onclick="closeDlg(false)">Скасувати</button><button class="t-btn stop" style="padding:12px" onclick="closeDlg(true)">${btnTxt}</button>`;document.getElementById('modDlg').style.display='flex'})}
-  
+
 function unlockAudio(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC()}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume()}
 document.addEventListener('touchstart',unlockAudio,{passive:true});document.addEventListener('click',unlockAudio,{passive:true});
 function playChime(){try{unlockAudio();if(!audioCtx)return;const now=audioCtx.currentTime;[523.25,659.25,783.99,1046.50].forEach((freq,idx)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,now+idx*0.16);gain.gain.setValueAtTime(0.001,now+idx*0.16);gain.gain.exponentialRampToValueAtTime(0.25,now+idx*0.16+0.04);gain.gain.exponentialRampToValueAtTime(0.001,now+idx*0.16+0.45);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(now+idx*0.16);osc.stop(now+idx*0.16+0.46)});if(navigator.vibrate)navigator.vibrate()}catch(e){}}
 function testAlarmSound(){playChime()}
+
+function openNotes(){document.getElementById('inNoteText').value='';renderNotes();document.getElementById('modNotes').style.display='flex'}
+function addNote(){const inp=document.getElementById('inNoteText'),txt=inp.value.trim();if(!txt){uiAlert('Введіть текст нотатки','✍️','Порожньо');return}notes.unshift({id:Date.now(),txt,ts:Date.now()});localStorage.setItem('bNotes',JSON.stringify(notes));inp.value='';renderNotes();updNotesBadge();pushCloud()}
+async function delNote(id){if(await uiConfirm('Видалити цю нотатку?')){notes=notes.filter(n=>n.id!==id);localStorage.setItem('bNotes',JSON.stringify(notes));renderNotes();updNotesBadge();pushCloud()}}
+function updNotesBadge(){document.getElementById('notesBadge').textContent=notes.length}
+function renderNotes(){const el=document.getElementById('notesList');if(!notes.length){el.innerHTML='<div class="t-center s-lbl" style="padding:18px">Нотаток поки немає</div>';return}el.innerHTML=notes.map(n=>{const dt=new Date(n.ts),dStr=dt.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric'})+' о '+dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});return`<div class="note-card"><div class="note-head"><span>📅 ${dStr}</span><button class="del-btn" style="padding:2px 6px" onclick="delNote(${n.id})">✕</button></div><div class="note-body">${esc(n.txt)}</div></div>`}).join('')}
+const DOW_NAMES={1:'Пн',2:'Вт',3:'Ср',4:'Чт',5:'Пт',6:'Сб',0:'Нд'};
+function openRemModal(){document.getElementById('inRemTitle').value='';document.querySelectorAll('#dowSelector .dow-btn').forEach(b=>b.classList.remove('on'));renderRemManage();document.getElementById('modRem').style.display='flex'}
+function togDow(btn){btn.classList.toggle('on')}
+function selAllDow(){const btns=document.querySelectorAll('#dowSelector .dow-btn'),allOn=Array.from(btns).every(b=>b.classList.contains('on'));btns.forEach(b=>allOn?b.classList.remove('on'):b.classList.add('on'))}
+function addReminder(){const title=document.getElementById('inRemTitle').value.trim();if(!title){uiAlert('Введіть назву нагадування','🔔','Помилка');return}const days=Array.from(document.querySelectorAll('#dowSelector .dow-btn.on')).map(b=>Number(b.dataset.d));if(!days.length){uiAlert('Оберіть хоча б один день тижня','📅','Помилка');return}reminders.push({id:Date.now(),title,days,doneDate:''});localStorage.setItem('bReminders',JSON.stringify(reminders));document.getElementById('inRemTitle').value='';document.querySelectorAll('#dowSelector .dow-btn').forEach(b=>b.classList.remove('on'));renderRemManage();renderDueReminders();pushCloud()}
+async function delReminder(id){if(await uiConfirm('Видалити це нагадування?')){reminders=reminders.filter(r=>r.id!==id);localStorage.setItem('bReminders',JSON.stringify(reminders));renderRemManage();renderDueReminders();pushCloud()}}
+function confirmReminder(id){const rem=reminders.find(r=>r.id===id);if(!rem)return;rem.doneDate=localDateKey();localStorage.setItem('bReminders',JSON.stringify(reminders));renderDueReminders();add('rem','💊',rem.title,'Підтверджено за графіком',{remId:id})}
+function fmtDaysList(days){if(days.length===7)return'Щодня';const order=;return order.filter(d=>days.includes(d)).map(d=>DOW_NAMES[d]).join(', ')}
+function renderRemManage(){const el=document.getElementById('remManageList');if(!reminders.length){el.innerHTML='<div class="t-center s-lbl" style="padding:14px">Список нагадувань порожній</div>';return}el.innerHTML=reminders.map(r=>`<div class="med-row"><div><strong style="color:var(--bright)">${esc(r.title)}</strong><div class="s-lbl" style="margin-top:2px">${fmtDaysList(r.days)}</div></div><button class="del-btn" style="padding:4px 8px" onclick="delReminder(${r.id})">✕</button></div>`).join('')}
+function renderDueReminders(){const now=new Date(),dow=now.getDay(),todayKey=localDateKey(now),due=reminders.filter(r=>r.days.includes(dow)&&r.doneDate!==todayKey),card=document.getElementById('remBanner'),listEl=document.getElementById('dueRemList'),hdr=document.getElementById('remHeaderTxt');if(due.length>0){card.className='rem-card due';hdr.textContent=`🔔 Нагадування на сьогодні (${due.length})`;hdr.style.color='var(--yel)';listEl.innerHTML=due.map(r=>`<div class="rem-item"><div style="font-size:14px;font-weight:700;color:var(--bright)">💊 ${esc(r.title)}</div><button class="rem-ok-btn" onclick="confirmReminder(${r.id})">✅ Підтвердити</button></div>`).join('')}else{card.className='rem-card';hdr.style.color='var(--txt)';hdr.textContent=reminders.length?`🔔 Нагадування (активних: ${reminders.length})`:'🔔 Нагадування за графіком';listEl.innerHTML=''}}
+
 function openAlarm(){document.getElementById('inAlarmMins').value=alarmCfg.mins||180;document.getElementById('btnSysCalAlarm').style.display=alarmCfg.enabled?'block':'none';document.getElementById('modAlarm').style.display='flex'}
 function recalculateAlarmTarget(){if(!alarmCfg.enabled)return;const lf=logs.find(i=>i.t==='feed');alarmCfg.targetTs=(lf?lf.ts:Date.now())+alarmCfg.mins*60000;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}
-function setAlarmMins(val){const m=parseInt(val);if(!m||m<1){alert('Введіть інтервал у хвилинах');return}unlockAudio();if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();alarmCfg.enabled=true;alarmCfg.mins=m;alarmCfg.dismissedForTs=0;recalculateAlarmTarget();document.getElementById('modAlarm').style.display='none';updSince();pushCloud()}
+function setAlarmMins(val){const m=parseInt(val);if(!m||m<1){uiAlert('Введіть інтервал у хвилинах','⏰','Помилка');return}unlockAudio();if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();alarmCfg.enabled=true;alarmCfg.mins=m;alarmCfg.dismissedForTs=0;recalculateAlarmTarget();document.getElementById('modAlarm').style.display='none';updSince();pushCloud()}
 function disableAlarm(){alarmCfg.enabled=false;alarmCfg.targetTs=0;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg));stopRinging(false);document.getElementById('modAlarm').style.display='none';updSince();pushCloud()}
 function startRinging(){if(ringInterval)return;const dt=new Date(alarmCfg.targetTs);document.getElementById('ringSubText').textContent=`Запланований час годування: ${dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'})}`;document.getElementById('modRing').style.display='flex';playChime();ringInterval=setInterval(playChime,2500);if('Notification'in window&&Notification.permission==='granted'){try{new Notification('🍼 Час годувати малюка!',{body:'Минув інтервал годування'})}catch(e){}}}
 function stopRinging(markDismissed=true){if(ringInterval){clearInterval(ringInterval);ringInterval=null}document.getElementById('modRing').style.display='none';if(markDismissed&&alarmCfg.targetTs){alarmCfg.dismissedForTs=alarmCfg.targetTs;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}}
 function snoozeAlarm(mins){stopRinging(false);alarmCfg.targetTs=Date.now()+mins*60000;alarmCfg.dismissedForTs=0;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg));updSince()}
 function exportCalendarAlarm(){if(!alarmCfg.enabled||!alarmCfg.targetTs)return;const start=new Date(alarmCfg.targetTs),end=new Date(alarmCfg.targetTs+15*60000),fmtICS=d=>d.toISOString().replace(/[-:]/g,'').split('.')+'Z';const ics=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',`DTSTART:${fmtICS(start)}`,`DTEND:${fmtICS(end)}`,`SUMMARY:🍼 Годування (${prof.name})`,'DESCRIPTION:Нагадування з Трекера Малюка','BEGIN:VALARM','TRIGGER:-PT0M','ACTION:AUDIO','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='feeding-alarm.ics';link.click()}
-  (function checkInvite(){const p=new URLSearchParams(window.location.search),db=p.get('db');if(db){let u=decodeURIComponent(db).trim();if(!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl)}})();
+(function checkInvite(){const p=new URLSearchParams(window.location.search),db=p.get('db');if(db){let u=decodeURIComponent(db).trim();if(!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl)}})();
 function openSync(){document.getElementById('inSyncUrl').value=syncUrl;document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';document.getElementById('modSync').style.display='flex'}
-async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||hasMedData())await pushCloud();alert('Підключено! Дані синхронізовано.')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
-function shareInvite(){if(!syncUrl)return;const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;if(navigator.share){navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl})}else if(navigator.clipboard){navigator.clipboard.writeText(inviteUrl);alert('Посилання скопійовано!')}else{prompt('Скопіюйте посилання:',inviteUrl)}}
+async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||notes.length>0||reminders.length>0||hasMedData())await pushCloud();uiAlert('Дані успішно синхронізовано!','🔄','Підключено')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
+function shareInvite(){if(!syncUrl)return;const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;if(navigator.share){navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl})}else if(navigator.clipboard){navigator.clipboard.writeText(inviteUrl);uiAlert('Посилання скопійовано в буфер обміну!','📋','Скопійовано')}else{prompt('Скопіюйте посилання:',inviteUrl)}}
 function disableSync(){syncUrl='';localStorage.removeItem('bSyncUrl');updSyncDot(false);document.getElementById('modSync').style.display='none'}
 function updSyncDot(ok){document.getElementById('syncDot').className=ok?'sync-dot on':'sync-dot'}
-function hasMedData(){return(medData.w&&medData.w.length)||(medData.h&&medData.h.length)||(medData.b&&medData.b.length)}
+function hasMedData(){return(medData.w&&medData.w.length)||(medData.h&&medData.h.length)||(medData.b&&medData.b.length)||(medData.records&&medData.records.length)||(medData.info&&(medData.info.blood||medData.info.doc||medData.info.allergy))}
 
-async function pushCloud(forceEmpty=false){if(!syncUrl)return;if(logs.length===0&&!hasMedData()&&!forceEmpty)return;const stateObj={logs,prof,actFeed,actSleep,medData,alarmCfg};lastHash=JSON.stringify(stateObj);const payload=JSON.stringify({...stateObj,upd:Date.now()});try{const r=await fetch(syncUrl+'babydata.json',{method:'PUT',body:payload});updSyncDot(r.ok);if(r.ok&&logs.length>0){const todayKey=new Date().toISOString().slice(0,10);if(localStorage.getItem('lastCloudBackup')!==todayKey){await fetch(`${syncUrl}backups/${todayKey}.json`,{method:'PUT',body:payload});localStorage.setItem('lastCloudBackup',todayKey)}}}catch(e){updSyncDot(false)}}
-async function pullCloud(){if(!syncUrl)return;try{const r=await fetch(syncUrl+'babydata.json');if(!r.ok){updSyncDot(false);return}const data=await r.json();updSyncDot(true);if(!data){if(logs.length>0||hasMedData())pushCloud();return}const remoteState={logs:data.logs||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null,medData:data.medData||{w:[],h:[],b:[]},alarmCfg:data.alarmCfg||alarmCfg};const remoteHash=JSON.stringify(remoteState);if(remoteHash!==lastHash){if(remoteState.logs.length>0||isInitialSync||logs.length===0){logs=remoteState.logs;localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs))}if(data.medData){medData={w:data.medData.w||[],h:data.medData.h||[],b:data.medData.b||[]};localStorage.setItem('bMed',JSON.stringify(medData))}if(data.alarmCfg){alarmCfg=data.alarmCfg;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof))}actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');lastHash=remoteHash;renderProf();updTimers();render();updSince();updStats();if(document.getElementById('modMed').style.display==='flex')renderMed()}}catch(e){updSyncDot(false)}}
+async function pushCloud(forceEmpty=false){if(!syncUrl)return;if(logs.length===0&&notes.length===0&&reminders.length===0&&!hasMedData()&&!forceEmpty)return;const stateObj={logs,notes,reminders,prof,actFeed,actSleep,medData,alarmCfg};lastHash=JSON.stringify(stateObj);const payload=JSON.stringify({...stateObj,upd:Date.now()});try{const r=await fetch(syncUrl+'babydata.json',{method:'PUT',body:payload});updSyncDot(r.ok);if(r.ok&&logs.length>0){const todayKey=new Date().toISOString().slice(0,10);if(localStorage.getItem('lastCloudBackup')!==todayKey){await fetch(`${syncUrl}backups/${todayKey}.json`,{method:'PUT',body:payload});localStorage.setItem('lastCloudBackup',todayKey)}}}catch(e){updSyncDot(false)}}
+async function pullCloud(){if(!syncUrl)return;try{const r=await fetch(syncUrl+'babydata.json');if(!r.ok){updSyncDot(false);return}const data=await r.json();updSyncDot(true);if(!data){if(logs.length>0||notes.length>0||reminders.length>0||hasMedData())pushCloud();return}const remoteState={logs:data.logs||[],notes:data.notes||[],reminders:data.reminders||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null,medData:data.medData||{w:[],h:[],b:[],info:{blood:'',doc:'',allergy:''},records:[]},alarmCfg:data.alarmCfg||alarmCfg};const remoteHash=JSON.stringify(remoteState);if(remoteHash!==lastHash){if(remoteState.logs.length>0||isInitialSync||logs.length===0){logs=remoteState.logs;localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs))}if(data.notes){notes=data.notes;localStorage.setItem('bNotes',JSON.stringify(notes));updNotesBadge();if(document.getElementById('modNotes').style.display==='flex')renderNotes()}if(data.reminders){reminders=data.reminders;localStorage.setItem('bReminders',JSON.stringify(reminders));renderDueReminders();if(document.getElementById('modRem').style.display==='flex')renderRemManage()}if(data.medData){medData={w:data.medData.w||[],h:data.medData.h||[],b:data.medData.b||[],info:data.medData.info||{blood:'',doc:'',allergy:''},records:data.medData.records||[]};localStorage.setItem('bMed',JSON.stringify(medData))}if(data.alarmCfg){alarmCfg=data.alarmCfg;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof))}actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');lastHash=remoteHash;renderProf();updTimers();render();updSince();updStats();if(document.getElementById('modMed').style.display==='flex')renderMed()}}catch(e){updSyncDot(false)}}
 
-function openMed(){document.getElementById('medDate').value=new Date().toISOString().slice(0,10);setMedTab(curMedTab);document.getElementById('modMed').style.display='flex'}
-function setMedTab(t){curMedTab=t;document.getElementById('tabW').className=t==='w'?'t-btn sel':'t-btn';document.getElementById('tabH').className=t==='h'?'t-btn sel-g':'t-btn';document.getElementById('tabB').className=t==='b'?'t-btn sel-y':'t-btn';document.getElementById('medVal').placeholder={w:'Вага (напр. 4.35 кг)',h:'Зріст (напр. 56 см)',b:'Білірубін (мкмоль/л)'}[t];document.getElementById('medVal').value='';renderMed()}
-function addMed(){const d=document.getElementById('medDate').value,v=parseFloat(document.getElementById('medVal').value);if(!d||isNaN(v)||v<=0){alert('Введіть дату та значення');return}if(!medData[curMedTab])medData[curMedTab]=[];medData[curMedTab].push({id:Date.now(),d,v});medData[curMedTab].sort((a,b)=>a.d.localeCompare(b.d));if(curMedTab==='w'){prof.w=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}if(curMedTab==='h'){prof.h=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}localStorage.setItem('bMed',JSON.stringify(medData));document.getElementById('medVal').value='';renderMed();pushCloud()}
-function delMed(id){if(!confirm('Видалити цей замір?'))return;medData[curMedTab]=medData[curMedTab].filter(x=>x.id!==id);localStorage.setItem('bMed',JSON.stringify(medData));renderMed();pushCloud()}
-function renderMed(){const list=(medData[curMedTab]||[]).slice().sort((a,b)=>a.d.localeCompare(b.d)),unit={w:'кг',h:'см',b:'мкмоль/л'}[curMedTab],color={w:'#7aa2f7',h:'#f7768e',b:'#e0af68'}[curMedTab],chartWrap=document.getElementById('medChartWrap');if(list.length===0){chartWrap.innerHTML='<div class="t-center s-lbl" style="padding:28px 10px">Додайте перший замір нижче</div>'}else{const W=310,H=135,padX=28,padY=22,vals=list.map(x=>x.v);let minV=Math.min(...vals),maxV=Math.max(...vals);if(minV===maxV){minV=Math.max(0,minV-1);maxV=maxV+1}const range=maxV-minV,pts=list.map((item,idx)=>{const x=list.length===1?W/2:padX+(idx/(list.length-1))*(W-padX*2),y=H-padY-((item.v-minV)/range)*(H-padY*2);return{x,y,v:item.v,d:item.d.slice(5).split('-').reverse().join('.')}}),poly=pts.map(p=>`${p.x},${p.y}`).join(' '),dots=pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="${color}" stroke="#0f111a" stroke-width="1.5"/><text x="${p.x}" y="${p.y-8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${p.v}</text><text x="${p.x}" y="${H-4}" fill="#787c99" font-size="9" text-anchor="middle">${p.d}</text>`).join('');chartWrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block"><line x1="${padX}" y1="${padY}" x2="${W-padX}" y2="${padY}" stroke="rgba(255,255,255,.06)" stroke-dasharray="3"/><line x1="${padX}" y1="${H-padY}" x2="${W-padX}" y2="${H-padY}" stroke="rgba(255,255,255,.06)"/>${pts.length>1?`<polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${poly}"/>`:''}${dots}</svg>`}document.getElementById('medHistoryList').innerHTML=list.slice().reverse().map(item=>`<div class="med-row"><span>${item.d.split('-').reverse().join('.')} — <strong style="color:var(--bright)">${item.v} ${unit}</strong></span><button class="del-btn" style="padding:2px 6px" onclick="delMed(${item.id})">✕</button></div>`).join('')}
-  function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
+function openMed(){document.getElementById('medDate').value=localDateKey();setMedTab(curMedTab);document.getElementById('modMed').style.display='flex'}
+function setMedTab(t){curMedTab=t;document.getElementById('tabW').className=t==='w'?'t-btn sel':'t-btn';document.getElementById('tabH').className=t==='h'?'t-btn sel-g':'t-btn';document.getElementById('tabB').className=t==='b'?'t-btn sel-y':'t-btn';document.getElementById('tabC').className=t==='c'?'t-btn sel-gr':'t-btn';const gSec=document.getElementById('medGraphSection'),cSec=document.getElementById('medCardSection');if(t==='c'){gSec.style.display='none';cSec.style.display='flex';document.getElementById('mcBlood').value=medData.info.blood||'';document.getElementById('mcDoc').value=medData.info.doc||'';document.getElementById('mcAllergy').value=medData.info.allergy||'';renderMedRecords()}else{gSec.style.display='flex';cSec.style.display='none';document.getElementById('medVal').placeholder={w:'Вага (напр. 4.35 кг)',h:'Зріст (напр. 56 см)',b:'Білірубін (мкмоль/л)'}[t];document.getElementById('medVal').value='';document.getElementById('medNote').value='';renderMed()}}
+function saveMedInfo(){medData.info={blood:document.getElementById('mcBlood').value.trim(),doc:document.getElementById('mcDoc').value.trim(),allergy:document.getElementById('mcAllergy').value.trim()};localStorage.setItem('bMed',JSON.stringify(medData));pushCloud();uiAlert('Дані медичної картки збережено','🩺','Збережено')}
+function addMedRecord(){const inp=document.getElementById('mcRecText'),txt=inp.value.trim();if(!txt){uiAlert('Введіть медичний запис','📋','Порожньо');return}medData.records.unshift({id:Date.now(),txt,d:localDateKey()});localStorage.setItem('bMed',JSON.stringify(medData));inp.value='';renderMedRecords();pushCloud()}
+async function delMedRecord(id){if(!await uiConfirm('Видалити медичний запис?'))return;medData.records=medData.records.filter(r=>r.id!==id);localStorage.setItem('bMed',JSON.stringify(medData));renderMedRecords();pushCloud()}
+function renderMedRecords(){const el=document.getElementById('medRecordsList');if(!medData.records.length){el.innerHTML='<div class="t-center s-lbl" style="padding:12px">Медичних записів ще немає</div>';return}el.innerHTML=medData.records.map(r=>`<div class="med-row" style="align-items:flex-start"><div style="flex:1"><div class="s-lbl">${r.d.split('-').reverse().join('.')}</div><div style="color:var(--bright);margin-top:2px;white-space:pre-wrap">${esc(r.txt)}</div></div><button class="del-btn" style="padding:2px 6px" onclick="delMedRecord(${r.id})">✕</button></div>`).join('')}
+function addMed(){const d=document.getElementById('medDate').value,v=parseFloat(document.getElementById('medVal').value),note=document.getElementById('medNote').value.trim();if(!d||isNaN(v)||v<=0){uiAlert('Введіть дату та значення','📈','Помилка');return}if(!medData[curMedTab])medData[curMedTab]=[];medData[curMedTab].push({id:Date.now(),d,v,n:note});medData[curMedTab].sort((a,b)=>a.d.localeCompare(b.d));if(curMedTab==='w'){prof.w=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}if(curMedTab==='h'){prof.h=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}localStorage.setItem('bMed',JSON.stringify(medData));document.getElementById('medVal').value='';document.getElementById('medNote').value='';renderMed();pushCloud()}
+async function delMed(id){if(!await uiConfirm('Видалити цей замір?'))return;medData[curMedTab]=medData[curMedTab].filter(x=>x.id!==id);localStorage.setItem('bMed',JSON.stringify(medData));renderMed();pushCloud()}
+function renderMed(){if(curMedTab==='c'){renderMedRecords();return}const list=(medData[curMedTab]||[]).slice().sort((a,b)=>a.d.localeCompare(b.d)),unit={w:'кг',h:'см',b:'мкмоль/л'}[curMedTab],color={w:'#7aa2f7',h:'#f7768e',b:'#e0af68'}[curMedTab],chartWrap=document.getElementById('medChartWrap');if(list.length===0){chartWrap.innerHTML='<div class="t-center s-lbl" style="padding:28px 10px">Додайте перший замір нижче</div>'}else{const W=310,H=135,padX=28,padY=22,vals=list.map(x=>x.v);let minV=Math.min(...vals),maxV=Math.max(...vals);if(minV===maxV){minV=Math.max(0,minV-1);maxV=maxV+1}const range=maxV-minV,pts=list.map((item,idx)=>{const x=list.length===1?W/2:padX+(idx/(list.length-1))*(W-padX*2),y=H-padY-((item.v-minV)/range)*(H-padY*2);return{x,y,v:item.v,d:item.d.slice(5).split('-').reverse().join('.')}}),poly=pts.map(p=>`${p.x},${p.y}`).join(' '),dots=pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="${color}" stroke="#0f111a" stroke-width="1.5"/><text x="${p.x}" y="${p.y-8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${p.v}</text><text x="${p.x}" y="${H-4}" fill="#787c99" font-size="9" text-anchor="middle">${p.d}</text>`).join('');chartWrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block"><line x1="${padX}" y1="${padY}" x2="${W-padX}" y2="${padY}" stroke="rgba(255,255,255,.06)" stroke-dasharray="3"/><line x1="${padX}" y1="${H-padY}" x2="${W-padX}" y2="${H-padY}" stroke="rgba(255,255,255,.06)"/>${pts.length>1?`<polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${poly}"/>`:''}${dots}</svg>`}document.getElementById('medHistoryList').innerHTML=list.slice().reverse().map(item=>`<div class="med-row"><div><span>${item.d.split('-').reverse().join('.')} — <strong style="color:var(--bright)">${item.v} ${unit}</strong></span>${item.n?`<div class="s-lbl">${esc(item.n)}</div>`:''}</div><button class="del-btn" style="padding:2px 6px" onclick="delMed(${item.id})">✕</button></div>`).join('')}
+
+function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
 function togStats(){statsOpen=!statsOpen;document.getElementById('extStats').style.display=statsOpen?'flex':'none';document.getElementById('stArrow').textContent=statsOpen?'Згорнути ▴':'Детальніше ▾'}
 function setGender(g){selGender=g;document.getElementById('btnBoy').className=g==='boy'?'t-btn sel':'t-btn';document.getElementById('btnGirl').className=g==='girl'?'t-btn sel-g':'t-btn'}
 function togForm(){const f=document.getElementById('pForm'),d=document.getElementById('pDisp');if(f.style.display==='flex'){f.style.display='none';d.style.display='block'}else{setGender(prof.gender||'');document.getElementById('iName').value=prof.name;document.getElementById('iDob').value=prof.dob;document.getElementById('iTob').value=prof.tob||'';document.getElementById('iW').value=prof.w;document.getElementById('iH').value=prof.h;f.style.display='flex';d.style.display='none'}}
@@ -224,6 +380,7 @@ function pluralDays(n){const mod10=n%10,mod100=n%100;if(mod10===1&&mod100!==11)r
 function renderProf(){const card=document.getElementById('profCard');card.className='card'+(prof.gender==='boy'?' boy':(prof.gender==='girl'?' girl':''));const icon=prof.gender==='boy'?'👦 ':(prof.gender==='girl'?'👧 ':'👶 ');document.getElementById('dName').textContent=icon+prof.name;document.getElementById('dDobLbl').textContent=prof.gender==='girl'?'Народилася':'Народився';document.getElementById('dW').textContent=prof.w?prof.w+' кг':'—';document.getElementById('dH').textContent=prof.h?prof.h+' см':'—';const arrow=profOpen?' ▴':' ▾';if(!prof.dob){document.getElementById('dDob').textContent='натисніть Редагувати';document.getElementById('mainDaysBadge').textContent='Профіль'+arrow;return}const[yr,mo,da]=prof.dob.split('-').map(Number),dobStart=new Date(yr,mo-1,da),now=new Date(),todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()),days=Math.max(0,Math.round((todayStart-dobStart)/864e5)),formattedDate=dobStart.toLocaleDateString('uk-UA');document.getElementById('dDob').textContent=prof.tob?`${formattedDate} о ${prof.tob}`:formattedDate;document.getElementById('mainDaysBadge').textContent=pluralDays(days)+arrow;document.getElementById('aDays').textContent=days;document.getElementById('aWeeks').textContent=Math.floor(days/7);let y=now.getFullYear()-dobStart.getFullYear(),m=now.getMonth()-dobStart.getMonth();if(now.getDate()<dobStart.getDate())m--;if(m<0){y--;m+=12}if(y>=1){document.getElementById('aYears').textContent=y;document.getElementById('aYLbl').textContent=y===1?'рік':(y<5?'роки':'років')}else{document.getElementById('aYears').textContent=m;document.getElementById('aYLbl').textContent=m===1?'місяць':(m>=2&&m<=4?'місяці':'місяців')}}
 function fmtDur(sec){const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60,pad=n=>String(n).padStart(2,'0');return h>0?`${h}:${pad(m)}:${pad(s)}`:`${pad(m)}:${pad(s)}`}
 function fmtTextDur(mins){if(mins<1)return'< 1 хв';const h=Math.floor(mins/60),m=mins%60;return h>0?`${h} год ${m} хв`:`${m} хв`}
+
 function startFeed(side){actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
 function stopFeed(saveIt){const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}else{pushCloud()}}
 function startSleep(){actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
@@ -234,24 +391,36 @@ function openBot(){document.getElementById('inMl').value='';setBotType('Сумі
 function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`${botType} • ${ml} мл`:botType,{ml});document.getElementById('modBot').style.display='none'}
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
-function openEdit(id){const item=logs.find(i=>i.id===id);if(!item)return;editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}else{wrap.style.display='none'}document.getElementById('modEdit').style.display='flex'}
-function applyEdit(){const item=logs.find(i=>i.id===editId);if(!item)return;const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();const wrap=document.getElementById('edExtraWrap'),val=parseInt(document.getElementById('edExtraVal').value)||0;if(wrap.style.display==='flex'){if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}}logs.sort((a,b)=>b.ts-a.ts);if(item.t==='feed'&&alarmCfg.enabled){alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}document.getElementById('modEdit').style.display='none';save()}
-function delFromEdit(){if(confirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save()}}
-  function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
-function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);if(t==='feed'&&alarmCfg.enabled){stopRinging(false);alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}resetDay();save()}
-function del(e,id){e.stopPropagation();if(confirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save(true)}}
-function clrAll(){if(confirm("Видалити всю історію?")){logs=[];localStorage.removeItem('bLogs_backup');save(true)}}
+function openAct(mode){actMode=mode;document.getElementById('actModalTitle').textContent=mode==='walk'?'🚼 Прогулянка':'🛁 Купання';document.getElementById('inActMins').value='';document.getElementById('modAct').style.display='flex'}
+function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
+function openAct(mode){actMode=mode;document.getElementById('actModalTitle').textContent=mode==='walk'?'🚼 Прогулянка':'🛁 Купання';document.getElementById('inActMins').value='';document.getElementById('modAct').style.display='flex'}
+function saveAct(val){const mins=parseInt(val)||0,ic=actMode==='walk'?'🚼':'🛁',ti=actMode==='walk'?'Прогулянка':'Купання',n=mins>0?'Тривалість: '+fmtTextDur(mins):'Зафіксовано';add(actMode,ic,ti,n,{mins});document.getElementById('modAct').style.display='none'}
+
+function openManualAdd(){const pad=n=>String(n).padStart(2,'0'),now=new Date();document.getElementById('manType').value='bf_l';document.getElementById('manDate').value=localDateKey(viewDate);document.getElementById('manTime').value=pad(now.getHours())+':'+pad(now.getMinutes());document.getElementById('manExtraVal').value='';document.getElementById('manComment').value='';updManualFields();document.getElementById('modManual').style.display='flex'}
+function updManualFields(){const t=document.getElementById('manType').value,wrap=document.getElementById('manExtraWrap'),lbl=document.getElementById('manExtraLbl'),inp=document.getElementById('manExtraVal');if(t==='mix'||t==='milk'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.placeholder='90'}else if(t==='bf_l'||t==='bf_r'||t==='slp'||t==='walk'||t==='bath'){wrap.style.display='flex';lbl.textContent='Тривалість (хвилин, 0 якщо без часу):';inp.placeholder='15'}else{wrap.style.display='none'}}
+function saveManualAdd(){const type=document.getElementById('manType').value,dVal=document.getElementById('manDate').value,tVal=document.getElementById('manTime').value;if(!dVal||!tVal){uiAlert('Вкажіть дату та час події','📅','Помилка');return}const ts=new Date(dVal+'T'+tVal).getTime(),val=parseInt(document.getElementById('manExtraVal').value)||0,c=document.getElementById('manComment').value.trim();let t='feed',ic='🤱',ti='Грудне годування',n='',ex={};if(type==='bf_l'||type==='bf_r'){const side=type==='bf_l'?'Ліва':'Права';n=side+' грудь ('+fmtTextDur(val)+')';ex={mins:val,side}}else if(type==='mix'||type==='milk'){ic='🍼';ti=type==='mix'?'Суміш':'Зціджене молоко';n=val>0?ti+' • '+val+' мл':ti;ex={ml:val}}else if(type==='slp'){t='slp';ic='😴';ti='Сон малюка';n='Тривалість: '+fmtTextDur(val);ex={mins:val}}else if(type.startsWith('dia_')){t='dia';ic='🧷';ti='Підгузок';const map={dia_w:['Мокрий',false],dia_p:['Какашка',true],dia_h:['Гібрид',true],dia_n:['Не стандарт',true]};n=map[type];ex={d:map[type]}}else if(type==='walk'||type==='bath'){t=type;ic=type==='walk'?'🚼':'🛁';ti=type==='walk'?'Прогулянка':'Купання';n=val>0?'Тривалість: '+fmtTextDur(val):'Зафіксовано';ex={mins:val}}logs.unshift({id:Date.now(),t,ic,ti,n,ex,c,ts});logs.sort((a,b)=>b.ts-a.ts);if(t==='feed'&&alarmCfg.enabled){alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}const[yy,mm,dd]=dVal.split('-').map(Number);viewDate=new Date(yy,mm-1,dd);viewDate.setHours(0,0,0,0);document.getElementById('modManual').style.display='none';save()}
+function appendTag(tag){const inp=document.getElementById('edComment'),cur=inp.value.trim();inp.value=cur?(cur.includes(tag)?cur:cur+', '+tag):tag}
+function openEdit(id){const item=logs.find(i=>i.id===id);if(!item)return;editId=id;document.getElementById('edTitle').textContent='✏️ '+item.ti;const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');document.getElementById('edDate').value=dt.getFullYear()+'-'+pad(dt.getMonth()+1)+'-'+pad(dt.getDate());document.getElementById('edTime').value=pad(dt.getHours())+':'+pad(dt.getMinutes());document.getElementById('edComment').value=item.c||'';const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}else{wrap.style.display='none'}document.getElementById('modEdit').style.display='flex'}
+function applyEdit(){const item=logs.find(i=>i.id===editId);if(!item)return;const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;if(dVal&&tVal)item.ts=new Date(dVal+'T'+tVal).getTime();item.c=document.getElementById('edComment').value.trim();const wrap=document.getElementById('edExtraWrap'),val=parseInt(document.getElementById('edExtraVal').value)||0;if(wrap.style.display==='flex'){if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?item.ti+' • '+val+' мл':item.ti}else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;if(item.t==='slp')item.n='Тривалість: '+fmtTextDur(val);else if(item.t==='walk'||item.t==='bath')item.n=val>0?'Тривалість: '+fmtTextDur(val):'Зафіксовано';else item.n=((item.ex.side||'')+' грудь ('+fmtTextDur(val)+')').trim()}}logs.sort((a,b)=>b.ts-a.ts);if(item.t==='feed'&&alarmCfg.enabled){alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}document.getElementById('modEdit').style.display='none';save()}
+async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
+
+function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
+function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,c:'',ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);if(t==='feed'&&alarmCfg.enabled){stopRinging(false);alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}resetDay();save()}
+async function del(e,id){e.stopPropagation();if(await uiConfirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save(true)}}
+
 function shiftDay(delta){viewDate.setDate(viewDate.getDate()+delta);render();updStats()}
 function resetDay(){viewDate=new Date();viewDate.setHours(0,0,0,0);render();updStats()}
 function pickCalDate(val){if(!val)return;const[y,m,d]=val.split('-').map(Number);viewDate=new Date(y,m-1,d);viewDate.setHours(0,0,0,0);render();updStats()}
-  function updStats(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),isToday=dayStart===todayStart;document.getElementById('statsTitle').textContent=isToday?'📊 Статистика за сьогодні':`📊 Статистика за ${viewDate.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit'})}`;const tl=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd);let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];tl.forEach(i=>{if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}}else if(i.t==='dia'){d++;if(i.ex&&i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}else if(i.t==='slp'){sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins}});document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';if(feedTimes.length>=2){feedTimes.sort((a,b)=>a-b);let diffSum=0;for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4))}else{document.getElementById('exInt').textContent='—'}}
-function updSince(){const el=document.getElementById('tFeed'),lf=logs.find(i=>i.t==='feed');if(!lf){el.textContent='Ще не було записів'}else{const m=Math.floor((Date.now()-lf.ts)/6e4),h=Math.floor(m/60);el.textContent=h>0?`${h} год ${m%60} хв тому`:`${m} хв тому`}const stTxt=document.getElementById('alarmStatusText'),btn=document.getElementById('alarmBtn');if(!alarmCfg.enabled||!alarmCfg.targetTs){stTxt.textContent='Будильник вимкнено';stTxt.style.color='var(--mut)';btn.className='alarm-pill';btn.textContent='⏰ Налаштувати';return}btn.className='alarm-pill on';btn.textContent=`⏰ ${fmtTextDur(alarmCfg.mins)}`;const leftMs=alarmCfg.targetTs-Date.now(),targetStr=new Date(alarmCfg.targetTs).toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});if(leftMs>0){const leftMins=Math.ceil(leftMs/60000);stTxt.style.color='var(--yel)';stTxt.textContent=`О ${targetStr} (через ${fmtTextDur(leftMins)})`}else{stTxt.style.color='var(--red)';stTxt.textContent=`Час годувати! (було о ${targetStr})`;if(alarmCfg.dismissedForTs!==alarmCfg.targetTs)startRinging()}}
-  function render(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),yesterdayStart=todayStart-864e5,pad=n=>String(n).padStart(2,'0'),isoStr=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`,todayIso=`${new Date().getFullYear()}-${pad(new Date().getMonth()+1)}-${pad(new Date().getDate())}`,picker=document.getElementById('calPicker');picker.value=isoStr;picker.max=todayIso;const lbl=document.getElementById('curDayLabel');if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);const dayLogs=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}el.innerHTML=dayLogs.map(i=>{const dt=new Date(i.ts),tm=dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});return`<div class="l-item" onclick="openEdit(${i.id})"><div class="l-info"><div class="l-icon">${i.ic}</div><div><div class="l-title">${i.ti}</div>${i.n?`<div class="l-note">${i.n}</div>`:''}</div></div><div class="l-right"><span class="l-time">${tm}</span><button class="del-btn" onclick="del(event,${i.id})">✕</button></div></div>`}).join('')}
+function updStats(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),isToday=dayStart===todayStart;document.getElementById('statsTitle').textContent=isToday?'📊 Статистика за сьогодні':'📊 Статистика за '+viewDate.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit'});const tl=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd);let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];tl.forEach(i=>{if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}}else if(i.t==='dia'){d++;if(i.ex&&i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}else if(i.t==='slp'){sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins}});document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent='Їжа ('+ml+' мл)';document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent='Підгузки ('+dt+'💩)';document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent='Сон ('+sc+' разів)';document.getElementById('exBf').textContent=bfC+' разів ('+fmtTextDur(bfM)+')';document.getElementById('exMix').textContent=mixMl+' мл';document.getElementById('exMilk').textContent=milkMl+' мл';document.getElementById('exDia').textContent=dWet+'💧 / '+dPoo+'💩 / '+dHyb+'💧💩 / '+dNon+'⚠️';document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';if(feedTimes.length>=2){feedTimes.sort((a,b)=>a-b);let diffSum=0;for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4))}else{document.getElementById('exInt').textContent='—'}}
+
+function updSince(){const el=document.getElementById('tFeed'),lf=logs.find(i=>i.t==='feed');if(!lf){el.textContent='Ще не було записів'}else{const m=Math.floor((Date.now()-lf.ts)/6e4),h=Math.floor(m/60);el.textContent=h>0?h+' год '+(m%60)+' хв тому':m+' хв тому'}const stTxt=document.getElementById('alarmStatusText'),btn=document.getElementById('alarmBtn');if(!alarmCfg.enabled||!alarmCfg.targetTs){stTxt.textContent='Будильник вимкнено';stTxt.style.color='var(--mut)';btn.className='alarm-pill';btn.textContent='⏰ Налаштувати';return}btn.className='alarm-pill on';btn.textContent='⏰ '+fmtTextDur(alarmCfg.mins);const leftMs=alarmCfg.targetTs-Date.now(),targetStr=new Date(alarmCfg.targetTs).toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});if(leftMs>0){const leftMins=Math.ceil(leftMs/60000);stTxt.style.color='var(--yel)';stTxt.textContent='О '+targetStr+' (через '+fmtTextDur(leftMins)+')'}else{stTxt.style.color='var(--red)';stTxt.textContent='Час годувати! (було о '+targetStr+')';if(alarmCfg.dismissedForTs!==alarmCfg.targetTs)startRinging()}}
+function render(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),yesterdayStart=todayStart-864e5,pad=n=>String(n).padStart(2,'0'),isoStr=viewDate.getFullYear()+'-'+pad(viewDate.getMonth()+1)+'-'+pad(viewDate.getDate()),todayIso=localDateKey(),picker=document.getElementById('calPicker');picker.value=isoStr;picker.max=todayIso;const lbl=document.getElementById('curDayLabel');if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);const dayLogs=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}el.innerHTML=dayLogs.map(i=>{const dt=new Date(i.ts),tm=dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'}),hasC=i.c&&i.c.trim().length>0;return'<div class="l-item'+(hasC?' has-comment':'')+'" onclick="openEdit('+i.id+')"><div class="l-info"><div class="l-icon">'+i.ic+'</div><div><div class="l-title">'+esc(i.ti)+'</div>'+(i.n?'<div class="l-note">'+esc(i.n)+'</div>':'')+(hasC?'<div class="l-comment">📝 '+esc(i.c)+'</div>':'')+'</div></div><div class="l-right"><span class="l-time">'+tm+'</span><button class="del-btn" onclick="del(event,'+i.id+')">✕</button></div></div>'}).join('')}
+
 window.addEventListener('load',()=>{setTimeout(()=>{const splash=document.getElementById('splash-screen');if(splash){splash.classList.add('hidden');setTimeout(()=>splash.remove(),600)}},1500)});
 if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(reg=>reg.update());let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing&&!actFeed&&!actSleep){refreshing=true;window.location.reload()}})}
-setInterval(()=>{updTimers();updSince();renderProf()},1000);
+setInterval(()=>{updTimers();updSince();renderProf();renderDueReminders()},1000);
 setInterval(pullCloud,5000);
-renderProf();updTimers();render();updSince();updStats();
+renderProf();updTimers();render();updSince();updStats();updNotesBadge();renderDueReminders();
 if(syncUrl)pullCloud();
 </script>
 </body>
