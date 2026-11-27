@@ -7,13 +7,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Даринка">
-<link rel="manifest" href="manifest.json?v=14">
+<link rel="manifest" href="manifest.json?v=6">
 <link rel="apple-touch-icon" href="./1795395014124.jpg">
 <title>Трекер Малюка</title>
 <style>
-:root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
+  :root{--bg:#0f111a;--card:#191c29;--light:#24283b;--prim:#9d7cd8;--sec:#73daca;--pink:#f7768e;--blue:#7aa2f7;--yel:#e0af68;--txt:#c0caf5;--bright:#ffffff;--mut:#787c99;--red:#f7768e}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
-input,textarea,select{user-select:auto}
+input{user-select:auto}
 body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env(safe-area-inset-top));max-width:480px;margin:0 auto;padding-bottom:60px}
 #splash-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;transition:opacity .6s ease,visibility .6s ease}
 #splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -22,45 +22,40 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
 @keyframes fadeInLove{to{opacity:1;transform:translateY(0)}}
 .card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .card.boy{border-top:3px solid var(--blue)}.card.girl{border-top:3px solid var(--pink)}
-.p-head,.h-head{display:flex;justify-content:space-between;align-items:center}.h-head{margin:18px 0 10px}
+  .p-head,.h-head{display:flex;justify-content:space-between;align-items:center}.h-head{margin:18px 0 10px}
 .b-name{font-size:19px;font-weight:700;color:var(--bright)}
 .day-badge{background:rgba(157,124,216,.15);color:var(--prim);padding:6px 12px;border-radius:12px;font-size:14px;font-weight:800}
 .sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mut);margin-right:6px}.sync-dot.on{background:var(--sec);box-shadow:0 0 8px var(--sec)}
 .prof-details{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
 .age-grid,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.age-grid{background:rgba(15,17,26,.5);padding:10px;border-radius:14px;margin-bottom:10px}
-.age-val,.stat-num{font-size:18px;font-weight:800}.age-val{color:var(--prim)}.age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
+.age-val,.stat-num{font-size:18px;font-weight:800}.age-val{color:var(--prim)}
+.age-lbl,.bio,.s-lbl,.stat-sub,.l-note,.l-time{font-size:12px;color:var(--mut)}
 .bio{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-bottom:12px}.bio strong{color:var(--bright)}
-.edit-btn{background:var(--light);border:none;color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%;margin-top:6px;cursor:pointer}
+.edit-btn{background:var(--light);border:none;color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;width:100%;margin-top:6px}
 .p-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
-.p-form input,.modal input,.modal textarea,.modal select{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
-.modal textarea{resize:none;min-height:76px;line-height:1.4}
+  .p-form input,.modal input{background:var(--bg);border:1px solid var(--light);color:var(--bright);padding:11px;border-radius:12px;font-size:15px;width:100%;outline:none}
 .f-row,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.save-btn{background:linear-gradient(135deg,var(--prim),var(--blue));color:#0f111a;border:none;padding:12px;border-radius:12px;font-weight:700;font-size:15px;width:100%;cursor:pointer}
+.save-btn{background:linear-gradient(135deg,var(--prim),var(--blue));color:#0f111a;border:none;padding:12px;border-radius:12px;font-weight:700;font-size:15px;width:100%}
 .t-center{text-align:center}.s-time{font-size:20px;font-weight:800;color:var(--sec);margin-top:4px;letter-spacing:.3px}
-.rem-card{border-left:4px solid var(--prim);padding:12px 14px;cursor:pointer}.rem-card.due{border:1px solid var(--yel);border-left:4px solid var(--yel);background:rgba(224,175,104,.08)}
-.rem-due-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
-.rem-ok-btn{background:var(--sec);color:#0f111a;border:none;padding:7px 12px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;flex-shrink:0}
+.alarm-bar{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.alarm-pill{background:var(--light);border:none;color:var(--txt);padding:6px 12px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}.alarm-pill.on{background:rgba(224,175,104,.2);color:var(--yel);border:1px solid rgba(224,175,104,.4)}
+.alarm-info{font-size:12px;color:var(--yel);font-weight:600;text-align:left}
+@keyframes pulseAlarm{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}.ring-card{border:2px solid var(--red)!important;animation:pulseAlarm 1s infinite}
 .timer-box{background:var(--card);border-radius:20px;padding:14px;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .timer-box.active{border-color:var(--sec);background:rgba(115,218,202,.08)}.timer-box.active-pink{border-color:var(--pink);background:rgba(247,118,142,.08)}
-.t-clock{font-size:24px;font-weight:800;color:var(--bright);font-variant-numeric:tabular-nums}.t-btns{display:flex;gap:5px;width:100%}
-.t-btn{flex:1;border:none;padding:9px 3px;border-radius:10px;font-size:12px;font-weight:700;color:var(--bright);background:var(--light);text-align:center;cursor:pointer}
-.t-btn.sel{background:var(--blue);color:#0f111a}.t-btn.sel-g{background:var(--pink);color:#0f111a}.t-btn.sel-y{background:var(--yel);color:#0f111a}.t-btn.sel-p{background:var(--prim);color:#0f111a}.t-btn.sel-t{background:var(--sec);color:#0f111a}.t-btn.go-p{background:rgba(247,118,142,.2);color:var(--pink)}.t-btn.go-v{background:rgba(157,124,216,.2);color:var(--prim)}.t-btn.stop{background:var(--red);color:#0f111a}
-.btn{background:var(--card);color:var(--bright);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:14px 8px;font-size:14px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.15);cursor:pointer}.btn:active{transform:scale(.96);background:var(--light)}
-.b-b{border-bottom:3px solid var(--blue)}.b-t{border-bottom:3px solid var(--sec)}.b-y{border-bottom:3px solid var(--yel)}.b-p{border-bottom:3px solid var(--prim)}.b-g{border-bottom:3px solid var(--pink)}.b-gr{border-bottom:3px solid #9ece6a}.b-or{border-bottom:3px solid #ff9e64}
-
+.t-clock{font-size:24px;font-weight:800;color:var(--bright);font-variant-numeric:tabular-nums}.t-btns{display:flex;gap:6px;width:100%}
+.t-btn{flex:1;border:none;padding:10px 4px;border-radius:10px;font-size:13px;font-weight:700;color:var(--bright);background:var(--light);text-align:center}
+.t-btn.sel{background:var(--blue);color:#0f111a}.t-btn.sel-g{background:var(--pink);color:#0f111a}.t-btn.sel-y{background:var(--yel);color:#0f111a}.t-btn.go-p{background:rgba(247,118,142,.2);color:var(--pink)}.t-btn.go-v{background:rgba(157,124,216,.2);color:var(--prim)}.t-btn.stop{background:var(--red);color:#0f111a}
+.btn{background:var(--card);color:var(--bright);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:14px 8px;font-size:14px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.15)}.btn:active{transform:scale(.96);background:var(--light)}
+.b-b{border-bottom:3px solid var(--blue)}.b-t{border-bottom:3px solid var(--sec)}.b-y{border-bottom:3px solid var(--yel);width:100%;flex-direction:row;justify-content:center;gap:10px;margin-bottom:14px}
 .stat-box{background:rgba(15,17,26,.45);padding:10px 4px;border-radius:14px}.ext-stats{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);flex-direction:column;gap:8px;font-size:13px}
-.ext-row{display:flex;justify-content:space-between;background:rgba(15,17,26,.35);padding:8px 12px;border-radius:10px}.ext-row strong{color:var(--bright)}.clr-btn{background:none;border:none;color:var(--red);font-size:13px;font-weight:600;cursor:pointer}
-.day-nav{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 12px;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}.day-nav button{background:var(--light);border:none;color:var(--bright);padding:6px 12px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer}.day-nav button:disabled{opacity:.35}
+.ext-row{display:flex;justify-content:space-between;background:rgba(15,17,26,.35);padding:8px 12px;border-radius:10px}.ext-row strong{color:var(--bright)}.clr-btn{background:none;border:none;color:var(--red);font-size:13px;font-weight:600}
+.day-nav{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 12px;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}.day-nav button{background:var(--light);border:none;color:var(--bright);padding:6px 12px;border-radius:10px;font-weight:700;font-size:13px}.day-nav button:disabled{opacity:.35}
 .cal-trigger{position:relative;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--bright);padding:4px 10px;border-radius:10px;background:rgba(157,124,216,.12);cursor:pointer}.cal-trigger input[type="date"]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
-.l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer;gap:10px}.l-item:active{background:var(--light)}
-.l-info{display:flex;align-items:center;gap:12px;min-width:0;flex:1}.l-right{display:flex;align-items:center;gap:8px;flex-shrink:0}.l-icon{width:38px;height:38px;flex-shrink:0;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.l-note{word-break:break-word;margin-top:2px}.l-subnote{font-size:12px;color:var(--yel);margin-top:3px;word-break:break-word}.note-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);margin-left:6px;vertical-align:middle}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px;cursor:pointer}
-.modal{display:none;position:fixed;inset:0;background:rgba(10,12,18,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;z-index:20;overflow-y:auto}.m-body{background:var(--card);padding:20px;border-radius:22px;width:100%;max-width:400px;display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);max-height:90vh;overflow-y:auto}.m-lbl{font-size:12px;color:var(--mut);margin-bottom:-6px}
-.chart-box{background:var(--bg);border-radius:16px;padding:10px;min-height:135px;display:flex;align-items:center;justify-content:center}
-.med-list{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
-.med-row{display:flex;justify-content:space-between;align-items:center;background:var(--bg);padding:9px 12px;border-radius:10px;font-size:13px;gap:8px}
-.vac-info{display:flex;flex-direction:column;gap:2px}.vac-sub{font-size:11px;color:var(--mut)}
-.chip-row{display:flex;flex-wrap:wrap;gap:6px}
-.chip{background:var(--light);border:none;color:var(--txt);padding:6px 10px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer}.chip:active{background:var(--prim);color:#0f111a}
+.l-item{background:var(--card);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer}.l-item:active{background:var(--light)}
+.l-info,.l-right{display:flex;align-items:center;gap:12px}.l-icon{width:38px;height:38px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:19px}.l-title{font-weight:600;font-size:15px;color:var(--bright)}.del-btn{background:none;border:none;color:var(--mut);font-size:16px;padding:6px}
+.modal{display:none;position:fixed;inset:0;background:rgba(10,12,18,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;z-index:20;overflow-y:auto}.m-body{background:var(--card);padding:20px;border-radius:22px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);max-height:90vh;overflow-y:auto}.m-lbl{font-size:12px;color:var(--mut);margin-bottom:-6px}
+.chart-box{background:var(--bg);border-radius:16px;padding:12px;border:1px solid var(--light)}.med-list{display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto}.med-row{display:flex;justify-content:space-between;align-items:center;background:rgba(15,17,26,.6);padding:8px 12px;border-radius:10px;font-size:13px}
 </style>
 </head>
 <body>
@@ -83,40 +78,19 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     </div>
   </div>
 </div>
-
-<div class="card rem-card" id="remBannerCard" onclick="openRem()">
-  <div class="p-head">
-    <div style="font-size:14px;font-weight:700;color:var(--bright)" id="remBannerTitle">🔔 Планові нагадування</div>
-    <div class="s-lbl" style="color:var(--prim);font-weight:700" id="remBannerAction">Налаштувати ▸</div>
-  </div>
-  <div id="remDueList" onclick="event.stopPropagation()"></div>
-</div>
-
 <div class="card t-center" id="feedStatusCard">
-  <div class="s-lbl">З останнього годування минуло:</div>
-  <div class="s-time" id="tFeed">Ще не було записів</div>
+  <div class="s-lbl">З останнього годування минуло:</div><div class="s-time" id="tFeed">Ще не було записів</div>
+  <div class="alarm-bar"><div class="alarm-info" id="alarmStatusText">Будильник вимкнено</div><button class="alarm-pill" id="alarmBtn" onclick="openAlarm()">⏰ Налаштувати</button></div>
 </div>
 <div class="grid" style="margin-bottom:10px">
   <div class="timer-box" id="boxFeed"><div class="s-lbl" id="lblFeed">🤱 Груди (таймер)</div><div class="t-clock" id="clkFeed">00:00</div><div class="t-btns" id="btnsFeed"><button class="t-btn go-p" onclick="startFeed('Ліва')">Ліва</button><button class="t-btn go-p" onclick="startFeed('Права')">Права</button></div></div>
   <div class="timer-box" id="boxSleep"><div class="s-lbl" id="lblSleep">😴 Таймер сну</div><div class="t-clock" id="clkSleep">00:00</div><div class="t-btns" id="btnsSleep"><button class="t-btn go-v" onclick="startSleep()">Почати сон</button></div></div>
 </div>
-
 <div class="grid" style="margin-bottom:10px">
   <button class="btn b-b" onclick="openBot()"><span style="font-size:24px">🍼</span><span>Суміш / Зціджене</span></button>
   <button class="btn b-t" onclick="openDia()"><span style="font-size:24px">🧷</span><span>Підгузок</span></button>
 </div>
-
-<div class="grid" style="margin-bottom:10px">
-  <button class="btn b-g" onclick="openBath()"><span style="font-size:24px">🛁</span><span>Купання</span></button>
-  <button class="btn b-gr" onclick="openWalk()"><span style="font-size:24px">🚶</span><span>Прогулянка</span></button>
-</div>
-
-<div class="grid" style="margin-bottom:14px">
-  <button class="btn b-y" onclick="openMed()"><span style="font-size:24px">🩺</span><span>Медична інформація</span></button>
-  <button class="btn b-p" onclick="openNote()"><span style="font-size:24px">📝</span><span>Нотатки</span></button>
-</div>
-
-
+<button class="btn b-y" onclick="openMed()"><span style="font-size:22px">📈</span><span>Графіки: Вага, Зріст, Білірубін</span></button>
 <div class="card" style="cursor:pointer" onclick="togStats()">
   <div class="p-head" style="margin-bottom:10px"><div class="s-lbl" style="font-weight:700;color:var(--txt)" id="statsTitle">📊 Статистика за сьогодні</div><div class="s-lbl" id="stArrow">Детальніше ▾</div></div>
   <div class="stats-grid">
@@ -131,104 +105,33 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
     <div class="ext-row"><span>⏱ Середній інтервал їжі:</span><strong id="exInt">—</strong></div>
     <div class="ext-row"><span>🧷 Підгузки детально:</span><strong id="exDia">0💧 / 0💩 / 0🎉 / 0⚠️</strong></div>
     <div class="ext-row"><span>😴 Середня тривалість сну:</span><strong id="exAvgSlp">—</strong></div>
-    <div class="ext-row"><span>🛁 Купання / 🚶 Прогулянки:</span><strong id="exAct">0 / 0</strong></div>
   </div>
 </div>
-
-<div class="h-head">
-  <h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3>
-  <button class="clr-btn" style="color:var(--sec)" onclick="openAddLog()">➕ Додати</button>
-</div>
+<div class="h-head"><h3 style="font-size:16px;color:var(--bright)">Історія подій <span class="s-lbl" style="font-weight:400">(натисніть для змін)</span></h3><button class="clr-btn" onclick="clrAll()">Очистити</button></div>
 <div class="day-nav"><button onclick="shiftDay(-1)">◀</button><label class="cal-trigger"><span>📅</span><span id="curDayLabel">Сьогодні</span><input type="date" id="calPicker" onchange="pickCalDate(this.value)"></label><button id="btnNextDay" onclick="shiftDay(1)" disabled>▶</button></div>
 <div id="logList"></div>
-<div class="modal" id="modRem" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">🔔 Планові нагадування</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modRem').style.display='none'">✕</button></div>
-  <div class="chip-row">
-    <button type="button" class="chip" onclick="pickRemPreset('Вітамін K1',7)">☀️ Вітамін K1 (раз на тиждень)</button>
-    <button type="button" class="chip" onclick="pickRemPreset('Вітамін D3',1)">☀️ Вітамін D3 (щодня)</button>
-    <button type="button" class="chip" onclick="pickRemPreset('Зважування',7)">⚖️ Зважування</button>
-  </div>
-  <input type="text" id="remName" placeholder="Назва (напр. Вітамін K1)">
-  <div class="f-row">
-    <div><div class="m-lbl" style="margin-bottom:4px">Дата прийому:</div><input type="date" id="remDate"></div>
-    <div><div class="m-lbl" style="margin-bottom:4px">Повтор (днів):</div><input type="number" id="remDays" placeholder="0 = одноразово" value="7"></div>
-  </div>
-  <button class="save-btn" onclick="addRem()">➕ Додати нагадування</button>
-  <div class="med-list" id="remHistoryList"></div>
+<div class="modal" id="modAlarm" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
+  <h3 style="font-size:17px;color:var(--bright)">⏰ Будильник годування</h3>
+  <div class="s-lbl" style="line-height:1.4">Оберіть інтервал між годуваннями:</div>
+  <div class="f-row"><button class="t-btn" onclick="setAlarmMins(120)">2 год</button><button class="t-btn" onclick="setAlarmMins(150)">2.5 год</button><button class="t-btn" onclick="setAlarmMins(180)">3 год</button><button class="t-btn" onclick="setAlarmMins(210)">3.5 год</button></div>
+  <div class="f-row"><button class="t-btn" onclick="setAlarmMins(240)">4 год</button><button class="t-btn" style="background:rgba(157,124,216,.2);color:var(--prim)" onclick="testAlarmSound()">🔊 Тест звуку</button></div>
+  <input type="number" id="inAlarmMins" placeholder="Свій інтервал (хвилини)">
+  <button class="save-btn" onclick="setAlarmMins(document.getElementById('inAlarmMins').value)">Увімкнути</button>
+  <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnSysCalAlarm" onclick="exportCalendarAlarm()">📲 Додати в Будильник iPhone</button>
+  <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableAlarm()">Вимкнути</button>
 </div></div>
-
-<div class="modal" id="modAct" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)" id="actModTitle">🛁 Купання</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modAct').style.display='none'">✕</button></div>
-  <button class="save-btn" onclick="saveAct(0)">✅ Записати зараз (без часу)</button>
-  <div class="s-lbl">Або вкажіть тривалість:</div>
-  <div class="f-row" id="actQuickBtns"></div>
-  <input type="number" id="inActMins" placeholder="Своя тривалість (хвилин)">
-  <button class="t-btn" style="padding:11px" onclick="saveAct(document.getElementById('inActMins').value)">Записати з тривалістю</button>
+<div class="modal" id="modRing"><div class="m-body ring-card t-center">
+  <div style="font-size:42px">⏰🍼</div><h3 style="font-size:20px;color:var(--bright)">Час годувати малюка!</h3><div class="s-lbl" id="ringSubText">Минув інтервал</div>
+  <button class="save-btn" style="background:var(--red);color:#0f111a;padding:14px;font-size:16px" onclick="stopRinging()">🔕 Вимкнути сигнал</button>
+  <button class="t-btn" style="padding:11px" onclick="snoozeAlarm(15)">😴 Відкласти на 15 хв</button>
 </div></div>
-
 <div class="modal" id="modMed" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">🩺 Медична інформація</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modMed').style.display='none'">✕</button></div>
-  <div class="t-btns">
-    <button class="t-btn sel" id="tabW" onclick="setMedTab('w')">⚖️ Вага</button>
-    <button class="t-btn" id="tabH" onclick="setMedTab('h')">📏 Зріст</button>
-    <button class="t-btn" id="tabB" onclick="setMedTab('b')">🧪 Білірубін</button>
-    <button class="t-btn" id="tabV" onclick="setMedTab('v')">💉 Вакцина</button>
-    <button class="t-btn" id="tabD" onclick="setMedTab('d')">💊 Ліки</button>
-  </div>
-  <div id="medGraphSection" style="display:flex;flex-direction:column;gap:12px">
-    <div class="chart-box" id="medChartWrap"></div>
-    <div class="f-row"><input type="date" id="medDate"><input type="number" step="0.01" id="medVal" placeholder="Значення"></div>
-    <button class="save-btn" onclick="addMed()">➕ Додати показник</button>
-    <div class="med-list" id="medHistoryList"></div>
-  </div>
-  <div id="medVacSection" style="display:none;flex-direction:column;gap:10px">
-    <div class="s-lbl">Швидкий вибір щеплення:</div>
-    <div class="chip-row">
-      <button type="button" class="chip" onclick="pickVac('БЦЖ')">БЦЖ</button>
-      <button type="button" class="chip" onclick="pickVac('Гепатит B')">Гепатит B</button>
-      <button type="button" class="chip" onclick="pickVac('АКДП + Поліо + ХІБ')">АКДП / Поліо</button>
-      <button type="button" class="chip" onclick="pickVac('Ротавірус')">Ротавірус</button>
-      <button type="button" class="chip" onclick="pickVac('Пневмокок')">Пневмокок</button>
-      <button type="button" class="chip" onclick="pickVac('КПК')">КПК</button>
-    </div>
-    <input type="text" id="vacName" placeholder="Назва щеплення (напр. Інфанрикс Гекса)">
-    <div class="f-row">
-      <input type="date" id="vacDate">
-      <input type="text" id="vacNote" placeholder="Доза / примітка">
-    </div>
-    <button class="save-btn" onclick="addVac()">💉 Записати щеплення</button>
-    <div class="med-list" id="vacHistoryList"></div>
-  </div>
-
-  <div id="medDrugSection" style="display:none;flex-direction:column;gap:10px">
-    <div class="s-lbl">Швидкий вибір препарату / вітаміну:</div>
-    <div class="chip-row">
-      <button type="button" class="chip" onclick="pickDrug('Вітамін ', true)">☀️ Вітамін</button>
-      <button type="button" class="chip" onclick="pickDrug('Еспумізан (Симетикон)')">🫧 Еспумізан</button>
-      <button type="button" class="chip" onclick="pickDrug('БіоГая (Пробіотик)')">🦠 БіоГая</button>
-      <button type="button" class="chip" onclick="pickDrug('Жарознижувальне')">🌡️ Від темп.</button>
-    </div>
-    <input type="text" id="drugName" placeholder="Назва вітаміну або препарату">
-    <div class="f-row">
-      <input type="datetime-local" id="drugDt">
-      <input type="text" id="drugDose" placeholder="Доза (напр. 1 крапля)">
-    </div>
-    <button class="save-btn" onclick="addDrug()">💊 Записати прийом</button>
-    <div class="med-list" id="drugHistoryList"></div>
-  </div>
-</div></div>
-
-<div class="modal" id="modNote" onclick="if(event.target===this)closeNoteMod()"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)" id="noteModTitle">📝 Нотатки</h3><button class="del-btn" style="font-size:20px" onclick="closeNoteMod()">✕</button></div>
-  <input type="date" id="inNoteDate">
-  <textarea id="inNoteText" placeholder="Запишіть важливу деталь, самопочуття або питання для педіатра..."></textarea>
-
-  <div class="f-row">
-    <button class="t-btn" id="btnCancelNoteEdit" style="display:none" onclick="cancelNoteEdit()">Скасувати</button>
-    <button class="save-btn" id="btnSaveNote" style="grid-column:span 2" onclick="saveNote()">Зберегти нотатку</button>
-  </div>
-  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Збережені нотатки (натисніть для змін):</div>
-  <div class="med-list" id="notesHistoryList" style="max-height:230px"></div>
+  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">📈 Динаміка розвитку</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modMed').style.display='none'">✕</button></div>
+  <div class="t-btns"><button class="t-btn sel" id="tabW" onclick="setMedTab('w')">⚖️ Вага</button><button class="t-btn" id="tabH" onclick="setMedTab('h')">📏 Зріст</button><button class="t-btn" id="tabB" onclick="setMedTab('b')">🧪 Білірубін</button></div>
+  <div class="chart-box" id="medChartWrap"></div>
+  <div class="f-row"><input type="date" id="medDate"><input type="number" step="0.01" id="medVal" placeholder="Значення"></div>
+  <button class="save-btn" onclick="addMed()">➕ Додати показник</button>
+  <div class="med-list" id="medHistoryList"></div>
 </div></div>
 <div class="modal" id="modBot" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🍼 Харчування з пляшечки</h3>
@@ -237,7 +140,6 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <input type="number" id="inMl" placeholder="Або введіть свій об'єм (мл)">
   <button class="save-btn" onclick="saveBot(document.getElementById('inMl').value)">Записати</button>
 </div></div>
-
 <div class="modal" id="modDia" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🧷 Зміна підгузка</h3>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Мокрий', false)">💧 Мокрий</button>
@@ -245,94 +147,13 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="padding:13px" onclick="saveDia('Гібрид', true)">🎉 Гібрид</button>
   <button class="t-btn" style="padding:13px" onclick="saveDia('Не стандарт', true)">⚠️ Не стандарт</button>
 </div></div>
-<div class="modal" id="modBath" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <h3 style="font-size:17px;color:var(--bright)">🛁 Купання малюка</h3>
-  <button class="save-btn" onclick="saveBath(0)">✅ Записати купання зараз</button>
-  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
-  <div class="f-row">
-    <button class="t-btn" onclick="saveBath(10)">10 хв</button>
-    <button class="t-btn" onclick="saveBath(15)">15 хв</button>
-    <button class="t-btn" onclick="saveBath(20)">20 хв</button>
-    <button class="t-btn" onclick="saveBath(30)">30 хв</button>
-  </div>
-  <input type="number" id="inBathMins" placeholder="Свій час (хвилин)">
-  <button class="t-btn" style="background:rgba(122,162,247,.2);color:var(--blue);padding:11px" onclick="saveBath(document.getElementById('inBathMins').value)">Записати з часом</button>
-</div></div>
-
-<div class="modal" id="modWalk" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <h3 style="font-size:17px;color:var(--bright)">🚶 Прогулянка</h3>
-  <button class="save-btn" onclick="saveWalk(0)">✅ Записати прогулянку зараз</button>
-  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
-  <div class="f-row">
-    <button class="t-btn" onclick="saveWalk(30)">30 хв</button>
-    <button class="t-btn" onclick="saveWalk(60)">1 год</button>
-    <button class="t-btn" onclick="saveWalk(90)">1.5 год</button>
-    <button class="t-btn" onclick="saveWalk(120)">2 год</button>
-  </div>
-  <input type="number" id="inWalkMins" placeholder="Свій час (хвилин)">
-  <button class="t-btn" style="background:rgba(115,218,202,.2);color:var(--sec);padding:11px" onclick="saveWalk(document.getElementById('inWalkMins').value)">Записати з часом</button>
-</div></div>
-
-<div class="modal" id="modAddLog" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <div class="p-head"><h3 style="font-size:17px;color:var(--bright)">➕ Додати подію в історію</h3><button class="del-btn" style="font-size:20px" onclick="document.getElementById('modAddLog').style.display='none'">✕</button></div>
-  <div class="t-btns" style="flex-wrap:wrap">
-    <button class="t-btn sel-g" id="addTypeBf" onclick="setAddLogType('bf')">🤱 Груди</button>
-    <button class="t-btn" id="addTypeBot" onclick="setAddLogType('bot')">🍼 Пляшка</button>
-    <button class="t-btn" id="addTypeSlp" onclick="setAddLogType('slp')">😴 Сон</button>
-    <button class="t-btn" id="addTypeDia" onclick="setAddLogType('dia')">🧷 Підгузок</button>
-    <button class="t-btn" id="addTypeBath" onclick="setAddLogType('bath')">🛁 Купання</button>
-    <button class="t-btn" id="addTypeWalk" onclick="setAddLogType('walk')">🚶 Прогулянка</button>
-  </div>
-  <div class="f-row">
-    <div><div class="m-lbl" style="margin-bottom:4px">Дата:</div><input type="date" id="addLogDate"></div>
-    <div><div class="m-lbl" style="margin-bottom:4px">Час:</div><input type="time" id="addLogTime"></div>
-  </div>
-  <div id="addFieldsBf" style="display:flex;flex-direction:column;gap:10px">
-    <div class="f-row">
-      <button type="button" class="t-btn sel-g" id="addSideL" onclick="setAddSide('Ліва')">Ліва грудь</button>
-      <button type="button" class="t-btn" id="addSideR" onclick="setAddSide('Права')">Права грудь</button>
-    </div>
-    <input type="number" id="addBfMins" placeholder="Тривалість (хвилин, напр. 15)">
-  </div>
-  <div id="addFieldsBot" style="display:none;flex-direction:column;gap:10px">
-    <div class="f-row">
-      <button type="button" class="t-btn sel" id="addBotMix" onclick="setAddBotKind('Суміш')">🍼 Суміш</button>
-      <button type="button" class="t-btn" id="addBotMilk" onclick="setAddBotKind('Зціджене молоко')">🤱 Зціджене</button>
-    </div>
-    <input type="number" id="addBotMl" placeholder="Об'єм (мл, напр. 90)">
-  </div>
-  <div id="addFieldsSlp" style="display:none;flex-direction:column;gap:10px">
-    <input type="number" id="addSlpMins" placeholder="Тривалість сну (хвилин, напр. 45)">
-  </div>
-  <div id="addFieldsDia" style="display:none;flex-direction:column;gap:10px">
-    <div class="f-row">
-      <button type="button" class="t-btn sel-t" id="addDia0" onclick="setAddDiaKind('Мокрий',false)">💧 Мокрий</button>
-      <button type="button" class="t-btn" id="addDia1" onclick="setAddDiaKind('Какашка',true)">💩 Какашка</button>
-      <button type="button" class="t-btn" id="addDia2" onclick="setAddDiaKind('Гібрид',true)">🎉 Гібрид</button>
-      <button type="button" class="t-btn" id="addDia3" onclick="setAddDiaKind('Не стандарт',true)">⚠️ Не стандарт</button>
-    </div>
-  </div>
-  <div id="addFieldsAct" style="display:none;flex-direction:column;gap:10px">
-    <input type="number" id="addActMins" placeholder="Тривалість (хвилин, необов'язково)">
-  </div>
-  <button class="save-btn" onclick="saveManualLog()">Зберегти в історію</button>
-</div></div>
 <div class="modal" id="modEdit" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)" id="edTitle">✏️ Редагувати запис</h3>
-  <div class="f-row">
-    <div><div class="m-lbl" style="margin-bottom:4px">Дата події:</div><input type="date" id="edDate"></div>
-    <div><div class="m-lbl" style="margin-bottom:4px">Час події:</div><input type="time" id="edTime"></div>
-  </div>
-  <div id="edExtraWrap" style="display:none;flex-direction:column;gap:8px"><div class="m-lbl" id="edExtraLbl" style="margin-bottom:0">Значення:</div><input type="number" id="edExtraVal"></div>
-  <div id="edSubWrap" style="display:flex;flex-direction:column;gap:8px">
-    <div class="m-lbl" style="margin-bottom:0">Швидкий опис проблеми / події:</div>
-    <div class="chip-row" id="edQuickChips"></div>
-    <input type="text" id="edSubNote" placeholder="Міні-нотатка (напр. зригнула, гикавка...)">
-  </div>
+  <div class="m-lbl">Дата події:</div><input type="date" id="edDate"><div class="m-lbl">Час події:</div><input type="time" id="edTime">
+  <div id="edExtraWrap" style="display:none;flex-direction:column;gap:12px"><div class="m-lbl" id="edExtraLbl">Значення:</div><input type="number" id="edExtraVal"></div>
   <button class="save-btn" onclick="applyEdit()">Зберегти зміни</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red);padding:11px" onclick="delFromEdit()">🗑 Видалити цей запис</button>
 </div></div>
-
 <div class="modal" id="modSync" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
   <h3 style="font-size:17px;color:var(--bright)">🔄 Сімейна синхронізація</h3>
   <div class="s-lbl" style="line-height:1.4">Вставте посилання на базу Firebase або надішліть запрошення:</div>
@@ -341,530 +162,97 @@ body{background:var(--bg);color:var(--txt);padding:16px;padding-top:max(16px,env
   <button class="t-btn" style="background:rgba(115,218,202,.15);color:var(--sec);padding:11px" id="btnShareLink" onclick="shareInvite()">📤 Надіслати посилання мамі</button>
   <button class="t-btn" style="background:rgba(247,118,142,.15);color:var(--red)" onclick="disableSync()">Вимкнути</button>
 </div></div>
-
-<div class="modal" id="modDlg" style="z-index:50" onclick="if(event.target===this)closeDlg(false)"><div class="m-body t-center">
+  <div class="modal" id="modDlg" style="z-index:50" onclick="if(event.target===this)closeDlg(false)"><div class="m-body t-center">
   <div style="font-size:34px" id="dlgIcon">💬</div>
   <h3 style="font-size:18px;color:var(--bright)" id="dlgTitle">Підтвердження</h3>
   <div class="s-lbl" style="line-height:1.45;font-size:14px" id="dlgText"></div>
   <div class="f-row" id="dlgBtns"></div>
 </div></div>
-  <div class="modal" id="modBath" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <h3 style="font-size:17px;color:var(--bright)">🛁 Купання малюка</h3>
-  <button class="save-btn" onclick="saveBath(0)">✅ Записати купання зараз</button>
-  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
-  <div class="f-row">
-    <button class="t-btn" onclick="saveBath(10)">10 хв</button>
-    <button class="t-btn" onclick="saveBath(15)">15 хв</button>
-    <button class="t-btn" onclick="saveBath(20)">20 хв</button>
-    <button class="t-btn" onclick="saveBath(30)">30 хв</button>
-  </div>
-  <input type="number" id="inBathMins" placeholder="Свій час (хвилин)">
-  <button class="t-btn" style="background:rgba(122,162,247,.2);color:var(--blue);padding:11px" onclick="saveBath(document.getElementById('inBathMins').value)">Записати з часом</button>
-</div></div>
-
-<div class="modal" id="modWalk" onclick="if(event.target===this)this.style.display='none'"><div class="m-body">
-  <h3 style="font-size:17px;color:var(--bright)">🚶 Прогулянка</h3>
-  <button class="save-btn" onclick="saveWalk(0)">✅ Записати прогулянку зараз</button>
-  <div class="m-lbl" style="margin-top:4px;margin-bottom:0">Або вкажіть тривалість:</div>
-  <div class="f-row">
-    <button class="t-btn" onclick="saveWalk(30)">30 хв</button>
-    <button class="t-btn" onclick="saveWalk(60)">1 год</button>
-    <button class="t-btn" onclick="saveWalk(90)">1.5 год</button>
-    <button class="t-btn" onclick="saveWalk(120)">2 год</button>
-  </div>
-  <input type="number" id="inWalkMins" placeholder="Свій час (хвилин)">
-  <button class="t-btn" style="background:rgba(115,218,202,.2);color:var(--sec);padding:11px" onclick="saveWalk(document.getElementById('inWalkMins').value)">Записати з часом</button>
-</div></div>
-
 <script>
-let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
+  let rawLogs=JSON.parse(localStorage.getItem('bLogs'));
 const backupLogs=JSON.parse(localStorage.getItem('bLogs_backup'));
 if((!rawLogs||!rawLogs.length)&&backupLogs&&backupLogs.length){rawLogs=backupLogs;localStorage.setItem('bLogs',JSON.stringify(rawLogs))}
 let logs=rawLogs||[];
 let medData=JSON.parse(localStorage.getItem('bMed'))||{w:[],h:[],b:[]};
-let vacData=JSON.parse(localStorage.getItem('bVac'))||[];
-let drugData=JSON.parse(localStorage.getItem('bDrugs'))||[];
-let notesData=JSON.parse(localStorage.getItem('bNotes'))||[];
-let remData=JSON.parse(localStorage.getItem('bRem'))||[];
-if(logs.some(i=>i.t==='note')){
-  logs.filter(i=>i.t==='note').forEach(n=>{
-    const d=new Date(n.ts),pad=x=>String(x).padStart(2,'0');
-    notesData.push({id:n.id,d:`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,txt:n.n,ts:n.ts});
-  });
-  logs=logs.filter(i=>i.t!=='note');
-  localStorage.setItem('bNotes',JSON.stringify(notesData));
-  localStorage.setItem('bLogs',JSON.stringify(logs));
-}
 let prof=JSON.parse(localStorage.getItem('bProf'))||{name:'Мій Малюк',gender:'',dob:'',tob:'',w:'',h:''};
 let actFeed=JSON.parse(localStorage.getItem('actFeed'))||null;
 let actSleep=JSON.parse(localStorage.getItem('actSleep'))||null;
+let alarmCfg=JSON.parse(localStorage.getItem('bAlarm'))||{enabled:false,mins:180,targetTs:0,dismissedForTs:0};
 let syncUrl=localStorage.getItem('bSyncUrl')||'';
-let lockSyncUntil=0,delIds=JSON.parse(localStorage.getItem('bDelIds'))||[],botType='Суміш',curActType='bath',editId=null,editNoteId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
+let botType='Суміш',editId=null,selGender=prof.gender||'',profOpen=false,statsOpen=false,lastHash='',isInitialSync=false,curMedTab='w';
 let viewDate=new Date();viewDate.setHours(0,0,0,0);
-
+let ringInterval=null,audioCtx=null;
 let dlgRes=null;
-
 function closeDlg(v){document.getElementById('modDlg').style.display='none';if(dlgRes){const r=dlgRes;dlgRes=null;r(v)}}
 function uiAlert(txt,ic='✨',ti='Готово'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML='<button class="save-btn" style="grid-column:span 2" onclick="closeDlg(true)">Зрозуміло</button>';document.getElementById('modDlg').style.display='flex'})}
 function uiConfirm(txt,btnTxt='Видалити',ic='🗑️',ti='Підтвердження'){return new Promise(r=>{dlgRes=r;document.getElementById('dlgIcon').textContent=ic;document.getElementById('dlgTitle').textContent=ti;document.getElementById('dlgText').textContent=txt;document.getElementById('dlgBtns').innerHTML=`<button class="t-btn" style="padding:12px" onclick="closeDlg(false)">Скасувати</button><button class="t-btn stop" style="padding:12px" onclick="closeDlg(true)">${btnTxt}</button>`;document.getElementById('modDlg').style.display='flex'})}
-function escHtml(str){return String(str||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-
-(function checkInvite(){const p=new URLSearchParams(window.location.search),db=p.get('db');if(db){let u=decodeURIComponent(db).trim();if(!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl)}})();
+  
+function unlockAudio(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC()}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume()}
+document.addEventListener('touchstart',unlockAudio,{passive:true});document.addEventListener('click',unlockAudio,{passive:true});
+function playChime(){try{unlockAudio();if(!audioCtx)return;const now=audioCtx.currentTime;[523.25,659.25,783.99,1046.50].forEach((freq,idx)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,now+idx*0.16);gain.gain.setValueAtTime(0.001,now+idx*0.16);gain.gain.exponentialRampToValueAtTime(0.25,now+idx*0.16+0.04);gain.gain.exponentialRampToValueAtTime(0.001,now+idx*0.16+0.45);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(now+idx*0.16);osc.stop(now+idx*0.16+0.46)});if(navigator.vibrate)navigator.vibrate()}catch(e){}}
+function testAlarmSound(){playChime()}
+function openAlarm(){document.getElementById('inAlarmMins').value=alarmCfg.mins||180;document.getElementById('btnSysCalAlarm').style.display=alarmCfg.enabled?'block':'none';document.getElementById('modAlarm').style.display='flex'}
+function recalculateAlarmTarget(){if(!alarmCfg.enabled)return;const lf=logs.find(i=>i.t==='feed');alarmCfg.targetTs=(lf?lf.ts:Date.now())+alarmCfg.mins*60000;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}
+function setAlarmMins(val){const m=parseInt(val);if(!m||m<1){alert('Введіть інтервал у хвилинах');return}unlockAudio();if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();alarmCfg.enabled=true;alarmCfg.mins=m;alarmCfg.dismissedForTs=0;recalculateAlarmTarget();document.getElementById('modAlarm').style.display='none';updSince();pushCloud()}
+function disableAlarm(){alarmCfg.enabled=false;alarmCfg.targetTs=0;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg));stopRinging(false);document.getElementById('modAlarm').style.display='none';updSince();pushCloud()}
+function startRinging(){if(ringInterval)return;const dt=new Date(alarmCfg.targetTs);document.getElementById('ringSubText').textContent=`Запланований час годування: ${dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'})}`;document.getElementById('modRing').style.display='flex';playChime();ringInterval=setInterval(playChime,2500);if('Notification'in window&&Notification.permission==='granted'){try{new Notification('🍼 Час годувати малюка!',{body:'Минув інтервал годування'})}catch(e){}}}
+function stopRinging(markDismissed=true){if(ringInterval){clearInterval(ringInterval);ringInterval=null}document.getElementById('modRing').style.display='none';if(markDismissed&&alarmCfg.targetTs){alarmCfg.dismissedForTs=alarmCfg.targetTs;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}}
+function snoozeAlarm(mins){stopRinging(false);alarmCfg.targetTs=Date.now()+mins*60000;alarmCfg.dismissedForTs=0;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg));updSince()}
+function exportCalendarAlarm(){if(!alarmCfg.enabled||!alarmCfg.targetTs)return;const start=new Date(alarmCfg.targetTs),end=new Date(alarmCfg.targetTs+15*60000),fmtICS=d=>d.toISOString().replace(/[-:]/g,'').split('.')+'Z';const ics=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',`DTSTART:${fmtICS(start)}`,`DTEND:${fmtICS(end)}`,`SUMMARY:🍼 Годування (${prof.name})`,'DESCRIPTION:Нагадування з Трекера Малюка','BEGIN:VALARM','TRIGGER:-PT0M','ACTION:AUDIO','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='feeding-alarm.ics';link.click()}
+  (function checkInvite(){const p=new URLSearchParams(window.location.search),db=p.get('db');if(db){let u=decodeURIComponent(db).trim();if(!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl)}})();
 function openSync(){document.getElementById('inSyncUrl').value=syncUrl;document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';document.getElementById('modSync').style.display='flex'}
-async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||hasMedData()||vacData.length>0||drugData.length>0||notesData.length>0||remData.length>0)await pushCloud();document.getElementById('modSync').style.display='none';uiAlert('Дані синхронізовано!','🔄','Підключено')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
-function shareInvite(){if(!syncUrl)return;const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;if(navigator.share){navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl})}else if(navigator.clipboard){navigator.clipboard.writeText(inviteUrl);uiAlert('Посилання скопійовано!','📋','Скопійовано')}else{prompt('Скопіюйте посилання:',inviteUrl)}}
+async function saveSync(){let u=document.getElementById('inSyncUrl').value.trim();if(u&&!u.endsWith('/'))u+='/';syncUrl=u;localStorage.setItem('bSyncUrl',syncUrl);document.getElementById('btnShareLink').style.display=syncUrl?'block':'none';if(syncUrl){isInitialSync=true;await pullCloud();isInitialSync=false;if(logs.length>0||hasMedData())await pushCloud();alert('Підключено! Дані синхронізовано.')}else{updSyncDot(false);document.getElementById('modSync').style.display='none'}}
+function shareInvite(){if(!syncUrl)return;const inviteUrl=`${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(syncUrl)}`;if(navigator.share){navigator.share({title:'Трекер Малюка',text:'Відкрий це посилання та додай на головний екран телефону:',url:inviteUrl})}else if(navigator.clipboard){navigator.clipboard.writeText(inviteUrl);alert('Посилання скопійовано!')}else{prompt('Скопіюйте посилання:',inviteUrl)}}
 function disableSync(){syncUrl='';localStorage.removeItem('bSyncUrl');updSyncDot(false);document.getElementById('modSync').style.display='none'}
 function updSyncDot(ok){document.getElementById('syncDot').className=ok?'sync-dot on':'sync-dot'}
 function hasMedData(){return(medData.w&&medData.w.length)||(medData.h&&medData.h.length)||(medData.b&&medData.b.length)}
 
-function mergeById(localArr,remoteArr){
-  const map=new Map();
-  (remoteArr||[]).forEach(x=>{if(x&&x.id&&!delIds.includes(x.id))map.set(x.id,x)});
-  (localArr||[]).forEach(x=>{if(x&&x.id&&!delIds.includes(x.id))map.set(x.id,x)});
-  return Array.from(map.values());
-}
+async function pushCloud(forceEmpty=false){if(!syncUrl)return;if(logs.length===0&&!hasMedData()&&!forceEmpty)return;const stateObj={logs,prof,actFeed,actSleep,medData,alarmCfg};lastHash=JSON.stringify(stateObj);const payload=JSON.stringify({...stateObj,upd:Date.now()});try{const r=await fetch(syncUrl+'babydata.json',{method:'PUT',body:payload});updSyncDot(r.ok);if(r.ok&&logs.length>0){const todayKey=new Date().toISOString().slice(0,10);if(localStorage.getItem('lastCloudBackup')!==todayKey){await fetch(`${syncUrl}backups/${todayKey}.json`,{method:'PUT',body:payload});localStorage.setItem('lastCloudBackup',todayKey)}}}catch(e){updSyncDot(false)}}
+async function pullCloud(){if(!syncUrl)return;try{const r=await fetch(syncUrl+'babydata.json');if(!r.ok){updSyncDot(false);return}const data=await r.json();updSyncDot(true);if(!data){if(logs.length>0||hasMedData())pushCloud();return}const remoteState={logs:data.logs||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null,medData:data.medData||{w:[],h:[],b:[]},alarmCfg:data.alarmCfg||alarmCfg};const remoteHash=JSON.stringify(remoteState);if(remoteHash!==lastHash){if(remoteState.logs.length>0||isInitialSync||logs.length===0){logs=remoteState.logs;localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs))}if(data.medData){medData={w:data.medData.w||[],h:data.medData.h||[],b:data.medData.b||[]};localStorage.setItem('bMed',JSON.stringify(medData))}if(data.alarmCfg){alarmCfg=data.alarmCfg;localStorage.setItem('bAlarm',JSON.stringify(alarmCfg))}if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof))}actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');lastHash=remoteHash;renderProf();updTimers();render();updSince();updStats();if(document.getElementById('modMed').style.display==='flex')renderMed()}}catch(e){updSyncDot(false)}}
 
-async function pushCloud(forceEmpty=false){
-  if(!syncUrl)return;
-  lockSyncUntil=Date.now()+8000;
-  const rData=(typeof remData!=='undefined')?remData:[];
-  if(!forceEmpty&&!logs.length&&!hasMedData()&&!vacData.length&&!drugData.length&&!notesData.length&&!rData.length&&!actFeed&&!actSleep)return;
-  try{
-    const payload={logs,medData,vacData,drugData,notesData,remData:rData,delIds:delIds.slice(-100),prof,actFeed,actSleep,updatedAt:Date.now()};
-    lastHash=JSON.stringify({logs,medData,vacData,drugData,notesData,remData:rData,prof,actFeed,actSleep});
-    const res=await fetch(`${syncUrl}babydata.json`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    updSyncDot(res.ok);
-  }catch(e){updSyncDot(false)}
-}
-
-async function pullCloud(){
-  if(!syncUrl||Date.now()<lockSyncUntil)return;
-  try{
-    const res=await fetch(`${syncUrl}babydata.json`);
-    if(!res.ok||Date.now()<lockSyncUntil){updSyncDot(res.ok);return}
-    const data=await res.json();
-    updSyncDot(true);
-    if(!data||Date.now()<lockSyncUntil)return;
-    if(data.delIds&&Array.isArray(data.delIds)){
-      delIds=Array.from(new Set([...delIds,...data.delIds])).slice(-150);
-      localStorage.setItem('bDelIds',JSON.stringify(delIds));
-    }
-    const rData=(typeof remData!=='undefined')?remData:[];
-    const remoteHash=JSON.stringify({logs:data.logs||[],medData:data.medData||{w:[],h:[],b:[]},vacData:data.vacData||[],drugData:data.drugData||[],notesData:data.notesData||[],remData:data.remData||[],prof:data.prof||prof,actFeed:data.actFeed||null,actSleep:data.actSleep||null});
-    if(remoteHash===lastHash&&!isInitialSync)return;
-    lastHash=remoteHash;
-    if(data.logs){
-      logs=mergeById(logs,data.logs).sort((a,b)=>b.ts-a.ts);
-      localStorage.setItem('bLogs',JSON.stringify(logs));
-      if(logs.length)localStorage.setItem('bLogs_backup',JSON.stringify(logs));
-    }
-    if(data.medData){
-      medData={
-        w:mergeById(medData.w,data.medData.w).sort((a,b)=>a.d.localeCompare(b.d)),
-        h:mergeById(medData.h,data.medData.h).sort((a,b)=>a.d.localeCompare(b.d)),
-        b:mergeById(medData.b,data.medData.b).sort((a,b)=>a.d.localeCompare(b.d))
-      };
-      localStorage.setItem('bMed',JSON.stringify(medData));
-    }
-    if(data.vacData){vacData=mergeById(vacData,data.vacData).sort((a,b)=>b.d.localeCompare(a.d));localStorage.setItem('bVac',JSON.stringify(vacData))}
-    if(data.drugData){drugData=mergeById(drugData,data.drugData).sort((a,b)=>b.dt.localeCompare(a.dt));localStorage.setItem('bDrugs',JSON.stringify(drugData))}
-    if(data.notesData){notesData=mergeById(notesData,data.notesData).sort((a,b)=>b.d.localeCompare(a.d)||b.ts-a.ts);localStorage.setItem('bNotes',JSON.stringify(notesData))}
-    if(data.remData&&typeof remData!=='undefined'){remData=mergeById(remData,data.remData);localStorage.setItem('bRem',JSON.stringify(remData));if(typeof renderRem==='function')renderRem()}
-    if(data.prof){prof=data.prof;localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}
-    actFeed=data.actFeed||null;if(actFeed)localStorage.setItem('actFeed',JSON.stringify(actFeed));else localStorage.removeItem('actFeed');
-    actSleep=data.actSleep||null;if(actSleep)localStorage.setItem('actSleep',JSON.stringify(actSleep));else localStorage.removeItem('actSleep');
-    updTimers();render();updSince();updStats();
-    if(document.getElementById('modMed').style.display==='flex'){
-      if(curMedTab==='v')renderVac();else if(curMedTab==='d')renderDrug();else renderMed();
-    }
-    if(document.getElementById('modNote').style.display==='flex')renderNotes();
-  }catch(e){updSyncDot(false)}
-}
-
-function todayIsoStr(){const d=new Date(),p=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
-function openRem(){
-  document.getElementById('remName').value='';
-  document.getElementById('remDate').value=todayIsoStr();
-  document.getElementById('remDays').value='7';
-  renderRem();document.getElementById('modRem').style.display='flex';
-}
-function pickRemPreset(name,days){document.getElementById('remName').value=name;document.getElementById('remDays').value=String(days)}
-function addRem(){
-  const name=document.getElementById('remName').value.trim(),nextDate=document.getElementById('remDate').value,everyDays=parseInt(document.getElementById('remDays').value)||0;
-  if(!name||!nextDate){uiAlert('Вкажіть назву та дату нагадування','🔔','Увага');return}
-  remData.push({id:Date.now(),name,nextDate,everyDays});
-  remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
-  localStorage.setItem('bRem',JSON.stringify(remData));
-  document.getElementById('remName').value='';
-  renderRem();pushCloud();
-}
-function confirmRem(id){
-  const item=remData.find(x=>x.id===id);if(!item)return;
-  const today=todayIsoStr();
-  addMedToHistory('🔔','Виконано нагадування',item.name,today,new Date().toTimeString().slice(0,5));
-  if(item.everyDays>0){
-    const [y,m,d]=today.split('-').map(Number);
-    const nxt=new Date(y,m-1,d+item.everyDays),p=n=>String(n).padStart(2,'0');
-    item.nextDate=`${nxt.getFullYear()}-${p(nxt.getMonth()+1)}-${p(nxt.getDate())}`;
-    remData.sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
-  }else{
-    remData=remData.filter(x=>x.id!==id);
-  }
-  localStorage.setItem('bRem',JSON.stringify(remData));
-  renderRem();pushCloud();
-}
-async function delRem(id){
-  if(!await uiConfirm('Видалити це нагадування?'))return;
-  remData=remData.filter(x=>x.id!==id);
-  localStorage.setItem('bRem',JSON.stringify(remData));
-  renderRem();pushCloud();
-}
-
-
-
-function renderRem(){
-  const today=todayIsoStr(),due=remData.filter(x=>x.nextDate<=today);
-  const card=document.getElementById('remBannerCard'),dueEl=document.getElementById('remDueList'),actEl=document.getElementById('remBannerAction');
-  if(due.length>0){
-    card.className='card rem-card due';
-    actEl.textContent=`Всього: ${remData.length} ▸`;
-    dueEl.innerHTML=due.map(x=>`<div class="rem-due-row"><div style="font-size:13px;color:var(--yel);font-weight:700">⏰ ${escHtml(x.name)} <span style="font-weight:400;color:var(--mut)">(${x.nextDate.split('-').reverse().join('.')})</span></div><button class="rem-ok-btn" onclick="confirmRem(${x.id})">✅ Підтвердити</button></div>`).join('');
-  }else{
-    card.className='card rem-card';
-    dueEl.innerHTML='';
-    actEl.textContent=remData.length?`Активних: ${remData.length} ▸`:'Додати ▸';
-  }
-  const listEl=document.getElementById('remHistoryList');
-  if(!listEl)return;
-  if(!remData.length){listEl.innerHTML='<div class="t-center s-lbl" style="padding:16px">Планових нагадувань немає</div>';return}
-  listEl.innerHTML=remData.map(x=>`<div class="med-row"><div class="vac-info"><strong style="color:var(--bright)">🔔 ${escHtml(x.name)}</strong><span class="vac-sub">Наступне: ${x.nextDate.split('-').reverse().join('.')} • ${x.everyDays>0?`кожні ${x.everyDays} дн.`:'одноразово'}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delRem(${x.id})">✕</button></div>`).join('');
-}
-
-
-function nowLocalIso(){const d=new Date(),p=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
-function addMedToHistory(ic,ti,n,dateStr,timeStr='12:00'){
-  const ts=new Date(`${dateStr}T${timeStr}`).getTime();
-  logs.unshift({id:Date.now()+Math.floor(Math.random()*100),t:'med',ic,ti,n,ex:{},ts});
-  logs.sort((a,b)=>b.ts-a.ts);
-  localStorage.setItem('bLogs',JSON.stringify(logs));
-  if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));
-  render();
-}
-function openMed(){
-  const today=todayIsoStr();
-  document.getElementById('medDate').value=today;document.getElementById('vacDate').value=today;document.getElementById('drugDt').value=nowLocalIso();
-  setMedTab(curMedTab);document.getElementById('modMed').style.display='flex';
-}
-function setMedTab(t){
-  curMedTab=t;
-  document.getElementById('tabW').className=t==='w'?'t-btn sel':'t-btn';
-  document.getElementById('tabH').className=t==='h'?'t-btn sel-g':'t-btn';
-  document.getElementById('tabB').className=t==='b'?'t-btn sel-y':'t-btn';
-  document.getElementById('tabV').className=t==='v'?'t-btn sel-p':'t-btn';
-  document.getElementById('tabD').className=t==='d'?'t-btn sel-t':'t-btn';
-  const gSec=document.getElementById('medGraphSection'),vSec=document.getElementById('medVacSection'),dSec=document.getElementById('medDrugSection');
-  gSec.style.display='none';vSec.style.display='none';dSec.style.display='none';
-  if(t==='v'){vSec.style.display='flex';renderVac()}
-  else if(t==='d'){dSec.style.display='flex';document.getElementById('drugDt').value=nowLocalIso();renderDrug()}
-  else{gSec.style.display='flex';document.getElementById('medVal').placeholder={w:'Вага (напр. 4.35 кг)',h:'Зріст (напр. 56 см)',b:'Білірубін (мкмоль/л)'}[t];document.getElementById('medVal').value='';renderMed()}
-}
-function addMed(){
-  const d=document.getElementById('medDate').value,v=parseFloat(document.getElementById('medVal').value);
-  if(!d||isNaN(v)||v<=0){uiAlert('Введіть дату та значення','📈','Увага');return}
-  if(!medData[curMedTab])medData[curMedTab]=[];
-  medData[curMedTab].push({id:Date.now(),d,v});medData[curMedTab].sort((a,b)=>a.d.localeCompare(b.d));
-  const meta={w:{ic:'⚖️',ti:'Замір ваги',u:'кг'},h:{ic:'📏',ti:'Замір зросту',u:'см'},b:{ic:'🧪',ti:'Білірубін',u:'мкмоль/л'}}[curMedTab];
-  if(curMedTab==='w'){prof.w=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}
-  if(curMedTab==='h'){prof.h=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}
-  localStorage.setItem('bMed',JSON.stringify(medData));document.getElementById('medVal').value='';
-  addMedToHistory(meta.ic,meta.ti,`${v} ${meta.u}`,d);renderMed();pushCloud();
-}
-async function delMed(id){if(!await uiConfirm('Видалити цей замір?'))return;medData[curMedTab]=medData[curMedTab].filter(x=>x.id!==id);localStorage.setItem('bMed',JSON.stringify(medData));renderMed();pushCloud()}
-function renderMed(){
-  const list=(medData[curMedTab]||[]).slice().sort((a,b)=>a.d.localeCompare(b.d)),unit={w:'кг',h:'см',b:'мкмоль/л'}[curMedTab],color={w:'#7aa2f7',h:'#f7768e',b:'#e0af68'}[curMedTab],chartWrap=document.getElementById('medChartWrap');
-  if(list.length===0){chartWrap.innerHTML='<div class="t-center s-lbl" style="padding:28px 10px">Додайте перший замір нижче</div>'}
-  else{
-    const W=310,H=135,padX=28,padY=22,vals=list.map(x=>x.v);let minV=Math.min(...vals),maxV=Math.max(...vals);
-    if(minV===maxV){minV=Math.max(0,minV-1);maxV=maxV+1}
-    const range=maxV-minV,pts=list.map((item,idx)=>{const x=list.length===1?W/2:padX+(idx/(list.length-1))*(W-padX*2),y=H-padY-((item.v-minV)/range)*(H-padY*2);return{x,y,v:item.v,d:item.d.slice(5).split('-').reverse().join('.')}}),poly=pts.map(p=>`${p.x},${p.y}`).join(' '),dots=pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="${color}" stroke="#0f111a" stroke-width="1.5"/><text x="${p.x}" y="${p.y-8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${p.v}</text><text x="${p.x}" y="${H-4}" fill="#787c99" font-size="9" text-anchor="middle">${p.d}</text>`).join('');
-    chartWrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block"><line x1="${padX}" y1="${padY}" x2="${W-padX}" y2="${padY}" stroke="rgba(255,255,255,.06)" stroke-dasharray="3"/><line x1="${padX}" y1="${H-padY}" x2="${W-padX}" y2="${H-padY}" stroke="rgba(255,255,255,.06)"/>${pts.length>1?`<polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${poly}"/>`:''}${dots}</svg>`;
-  }
-  document.getElementById('medHistoryList').innerHTML=list.slice().reverse().map(item=>`<div class="med-row"><span>${item.d.split('-').reverse().join('.')} — <strong style="color:var(--bright)">${item.v} ${unit}</strong></span><button class="del-btn" style="padding:2px 6px" onclick="delMed(${item.id})">✕</button></div>`).join('');
-}
-async function delDrug(id){
-  if(!await uiConfirm('Видалити запис про прийом ліків?'))return;
-  drugData=drugData.filter(x=>x.id!==id);
-  localStorage.setItem('bDrugs',JSON.stringify(drugData));
-  renderDrug();pushCloud();
-}
-
-function renderDrug(){
-  const listEl=document.getElementById('drugHistoryList');
-  if(!drugData.length){listEl.innerHTML='<div class="t-center s-lbl" style="padding:20px 10px">Записів про прийом препаратів ще немає</div>';return}
-  listEl.innerHTML=drugData.map(x=>{
-    const [dPart,tPart]=(x.dt||'').split('T');
-    const fmtDate=dPart?dPart.split('-').reverse().join('.'):'';
-    return`<div class="med-row"><div class="vac-info"><strong style="color:var(--bright)">💊 ${escHtml(x.name)}</strong><span class="vac-sub">${fmtDate} о ${tPart||''}${x.dose?' • '+escHtml(x.dose):''}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delDrug(${x.id})">✕</button></div>`;
-  }).join('');
-}
-
-// --- НОТАТКИ (ОКРЕМЕ МЕНЮ) ---
-function closeNoteMod(){cancelNoteEdit();document.getElementById('modNote').style.display='none'}
-function openNote(){cancelNoteEdit();renderNotes();document.getElementById('modNote').style.display='flex'}
-
-function cancelNoteEdit(){
-  editNoteId=null;
-  document.getElementById('noteModTitle').textContent='📝 Нотатки';
-  document.getElementById('inNoteDate').value=new Date().toISOString().slice(0,10);
-  document.getElementById('inNoteText').value='';
-  document.getElementById('btnCancelNoteEdit').style.display='none';
-  const btn=document.getElementById('btnSaveNote');btn.textContent='Зберегти нотатку';btn.style.gridColumn='span 2';
-}
-
-function editNote(id){
-  const n=notesData.find(x=>x.id===id);if(!n)return;
-  editNoteId=id;
-  document.getElementById('noteModTitle').textContent='✏️ Редагувати нотатку';
-  document.getElementById('inNoteDate').value=n.d||new Date().toISOString().slice(0,10);
-  document.getElementById('inNoteText').value=n.txt||'';
-  document.getElementById('btnCancelNoteEdit').style.display='block';
-  const btn=document.getElementById('btnSaveNote');btn.textContent='Оновити';btn.style.gridColumn='span 1';
-  document.getElementById('inNoteText').focus();
-}
-
-function addNoteTag(tag){const ta=document.getElementById('inNoteText');ta.value=(ta.value?ta.value.trim()+' ':'')+tag;ta.focus()}
-
-function saveNote(){
-  const txt=document.getElementById('inNoteText').value.trim(),d=document.getElementById('inNoteDate').value||new Date().toISOString().slice(0,10);
-  if(!txt){uiAlert('Введіть текст нотатки','📝','Увага');return}
-  if(editNoteId){const item=notesData.find(x=>x.id===editNoteId);if(item){item.d=d;item.txt=txt}cancelNoteEdit()}
-  else{notesData.unshift({id:Date.now(),d,txt,ts:Date.now()});document.getElementById('inNoteText').value=''}
-  notesData.sort((a,b)=>b.d.localeCompare(a.d)||b.ts-a.ts);
-  localStorage.setItem('bNotes',JSON.stringify(notesData));
-  renderNotes();pushCloud();
-}
-
-async function delNote(e,id){
-  e.stopPropagation();
-  if(!await uiConfirm('Видалити цю нотатку?'))return;
-  if(editNoteId===id)cancelNoteEdit();
-  notesData=notesData.filter(x=>x.id!==id);
-  localStorage.setItem('bNotes',JSON.stringify(notesData));
-  renderNotes();pushCloud();
-}
-
-function renderNotes(){
-  const listEl=document.getElementById('notesHistoryList');
-  if(!notesData.length){listEl.innerHTML='<div class="t-center s-lbl" style="padding:18px 10px">Нотаток ще немає</div>';return}
-  listEl.innerHTML=notesData.map(n=>{
-    const fmtDate=n.d?n.d.split('-').reverse().join('.'):'';
-    return`<div class="med-row" style="align-items:flex-start;cursor:pointer" onclick="editNote(${n.id})"><div class="vac-info"><span class="vac-sub" style="color:var(--prim);font-weight:700">📅 ${fmtDate}</span><span style="color:var(--bright);line-height:1.35;word-break:break-word">${escHtml(n.txt)}</span></div><button class="del-btn" style="padding:2px 6px" onclick="delNote(event,${n.id})">✕</button></div>`;
-  }).join('');
-}
-// --- ПРОФІЛЬ ТА СТАТИСТИКА ---
-function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
+function openMed(){document.getElementById('medDate').value=new Date().toISOString().slice(0,10);setMedTab(curMedTab);document.getElementById('modMed').style.display='flex'}
+function setMedTab(t){curMedTab=t;document.getElementById('tabW').className=t==='w'?'t-btn sel':'t-btn';document.getElementById('tabH').className=t==='h'?'t-btn sel-g':'t-btn';document.getElementById('tabB').className=t==='b'?'t-btn sel-y':'t-btn';document.getElementById('medVal').placeholder={w:'Вага (напр. 4.35 кг)',h:'Зріст (напр. 56 см)',b:'Білірубін (мкмоль/л)'}[t];document.getElementById('medVal').value='';renderMed()}
+function addMed(){const d=document.getElementById('medDate').value,v=parseFloat(document.getElementById('medVal').value);if(!d||isNaN(v)||v<=0){alert('Введіть дату та значення');return}if(!medData[curMedTab])medData[curMedTab]=[];medData[curMedTab].push({id:Date.now(),d,v});medData[curMedTab].sort((a,b)=>a.d.localeCompare(b.d));if(curMedTab==='w'){prof.w=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}if(curMedTab==='h'){prof.h=String(v);localStorage.setItem('bProf',JSON.stringify(prof));renderProf()}localStorage.setItem('bMed',JSON.stringify(medData));document.getElementById('medVal').value='';renderMed();pushCloud()}
+function delMed(id){if(!confirm('Видалити цей замір?'))return;medData[curMedTab]=medData[curMedTab].filter(x=>x.id!==id);localStorage.setItem('bMed',JSON.stringify(medData));renderMed();pushCloud()}
+function renderMed(){const list=(medData[curMedTab]||[]).slice().sort((a,b)=>a.d.localeCompare(b.d)),unit={w:'кг',h:'см',b:'мкмоль/л'}[curMedTab],color={w:'#7aa2f7',h:'#f7768e',b:'#e0af68'}[curMedTab],chartWrap=document.getElementById('medChartWrap');if(list.length===0){chartWrap.innerHTML='<div class="t-center s-lbl" style="padding:28px 10px">Додайте перший замір нижче</div>'}else{const W=310,H=135,padX=28,padY=22,vals=list.map(x=>x.v);let minV=Math.min(...vals),maxV=Math.max(...vals);if(minV===maxV){minV=Math.max(0,minV-1);maxV=maxV+1}const range=maxV-minV,pts=list.map((item,idx)=>{const x=list.length===1?W/2:padX+(idx/(list.length-1))*(W-padX*2),y=H-padY-((item.v-minV)/range)*(H-padY*2);return{x,y,v:item.v,d:item.d.slice(5).split('-').reverse().join('.')}}),poly=pts.map(p=>`${p.x},${p.y}`).join(' '),dots=pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="${color}" stroke="#0f111a" stroke-width="1.5"/><text x="${p.x}" y="${p.y-8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${p.v}</text><text x="${p.x}" y="${H-4}" fill="#787c99" font-size="9" text-anchor="middle">${p.d}</text>`).join('');chartWrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block"><line x1="${padX}" y1="${padY}" x2="${W-padX}" y2="${padY}" stroke="rgba(255,255,255,.06)" stroke-dasharray="3"/><line x1="${padX}" y1="${H-padY}" x2="${W-padX}" y2="${H-padY}" stroke="rgba(255,255,255,.06)"/>${pts.length>1?`<polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${poly}"/>`:''}${dots}</svg>`}document.getElementById('medHistoryList').innerHTML=list.slice().reverse().map(item=>`<div class="med-row"><span>${item.d.split('-').reverse().join('.')} — <strong style="color:var(--bright)">${item.v} ${unit}</strong></span><button class="del-btn" style="padding:2px 6px" onclick="delMed(${item.id})">✕</button></div>`).join('')}
+  function togProfDetails(){profOpen=!profOpen;document.getElementById('profDetails').style.display=profOpen?'block':'none';renderProf()}
 function togStats(){statsOpen=!statsOpen;document.getElementById('extStats').style.display=statsOpen?'flex':'none';document.getElementById('stArrow').textContent=statsOpen?'Згорнути ▴':'Детальніше ▾'}
 function setGender(g){selGender=g;document.getElementById('btnBoy').className=g==='boy'?'t-btn sel':'t-btn';document.getElementById('btnGirl').className=g==='girl'?'t-btn sel-g':'t-btn'}
 function togForm(){const f=document.getElementById('pForm'),d=document.getElementById('pDisp');if(f.style.display==='flex'){f.style.display='none';d.style.display='block'}else{setGender(prof.gender||'');document.getElementById('iName').value=prof.name;document.getElementById('iDob').value=prof.dob;document.getElementById('iTob').value=prof.tob||'';document.getElementById('iW').value=prof.w;document.getElementById('iH').value=prof.h;f.style.display='flex';d.style.display='none'}}
 function saveProf(){prof={name:document.getElementById('iName').value.trim()||'Мій Малюк',gender:selGender,dob:document.getElementById('iDob').value,tob:document.getElementById('iTob').value,w:document.getElementById('iW').value,h:document.getElementById('iH').value};localStorage.setItem('bProf',JSON.stringify(prof));togForm();renderProf();pushCloud()}
 function pluralDays(n){const mod10=n%10,mod100=n%100;if(mod10===1&&mod100!==11)return`${n} день`;if(mod10>=2&&mod10<=4&&(mod100<12||mod100>14))return`${n} дні`;return`${n} днів`}
 function renderProf(){const card=document.getElementById('profCard');card.className='card'+(prof.gender==='boy'?' boy':(prof.gender==='girl'?' girl':''));const icon=prof.gender==='boy'?'👦 ':(prof.gender==='girl'?'👧 ':'👶 ');document.getElementById('dName').textContent=icon+prof.name;document.getElementById('dDobLbl').textContent=prof.gender==='girl'?'Народилася':'Народився';document.getElementById('dW').textContent=prof.w?prof.w+' кг':'—';document.getElementById('dH').textContent=prof.h?prof.h+' см':'—';const arrow=profOpen?' ▴':' ▾';if(!prof.dob){document.getElementById('dDob').textContent='натисніть Редагувати';document.getElementById('mainDaysBadge').textContent='Профіль'+arrow;return}const[yr,mo,da]=prof.dob.split('-').map(Number),dobStart=new Date(yr,mo-1,da),now=new Date(),todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()),days=Math.max(0,Math.round((todayStart-dobStart)/864e5)),formattedDate=dobStart.toLocaleDateString('uk-UA');document.getElementById('dDob').textContent=prof.tob?`${formattedDate} о ${prof.tob}`:formattedDate;document.getElementById('mainDaysBadge').textContent=pluralDays(days)+arrow;document.getElementById('aDays').textContent=days;document.getElementById('aWeeks').textContent=Math.floor(days/7);let y=now.getFullYear()-dobStart.getFullYear(),m=now.getMonth()-dobStart.getMonth();if(now.getDate()<dobStart.getDate())m--;if(m<0){y--;m+=12}if(y>=1){document.getElementById('aYears').textContent=y;document.getElementById('aYLbl').textContent=y===1?'рік':(y<5?'роки':'років')}else{document.getElementById('aYears').textContent=m;document.getElementById('aYLbl').textContent=m===1?'місяць':(m>=2&&m<=4?'місяці':'місяців')}}
-
-// --- ТАЙМЕРИ ТА ШВИДКІ ДІЇ ---
 function fmtDur(sec){const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60,pad=n=>String(n).padStart(2,'0');return h>0?`${h}:${pad(m)}:${pad(s)}`:`${pad(m)}:${pad(s)}`}
 function fmtTextDur(mins){if(mins<1)return'< 1 хв';const h=Math.floor(mins/60),m=mins%60;return h>0?`${h} год ${m} хв`:`${m} хв`}
-function startFeed(side){lockSyncUntil=Date.now()+8000;actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
-function stopFeed(saveIt){lockSyncUntil=Date.now()+8000;const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}else{pushCloud()}}
-function startSleep(){lockSyncUntil=Date.now()+8000;actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
-function stopSleep(saveIt){lockSyncUntil=Date.now()+8000;const cur=actSleep;actSleep=null;localStorage.removeItem('actSleep');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins})}else{pushCloud()}}
+function startFeed(side){actFeed={side,start:Date.now()};localStorage.setItem('actFeed',JSON.stringify(actFeed));updTimers();pushCloud()}
+function stopFeed(saveIt){const cur=actFeed;actFeed=null;localStorage.removeItem('actFeed');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('feed','🤱','Грудне годування',`${cur.side} грудь (${fmtTextDur(mins)})`,{mins,side:cur.side})}else{pushCloud()}}
+function startSleep(){actSleep={start:Date.now()};localStorage.setItem('actSleep',JSON.stringify(actSleep));updTimers();pushCloud()}
+function stopSleep(saveIt){const cur=actSleep;actSleep=null;localStorage.removeItem('actSleep');updTimers();if(saveIt&&cur){const mins=Math.round((Date.now()-cur.start)/6e4);add('slp','😴','Сон малюка',`Тривалість: ${fmtTextDur(mins)}`,{mins})}else{pushCloud()}}
 function updTimers(){const bf=document.getElementById('boxFeed'),lf=document.getElementById('lblFeed'),cf=document.getElementById('clkFeed'),btf=document.getElementById('btnsFeed');if(actFeed){bf.className='timer-box active-pink';lf.textContent='🤱 Їсть ('+actFeed.side+')';cf.textContent=fmtDur(Math.floor((Date.now()-actFeed.start)/1e3));btf.innerHTML='<button class="t-btn stop" onclick="stopFeed(true)">Стоп</button><button class="t-btn" onclick="stopFeed(false)">✕</button>'}else{bf.className='timer-box';lf.textContent='🤱 Груди (таймер)';cf.textContent='00:00';btf.innerHTML='<button class="t-btn go-p" onclick="startFeed(\'Ліва\')">Ліва</button><button class="t-btn go-p" onclick="startFeed(\'Права\')">Права</button>'}const bs=document.getElementById('boxSleep'),ls=document.getElementById('lblSleep'),cs=document.getElementById('clkSleep'),bts=document.getElementById('btnsSleep');if(actSleep){bs.className='timer-box active';ls.textContent='😴 Малюк спить...';cs.textContent=fmtDur(Math.floor((Date.now()-actSleep.start)/1e3));bts.innerHTML='<button class="t-btn stop" onclick="stopSleep(true)">Прокинувся</button><button class="t-btn" onclick="stopSleep(false)">✕</button>'}else{bs.className='timer-box';ls.textContent='😴 Таймер сну';cs.textContent='00:00';bts.innerHTML='<button class="t-btn go-v" onclick="startSleep()">Почати сон</button>'}}
 function setBotType(t){botType=t;document.getElementById('btnTypeMix').className=t==='Суміш'?'t-btn sel':'t-btn';document.getElementById('btnTypeMilk').className=t==='Зціджене молоко'?'t-btn sel':'t-btn'}
 function openBot(){document.getElementById('inMl').value='';setBotType('Суміш');document.getElementById('modBot').style.display='flex'}
 function saveBot(val){const ml=parseInt(val)||0;add('feed','🍼',botType,ml>0?`${botType} • ${ml} мл`:botType,{ml});document.getElementById('modBot').style.display='none'}
 function openDia(){document.getElementById('modDia').style.display='flex'}
 function saveDia(label,isDirty){add('dia','🧷','Підгузок',label,{d:isDirty});document.getElementById('modDia').style.display='none'}
-function openBath(){document.getElementById('inBathMins').value='';document.getElementById('modBath').style.display='flex'}
-function saveBath(val){
-  const mins=parseInt(val)||0;
-  const n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Купання малюка';
-  logs.unshift({id:Date.now(),t:'bath',ic:'🛁',ti:'Купання',n,ex:{mins},ts:Date.now()});
-  logs.sort((a,b)=>b.ts-a.ts);
-  document.getElementById('modBath').style.display='none';
-  resetDay();save();
-}
-function openWalk(){document.getElementById('inWalkMins').value='';document.getElementById('modWalk').style.display='flex'}
-
-function saveWalk(val){
-  const mins=parseInt(val)||0;
-  const n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Прогулянка на свіжому повітрі';
-  logs.unshift({id:Date.now(),t:'walk',ic:'🚶',ti:'Прогулянка',n,ex:{mins},ts:Date.now()});
-  logs.sort((a,b)=>b.ts-a.ts);
-  document.getElementById('modWalk').style.display='none';
-  resetDay();save();
-}
-
-
-// --- РУЧНЕ ДОДАВАННЯ В ІСТОРІЮ ---
-let addLogMode='bf',addLogSide='Ліва',addBotKind='Суміш',addDiaLabel='Мокрий',addDiaDirty=false;
-
-function openAddLog(){
-  const pad=n=>String(n).padStart(2,'0'),now=new Date();
-  document.getElementById('addLogDate').value=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`;
-  document.getElementById('addLogTime').value=`${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  document.getElementById('addBfMins').value='';document.getElementById('addBotMl').value='';
-  document.getElementById('addSlpMins').value='';document.getElementById('addActMins').value='';
-  setAddLogType('bf');document.getElementById('modAddLog').style.display='flex';
-}
-function setAddLogType(t){
-  addLogMode=t;
-  ['bf','bot','slp','dia','bath','walk'].forEach(k=>{
-    const el=document.getElementById('addType'+k.charAt(0).toUpperCase()+k.slice(1));
-    if(el)el.className=(t===k)?'t-btn sel':'t-btn';
-  });
-  document.getElementById('addFieldsBf').style.display=t==='bf'?'flex':'none';
-  document.getElementById('addFieldsBot').style.display=t==='bot'?'flex':'none';
-  document.getElementById('addFieldsSlp').style.display=t==='slp'?'flex':'none';
-  document.getElementById('addFieldsDia').style.display=t==='dia'?'flex':'none';
-  document.getElementById('addFieldsAct').style.display=(t==='bath'||t==='walk')?'flex':'none';
-}
-function setAddSide(s){addLogSide=s;document.getElementById('addSideL').className=s==='Ліва'?'t-btn sel-g':'t-btn';document.getElementById('addSideR').className=s==='Права'?'t-btn sel-g':'t-btn'}
-function setAddBotKind(k){addBotKind=k;document.getElementById('addBotMix').className=k==='Суміш'?'t-btn sel':'t-btn';document.getElementById('addBotMilk').className=k==='Зціджене молоко'?'t-btn sel':'t-btn'}
-function setAddDiaKind(lbl,dirty){addDiaLabel=lbl;addDiaDirty=dirty;['Мокрий','Какашка','Гібрид','Не стандарт'].forEach((n,i)=>{document.getElementById('addDia'+i).className=n===lbl?'t-btn sel-t':'t-btn'})}
-function saveManualLog(){
-  const dVal=document.getElementById('addLogDate').value,tVal=document.getElementById('addLogTime').value;
-  if(!dVal||!tVal){uiAlert('Вкажіть дату та час події','📅','Увага');return}
-  const ts=new Date(`${dVal}T${tVal}`).getTime();
-  let t='feed',ic='🤱',ti='Грудне годування',n='',ex={};
-  if(addLogMode==='bf'){const mins=parseInt(document.getElementById('addBfMins').value)||0;n=mins>0?`${addLogSide} грудь (${fmtTextDur(mins)})`:`${addLogSide} грудь`;ex={mins,side:addLogSide}}
-  else if(addLogMode==='bot'){const ml=parseInt(document.getElementById('addBotMl').value)||0;ic='🍼';ti=addBotKind;n=ml>0?`${addBotKind} • ${ml} мл`:addBotKind;ex={ml}}
-  else if(addLogMode==='slp'){const mins=parseInt(document.getElementById('addSlpMins').value)||0;t='slp';ic='😴';ti='Сон малюка';n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Сон';ex={mins}}
-  else if(addLogMode==='dia'){t='dia';ic='🧷';ti='Підгузок';n=addDiaLabel;ex={d:addDiaDirty}}
-  else if(addLogMode==='bath'){const mins=parseInt(document.getElementById('addActMins').value)||0;t='bath';ic='🛁';ti='Купання';n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Купання малюка';ex={mins}}
-  else if(addLogMode==='walk'){const mins=parseInt(document.getElementById('addActMins').value)||0;t='walk';ic='🚶';ti='Прогулянка';n=mins>0?`Тривалість: ${fmtTextDur(mins)}`:'Прогулянка на свіжому повітрі';ex={mins}}
-  logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts});logs.sort((a,b)=>b.ts-a.ts);
-  const [y,m,d]=dVal.split('-').map(Number);viewDate=new Date(y,m-1,d);viewDate.setHours(0,0,0,0);
-  document.getElementById('modAddLog').style.display='none';save();
-}
-
-// --- РЕДАГУВАННЯ ЗАПИСІВ ІСТОРІЇ ---
-function appendSubChip(txt,needsInput=false){
-  const inp=document.getElementById('edSubNote'),cur=inp.value.trim();
-  if(needsInput){inp.value=cur?`${cur}; ${txt}`:txt;inp.focus()}
-  else{const parts=cur?cur.split('; ').filter(Boolean):[];if(!parts.includes(txt))parts.push(txt);inp.value=parts.join('; ')}
-}
-function openEdit(id){
-  const item=logs.find(i=>i.id===id);if(!item)return;
-  editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;
-  const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');
-  document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
-  document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
-  const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');
-  const subInp=document.getElementById('edSubNote'),chipsEl=document.getElementById('edQuickChips');
-  wrap.style.display='none';subInp.value=(item.ex&&item.ex.sub)||'';
-  let chips=[];
-  if(item.t==='feed'){
-    chips=[{l:'🤢 Зригнула',v:'Зригнула',f:false},{l:'🤮 Сильно зригнула',v:'Сильно зригнула',f:false},{l:'🫧 Гикавка',v:'Гикавка',f:false},{l:'💨 Не вийшло повітря',v:'Не вийшло повітря',f:false},{l:'😫 Коліки',v:'Коліки',f:false},{l:'😴 Заснула під час їжі',v:'Заснула під час їжі',f:false},{l:'🙅 Мало зїла',v:'Мало зїла',f:false}];
-  }else if(item.t==='slp'){
-    chips=[{l:'😫 Коліки / животик',v:'Коліки / болить животик',f:false},{l:'😢 Неспокійний сон',v:'Неспокійний сон',f:false},{l:'🤱 На руках / животику',v:'Спить на руках / животику',f:false},{l:'🌡️ Температура',v:'Температура: ',f:true}];
-  }else if(item.t==='dia'){
-    chips=[{l:'🔴 Почервоніння',v:'Почервоніння / попрілість',f:false},{l:'💧 Дуже повний',v:'Дуже повний підгузок',f:false},{l:'🤢 Слиз / інший колір',v:'Слиз / незвичний колір',f:false}];
-  }else if(item.t==='med'){
-    chips=[{l:'🌡️ Температура',v:'Температура: ',f:true},{l:'🔴 Почервоніння місця уколу',v:'Почервоніння місця уколу',f:false},{l:'😢 Примхливість',v:'Примхливість / неспокій',f:false},{l:'🤢 Зригнула ліки',v:'Зригнула ліки',f:false}];
-  }else if(item.t==='bath'||item.t==='walk'){
-    chips=[{l:'🌿 З травами / сіллю',v:'З травами / сіллю',f:false},{l:'🧴 Миття голови',v:'Миття голови',f:false},{l:'😴 Гарно спала',v:'Гарно спала',f:false},{l:'😢 Капризувала',v:'Капризувала',f:false}];
-  }
-  chipsEl.innerHTML=chips.map(c=>`<button type="button" class="chip" onclick="appendSubChip('${c.v}',${c.f})">${c.l}</button>`).join('');
-  if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}
-  else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}
-  document.getElementById('modEdit').style.display='flex';
-}
-function applyEdit(){
-  const item=logs.find(i=>i.id===editId);if(!item)return;
-  const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;
-  if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();
-  if(!item.ex)item.ex={};
-  item.ex.sub=document.getElementById('edSubNote').value.trim();
-  if(document.getElementById('edExtraWrap').style.display==='flex'){
-    const val=parseInt(document.getElementById('edExtraVal').value)||0;
-    if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}
-    else if(typeof item.ex.mins!=='undefined'){
-      item.ex.mins=val;
-      if(item.t==='slp')item.n=val>0?`Тривалість: ${fmtTextDur(val)}`:'Сон';
-      else if(item.t==='bath')item.n=val>0?`Тривалість: ${fmtTextDur(val)}`:'Купання малюка';
-      else if(item.t==='walk')item.n=val>0?`Тривалість: ${fmtTextDur(val)}`:'Прогулянка на свіжому повітрі';
-      else item.n=`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim();
-    }
-  }
-  logs.sort((a,b)=>b.ts-a.ts);document.getElementById('modEdit').style.display='none';save();
-}
-async function delFromEdit(){if(await uiConfirm("Видалити цей запис?")){delIds.push(editId);localStorage.setItem('bDelIds',JSON.stringify(delIds));logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save(true)}}
-// --- ЗБЕРЕЖЕННЯ, СТАТИСТИКА ТА РЕНДЕР ---
-function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
-function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);resetDay();save()}
-async function del(e,id){e.stopPropagation();if(await uiConfirm("Видалити запис?")){delIds.push(id);localStorage.setItem('bDelIds',JSON.stringify(delIds));logs=logs.filter(i=>i.id!==id);save(true)}}
+function openEdit(id){const item=logs.find(i=>i.id===id);if(!item)return;editId=id;document.getElementById('edTitle').textContent=`✏️ ${item.ti}`;const dt=new Date(item.ts),pad=n=>String(n).padStart(2,'0');document.getElementById('edDate').value=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;document.getElementById('edTime').value=`${pad(dt.getHours())}:${pad(dt.getMinutes())}`;const wrap=document.getElementById('edExtraWrap'),lbl=document.getElementById('edExtraLbl'),inp=document.getElementById('edExtraVal');if(item.ex&&typeof item.ex.ml!=='undefined'){wrap.style.display='flex';lbl.textContent="Об'єм (мл):";inp.value=item.ex.ml}else if(item.ex&&typeof item.ex.mins!=='undefined'){wrap.style.display='flex';lbl.textContent="Тривалість (хвилин):";inp.value=item.ex.mins}else{wrap.style.display='none'}document.getElementById('modEdit').style.display='flex'}
+function applyEdit(){const item=logs.find(i=>i.id===editId);if(!item)return;const dVal=document.getElementById('edDate').value,tVal=document.getElementById('edTime').value;if(dVal&&tVal)item.ts=new Date(`${dVal}T${tVal}`).getTime();const wrap=document.getElementById('edExtraWrap'),val=parseInt(document.getElementById('edExtraVal').value)||0;if(wrap.style.display==='flex'){if(typeof item.ex.ml!=='undefined'){item.ex.ml=val;item.n=val>0?`${item.ti} • ${val} мл`:item.ti}else if(typeof item.ex.mins!=='undefined'){item.ex.mins=val;item.n=item.t==='slp'?`Тривалість: ${fmtTextDur(val)}`:`${item.ex.side||''} грудь (${fmtTextDur(val)})`.trim()}}logs.sort((a,b)=>b.ts-a.ts);if(item.t==='feed'&&alarmCfg.enabled){alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}document.getElementById('modEdit').style.display='none';save()}
+function delFromEdit(){if(confirm("Видалити цей запис?")){logs=logs.filter(i=>i.id!==editId);document.getElementById('modEdit').style.display='none';save()}}
+  function save(forceEmpty=false){localStorage.setItem('bLogs',JSON.stringify(logs));if(logs.length>0)localStorage.setItem('bLogs_backup',JSON.stringify(logs));render();updSince();updStats();pushCloud(forceEmpty)}
+function add(t,ic,ti,n='',ex={}){logs.unshift({id:Date.now(),t,ic,ti,n,ex,ts:Date.now()});logs.sort((a,b)=>b.ts-a.ts);if(t==='feed'&&alarmCfg.enabled){stopRinging(false);alarmCfg.dismissedForTs=0;recalculateAlarmTarget()}resetDay();save()}
+function del(e,id){e.stopPropagation();if(confirm("Видалити запис?")){logs=logs.filter(i=>i.id!==id);save(true)}}
+function clrAll(){if(confirm("Видалити всю історію?")){logs=[];localStorage.removeItem('bLogs_backup');save(true)}}
 function shiftDay(delta){viewDate.setDate(viewDate.getDate()+delta);render();updStats()}
 function resetDay(){viewDate=new Date();viewDate.setHours(0,0,0,0);render();updStats()}
 function pickCalDate(val){if(!val)return;const[y,m,d]=val.split('-').map(Number);viewDate=new Date(y,m-1,d);viewDate.setHours(0,0,0,0);render();updStats()}
-
-function updStats(){
-  const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),isToday=dayStart===todayStart;
-  document.getElementById('statsTitle').textContent=isToday?'📊 Статистика за сьогодні':`📊 Статистика за ${viewDate.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit'})}`;
-  const tl=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd);
-  let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[],bathC=0,walkC=0,walkM=0;
-  tl.forEach(i=>{
-    if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}}
-    else if(i.t==='dia'){d++;if(i.ex&&i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}
-    else if(i.t==='slp'){sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins}
-    else if(i.t==='bath'){bathC++}
-    else if(i.t==='walk'){walkC++;if(i.ex&&i.ex.mins)walkM+=i.ex.mins}
-  });
-  document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;
-  document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;
-  document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;
-  document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;
-  document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;
-  document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}🎉 / ${dNon}⚠️`;
-  document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';
-  document.getElementById('exBath').textContent=`${bathC} разів`;
-  document.getElementById('exWalk').textContent=walkM>0?`${walkC} разів (${fmtTextDur(walkM)})`:`${walkC} разів`;
-  if(feedTimes.length>=2){feedTimes.sort((a,b)=>a-b);let diffSum=0;for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4))}
-  else{document.getElementById('exInt').textContent='—'}
-}
-
-function updSince(){
-  const el=document.getElementById('tFeed'),lf=logs.find(i=>i.t==='feed');
-  if(!lf){el.textContent='Ще не було записів'}
-  else{const m=Math.floor((Date.now()-lf.ts)/6e4),h=Math.floor(m/60);el.textContent=h>0?`${h} год ${m%60} хв тому`:`${m} хв тому`}
-}
-
-function render(){
-  const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),yesterdayStart=todayStart-864e5,pad=n=>String(n).padStart(2,'0'),isoStr=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`,todayIso=`${new Date().getFullYear()}-${pad(new Date().getMonth()+1)}-${pad(new Date().getDate())}`,picker=document.getElementById('calPicker');
-  picker.value=isoStr;picker.max=todayIso;
-  const lbl=document.getElementById('curDayLabel');
-  if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});
-  document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);
-  const dayLogs=logs.filter(i=>i.t!=='note'&&i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');
-  if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}
-  el.innerHTML=dayLogs.map(i=>{
-    const dt=new Date(i.ts),tm=dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});
-    const hasSub=Boolean(i.ex&&i.ex.sub&&i.ex.sub.trim());
-    const dot=hasSub?'<span class="note-dot"></span>':'';
-    const sub=hasSub?`<div class="l-subnote">💬 ${escHtml(i.ex.sub)}</div>`:'';
-    return`<div class="l-item" onclick="openEdit(${i.id})"><div class="l-info"><div class="l-icon">${i.ic}</div><div style="min-width:0"><div class="l-title">${escHtml(i.ti)}${dot}</div>${i.n?`<div class="l-note">${escHtml(i.n)}</div>`:''}${sub}</div></div><div class="l-right"><span class="l-time">${tm}</span><button class="del-btn" onclick="del(event,${i.id})">✕</button></div></div>`;
-  }).join('');
-}
-
-function hideSplash(){const s=document.getElementById('splash-screen');if(s&&!s.classList.contains('hidden')){s.classList.add('hidden');setTimeout(()=>s.remove(),600)}}
-window.addEventListener('load',()=>setTimeout(hideSplash,1500));
-setTimeout(hideSplash,3000);
+  function updStats(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),isToday=dayStart===todayStart;document.getElementById('statsTitle').textContent=isToday?'📊 Статистика за сьогодні':`📊 Статистика за ${viewDate.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit'})}`;const tl=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd);let f=0,ml=0,d=0,dt=0,sc=0,sm=0,bfC=0,bfM=0,mixMl=0,milkMl=0,dWet=0,dPoo=0,dHyb=0,dNon=0,feedTimes=[];tl.forEach(i=>{if(i.t==='feed'){f++;feedTimes.push(i.ts);if(i.ex&&i.ex.ml){ml+=i.ex.ml;if(i.ti==='Суміш')mixMl+=i.ex.ml;else milkMl+=i.ex.ml}else{bfC++;bfM+=((i.ex&&i.ex.mins)||0)}}else if(i.t==='dia'){d++;if(i.ex&&i.ex.d)dt++;if(i.n==='Мокрий')dWet++;else if(i.n==='Какашка')dPoo++;else if(i.n==='Гібрид')dHyb++;else dNon++}else if(i.t==='slp'){sc++;if(i.ex&&i.ex.mins)sm+=i.ex.mins}});document.getElementById('stF').textContent=f;document.getElementById('stMl').textContent=`Їжа (${ml} мл)`;document.getElementById('stD').textContent=d;document.getElementById('stDt').textContent=`Підгузки (${dt}💩)`;document.getElementById('stS').textContent=fmtTextDur(sm);document.getElementById('stSc').textContent=`Сон (${sc} разів)`;document.getElementById('exBf').textContent=`${bfC} разів (${fmtTextDur(bfM)})`;document.getElementById('exMix').textContent=`${mixMl} мл`;document.getElementById('exMilk').textContent=`${milkMl} мл`;document.getElementById('exDia').textContent=`${dWet}💧 / ${dPoo}💩 / ${dHyb}💧💩 / ${dNon}⚠️`;document.getElementById('exAvgSlp').textContent=sc>0?fmtTextDur(Math.round(sm/sc)):'—';if(feedTimes.length>=2){feedTimes.sort((a,b)=>a-b);let diffSum=0;for(let k=1;k<feedTimes.length;k++)diffSum+=(feedTimes[k]-feedTimes[k-1]);document.getElementById('exInt').textContent=fmtTextDur(Math.round((diffSum/(feedTimes.length-1))/6e4))}else{document.getElementById('exInt').textContent='—'}}
+function updSince(){const el=document.getElementById('tFeed'),lf=logs.find(i=>i.t==='feed');if(!lf){el.textContent='Ще не було записів'}else{const m=Math.floor((Date.now()-lf.ts)/6e4),h=Math.floor(m/60);el.textContent=h>0?`${h} год ${m%60} хв тому`:`${m} хв тому`}const stTxt=document.getElementById('alarmStatusText'),btn=document.getElementById('alarmBtn');if(!alarmCfg.enabled||!alarmCfg.targetTs){stTxt.textContent='Будильник вимкнено';stTxt.style.color='var(--mut)';btn.className='alarm-pill';btn.textContent='⏰ Налаштувати';return}btn.className='alarm-pill on';btn.textContent=`⏰ ${fmtTextDur(alarmCfg.mins)}`;const leftMs=alarmCfg.targetTs-Date.now(),targetStr=new Date(alarmCfg.targetTs).toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});if(leftMs>0){const leftMins=Math.ceil(leftMs/60000);stTxt.style.color='var(--yel)';stTxt.textContent=`О ${targetStr} (через ${fmtTextDur(leftMins)})`}else{stTxt.style.color='var(--red)';stTxt.textContent=`Час годувати! (було о ${targetStr})`;if(alarmCfg.dismissedForTs!==alarmCfg.targetTs)startRinging()}}
+  function render(){const dayStart=viewDate.getTime(),dayEnd=dayStart+864e5,todayStart=new Date().setHours(0,0,0,0),yesterdayStart=todayStart-864e5,pad=n=>String(n).padStart(2,'0'),isoStr=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}-${pad(viewDate.getDate())}`,todayIso=`${new Date().getFullYear()}-${pad(new Date().getMonth()+1)}-${pad(new Date().getDate())}`,picker=document.getElementById('calPicker');picker.value=isoStr;picker.max=todayIso;const lbl=document.getElementById('curDayLabel');if(dayStart===todayStart)lbl.textContent='Сьогодні';else if(dayStart===yesterdayStart)lbl.textContent='Вчора';else lbl.textContent=viewDate.toLocaleDateString('uk-UA',{day:'numeric',month:'long'});document.getElementById('btnNextDay').disabled=(dayStart>=todayStart);const dayLogs=logs.filter(i=>i.ts>=dayStart&&i.ts<dayEnd),el=document.getElementById('logList');if(!dayLogs.length){el.innerHTML='<div class="t-center s-lbl" style="padding:24px">За цей день записів немає</div>';return}el.innerHTML=dayLogs.map(i=>{const dt=new Date(i.ts),tm=dt.toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});return`<div class="l-item" onclick="openEdit(${i.id})"><div class="l-info"><div class="l-icon">${i.ic}</div><div><div class="l-title">${i.ti}</div>${i.n?`<div class="l-note">${i.n}</div>`:''}</div></div><div class="l-right"><span class="l-time">${tm}</span><button class="del-btn" onclick="del(event,${i.id})">✕</button></div></div>`}).join('')}
+window.addEventListener('load',()=>{setTimeout(()=>{const splash=document.getElementById('splash-screen');if(splash){splash.classList.add('hidden');setTimeout(()=>splash.remove(),600)}},1500)});
 if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(reg=>reg.update());let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing&&!actFeed&&!actSleep){refreshing=true;window.location.reload()}})}
-setInterval(()=>{updTimers();updSince();renderProf();renderRem()},1000);
-setInterval(()=>{if(!document.hidden)pullCloud()},15000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullCloud()});
-  
-renderProf();updTimers();render();updSince();updStats();renderRem();
+setInterval(()=>{updTimers();updSince();renderProf()},1000);
+setInterval(pullCloud,5000);
+renderProf();updTimers();render();updSince();updStats();
 if(syncUrl)pullCloud();
 </script>
 </body>
 </html>
-
